@@ -1,0 +1,46 @@
+{
+  "name": "ukiyoe-web",
+  "description": "",
+  "version": "0.0.1",
+  "author": {
+    "name": "John Resig",
+    "email": "jeresig@gmail.com"
+  },
+  "engines": {
+    "node": "0.10.x",
+    "npm": "1.2.x"
+  },
+  "scripts": {
+    "start": "NODE_PATH=./app/controllers NODE_ENV=development ./node_modules/.bin/nodemon server.js",
+    "test": "make test",
+    "encrypt": "encrypt config/config.js config/config.js.cast5",
+    "decrypt": "decrypt config/config.js.cast5 config/config.js"
+  },
+  "dependencies": {
+    "express": "latest",
+    "express-namespace": "latest",
+    "mongoose": "latest",
+    "mongoose-user": "latest",
+    "passport": "latest",
+    "passport-local": "latest",
+    "connect-mongo": "latest",
+    "connect-flash": "latest",
+    "view-helpers": "latest",
+    "async": "latest",
+    "forever": "latest",
+    "express-cdn": "latest",
+    "i18n-2": "~0.4.5",
+    "swig": "~1.1.0",
+    "config-leaf": "~0.1.0"
+  },
+  "devDependencies": {
+    "nodemon": "latest",
+    "mocha": "latest",
+    "should": "latest",
+    "supertest": "latest"
+  },
+  "keywords": [
+    "mvc",
+    "boilerplate"
+  ]
+}

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="{{ __("en-US") }}" class="{{ __("en-US") }}">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="content-language" content="{{ __("en-US") }}"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="{{ CDN("/images/favicon.png", {"raw": true}) }}" type="image/x-icon"/>
+    <title>{{ page_title }}</title>
+    {% if page_desc %}<meta name="description" content="{{ page_desc }}"/>{% endif %}
+
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootswatch/3.0.2/flatly/bootstrap.min.css" />
+    {{ CDN("/css/app.css") }}
+
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+    <div class="navbar navbar-default navbar-static-top">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="/">
+                    {{ __(page_title) }}</a>
+            </div>
+
+            <div class="collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="/">{{ __("Search") }}</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="lang-notice alert alert-error" style="display:none;">
+            {{ __("Language Notice") }}
+            <a href="{{ getOtherURL }}">{{ __("Language Redirect") }}</a>
+        </div>
+
+        {% block content %}{% endblock %}
+    </div>
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    {{ CDN("/js/app.js") }}
+</body>
+</html>
