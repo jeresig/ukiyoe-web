@@ -17,30 +17,30 @@
     "decrypt": "decrypt config/config.js.cast5 config/config.js"
   },
   "dependencies": {
-    "express": "latest",
-    "express-namespace": "latest",
-    "mongoose": "latest",
-    "mongoose-user": "latest",
-    "passport": "latest",
-    "passport-local": "latest",
-    "connect-mongo": "latest",
-    "connect-flash": "latest",
-    "view-helpers": "latest",
-    "async": "latest",
-    "forever": "latest",
-    "express-cdn": "latest",
+    "express": "~3.4.4",
+    "express-namespace": "~0.1.1",
+    "mongoose": "~3.8.1",
+    "mongoose-user": "~0.0.1",
+    "passport": "~0.1.17",
+    "passport-local": "~0.1.6",
+    "connect-mongo": "~0.4.0",
+    "connect-flash": "~0.1.1",
+    "view-helpers": "~0.1.3",
+    "async": "~0.2.9",
+    "forever": "~0.10.9",
+    "express-cdn": "~0.1.7",
     "i18n-2": "~0.4.5",
     "swig": "~1.1.0",
     "config-leaf": "~0.1.0",
     "mongoosastic": "~0.2.0",
     "mongoose-versioner": "~0.1.1",
-    "forms-mongoose": "0.0.6"
+    "forms-mongoose": "~0.0.6"
   },
   "devDependencies": {
-    "nodemon": "latest",
-    "mocha": "latest",
-    "should": "latest",
-    "supertest": "latest"
+    "nodemon": "~0.7.10",
+    "mocha": "~1.14.0",
+    "should": "~2.1.0",
+    "supertest": "~0.8.1"
   },
   "keywords": [
     "mvc",
