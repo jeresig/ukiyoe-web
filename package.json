@@ -34,7 +34,8 @@
     "config-leaf": "~0.1.0",
     "mongoosastic": "~0.2.0",
     "mongoose-versioner": "~0.1.1",
-    "forms-mongoose": "~0.0.6"
+    "forms-mongoose": "~0.0.6",
+    "lodash": "~2.3.0"
   },
   "devDependencies": {
     "nodemon": "~0.7.10",

@@ -9,5 +9,6 @@
 	"Language Notice": "Language Notice",
 	"Language Redirect": "Language Redirect",
 	"": "",
-	"Home Page": "Home Page"
+	"Home Page": "Home Page",
+	"ExtractedArtists": "ExtractedArtists"
 }

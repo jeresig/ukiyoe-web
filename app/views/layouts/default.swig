@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="{{ CDN("/images/favicon.png", {"raw": true}) }}" type="image/x-icon"/>
-    <title>{{ page_title }}</title>
+    <title>{{ title }}</title>
     {% if page_desc %}<meta name="description" content="{{ page_desc }}"/>{% endif %}
 
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootswatch/3.0.2/flatly/bootstrap.min.css" />
@@ -22,7 +22,7 @@
         <div class="container">
             <div class="navbar-header">
                 <a class="navbar-brand" href="/">
-                    {{ __(page_title) }}</a>
+                    {{ __(title) }}</a>
             </div>
 
             <div class="collapse navbar-collapse">
