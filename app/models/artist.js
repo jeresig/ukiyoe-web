@@ -1,4 +1,5 @@
 var mongoose = require("mongoose"),
+    mongoosastic = require("mongoosastic"),
     env = process.env.NODE_ENV || "development",
     config = require("../../config/config")[env],
     Schema = mongoose.Schema,
@@ -6,28 +7,28 @@ var mongoose = require("mongoose"),
 
 var Name = {
     original: String,
-    name: String,
+    name: {type: String, es_indexed: true},
     ascii: String,
     plain: String,
-    given: String,
+    given: {type: String, es_indexed: true, es_boost: 2.0},
     given_kana: String,
-    given_kanji: String,
+    given_kanji: {type: String, es_indexed: true, es_boost: 2.0},
     surname: String,
     surname_kana: String,
     surname_kanji: String,
     kana: String,
-    kanji: String,
+    kanji: {type: String, es_indexed: true},
     locale: String,
     generation: Number
 };
 
 var YearRange = {
     original: String,
-    start: Number,
+    start: {type: Number, es_indexed: true},
     start_ca: Boolean,
-    end: Number,
+    end: {type: Number, es_indexed: true},
     end_ca: Boolean,
-    current: Boolean
+    current: {type: Boolean, es_indexed: true}
 };
 
 var ExtractedArtistSchema = new Schema({
@@ -104,6 +105,8 @@ ExtractedArtistSchema.statics = {
     }
 };
 
+ExtractedArtistSchema.plugin(mongoosastic);
+
 var ArtistSchema = new Schema({
     _id: ObjectId,
 
@@ -179,5 +182,12 @@ ArtistSchema.statics = {
     }
 };
 
+ArtistSchema.plugin(mongoosastic);
+
 mongoose.model("ExtractedArtist", ExtractedArtistSchema);
 mongoose.model("Artist", ArtistSchema);
+
+module.exports = {
+    ExtractedArtist: ExtractedArtistSchema,
+    Artist: ArtistSchema
+};

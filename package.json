@@ -41,7 +41,8 @@
     "nodemon": "~0.7.10",
     "mocha": "~1.14.0",
     "should": "~2.1.0",
-    "supertest": "~0.8.1"
+    "supertest": "~0.8.1",
+    "mongoose-repl": "~0.1.7"
   },
   "keywords": [
     "mvc",
