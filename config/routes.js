@@ -47,5 +47,5 @@ module.exports = function (app, passport) {
 
     app.param("artistId", artists.load);
 
-    app.get("/", artists.index);
+    app.get("/", artists.search);
 };

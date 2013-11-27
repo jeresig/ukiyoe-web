@@ -26,6 +26,33 @@ exports.load = function(req, res, next, id) {
 };
 
 /**
+ * Search
+ */
+
+exports.search = function(req, res) {
+    var page = (req.param("page") > 0 ? req.param("page") : 1) - 1;
+    var perPage = 30;
+    var options = {
+        query: req.param("q") || "",
+        size: perPage,
+        from: page * perPage
+    };
+
+    Artist.search(options, {hydrate: true, hydrateOptions: {populate: "bios"}}, function(err, results){
+        if (err) {
+            return res.render("500");
+        }
+
+        res.render("artists/index", {
+            title: "Artists",
+            artists: results.hits,
+            page: page + 1,
+            pages: Math.ceil(results.total / perPage)
+        });
+    });
+};
+
+/**
  * List
  */
 
@@ -38,7 +65,7 @@ exports.index = function(req, res) {
         from: page * perPage
     };
 
-    Artist.search(options, {hydrate: true}, function(err, results){
+    Artist.search(options, {hydrate: true, hydrateOptions: {populate: "bios"}}, function(err, results){
         if (err) {
             return res.render("500");
         }

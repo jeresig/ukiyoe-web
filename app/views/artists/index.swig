@@ -6,6 +6,11 @@
 
 {% for artist in artists %}
     <p>{{ artist.name.name }}</p>
+	<ul>
+		{% for bio in artist.bios %}
+			<li>{{ bio.name.name }}</li>
+		{% endfor %}
+	</ul>
 {% endfor %}
 
 {% endblock %}
