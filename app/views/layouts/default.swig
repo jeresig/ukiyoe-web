@@ -9,7 +9,8 @@
     <title>{{ title }}</title>
     {% if page_desc %}<meta name="description" content="{{ page_desc }}"/>{% endif %}
 
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootswatch/3.0.2/flatly/bootstrap.min.css" />
+	{{ CDN("/bower/bootstrap/dist/css/bootstrap.min.css") }}
+    {{ CDN("/bower/bootstrap/dist/css/bootstrap-theme.min.css") }}
     {{ CDN("/css/app.css") }}
 
     <!--[if lt IE 9]>
