@@ -22,17 +22,3 @@ exports.user = {
         next();
     }
 };
-
-/*
- *    Article authorization routing middleware
- */
-exports.extractedartist = {
-    hasAuthorization: function (req, res, next) {
-        if (req.article.user.id !== req.user.id) {
-            req.flash("info", "You are not authorized");
-            // TODO: Switch to generating the URL from a method.
-            return res.redirect("/extracted/artist/" + req.article.id);
-        }
-        next();
-    }
-};

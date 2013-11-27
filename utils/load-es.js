@@ -1,7 +1,7 @@
 var mongoose = require("mongoose"),
     schemas = require("../app/models/artist"),
-    ExtractedArtist = mongoose.model('ExtractedArtist',
-        schemas.ExtractedArtist);
+    Artist = mongoose.model('Artist',
+        schemas.Artist);
 
 mongoose.connect('mongodb://localhost/extract');
 
@@ -26,8 +26,8 @@ mongoose.connection.once('open', function() {
             console.log(JSON.stringify(results))
         })
     } else {
-        ExtractedArtist.createMapping(function(err, mapping) {
-            var stream = ExtractedArtist.synchronize();
+        Artist.createMapping(function(err, mapping) {
+            var stream = Artist.synchronize();
             var count = 0;
             stream.on('data', function(err, doc){
                 count++;

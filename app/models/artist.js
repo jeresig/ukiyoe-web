@@ -43,6 +43,9 @@ var ExtractedArtistSchema = new Schema({
     // The source of the artist information.
     source: {type: String, ref: "Source"},
 
+    master: {type: String, ref: "Artist"},
+    hasMaster: {type: Boolean, es_indexed: true, "default": false},
+
     extract: [String],
 
     extracted: {type: Boolean, es_indexed: true},
@@ -122,7 +125,7 @@ var ArtistSchema = new Schema({
     aliases: [Name],
 
     // TODO: Index this or make it the _id
-    slug: String,
+    slug: {type: String, es_indexed: true},
 
     // Need a list of slugs to redirect?
 
@@ -147,7 +150,7 @@ var ArtistSchema = new Schema({
     active: YearRange,
     life: YearRange,
 
-    gender: String
+    gender: {type: String, es_indexed: true}
 });
 
 ArtistSchema.statics = {

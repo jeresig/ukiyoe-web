@@ -33,7 +33,7 @@ exports.index = function(req, res) {
     var page = (req.param("page") > 0 ? req.param("page") : 1) - 1;
     var perPage = 30;
     var options = {
-        query: "Yoshitoshi",
+        query: "Hiroshige",
         size: perPage,
         from: page * perPage
     };

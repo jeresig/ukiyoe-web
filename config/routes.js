@@ -1,10 +1,14 @@
 var auth = require("./middlewares/authorization");
 var users = require("../app/controllers/users");
 var extractedartists = require("../app/controllers/extractedartists");
+var artists = require("../app/controllers/artists");
 
 var extractedartistAuth = [
-    auth.requiresLogin,
-    auth.extractedartist.hasAuthorization
+    auth.requiresLogin
+];
+
+var artistAuth = [
+    auth.requiresLogin
 ];
 
 var passportOptions = {
@@ -33,5 +37,15 @@ module.exports = function (app, passport) {
 
     app.param("eaId", extractedartists.load);
 
-    app.get("/", extractedartists.index);
+    app.get("/artists", artists.index);
+    app.get("/artists/new", auth.requiresLogin, artists.new);
+    app.post("/artists", auth.requiresLogin, artists.create);
+    app.get("/artists/:eaId", artists.show);
+    app.get("/artists/:eaId/edit", artistAuth, artists.edit);
+    app.put("/artists/:eaId", artistAuth, artists.update);
+    app.del("/artists/:eaId", artistAuth, artists.destroy);
+
+    app.param("artistId", artists.load);
+
+    app.get("/", artists.index);
 };
