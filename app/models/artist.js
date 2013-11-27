@@ -45,7 +45,7 @@ var ExtractedArtistSchema = new Schema({
 
     extract: [String],
 
-    extracted: Boolean,
+    extracted: {type: Boolean, es_indexed: true},
 
     // UUID of the source page. (Format: PAGEMD5)
     pageID: String,

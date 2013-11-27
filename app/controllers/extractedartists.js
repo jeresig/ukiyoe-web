@@ -33,22 +33,21 @@ exports.index = function(req, res) {
     var page = (req.param("page") > 0 ? req.param("page") : 1) - 1;
     var perPage = 30;
     var options = {
-        perPage: perPage,
-        page: page
+        query: "Yoshitoshi",
+        size: perPage,
+        from: page * perPage
     };
 
-    ExtractedArtist.list(options, function(err, extractedartists) {
+    ExtractedArtist.search(options, {hydrate: true}, function(err, results){
         if (err) {
             return res.render("500");
         }
 
-        ExtractedArtist.count().exec(function(err, count) {
-            res.render("extractedartists/index", {
-                title: "ExtractedArtists",
-                extractedartists: extractedartists,
-                page: page + 1,
-                pages: Math.ceil(count / perPage)
-            });
+        res.render("extractedartists/index", {
+            title: "ExtractedArtists",
+            extractedartists: results.hits,
+            page: page + 1,
+            pages: Math.ceil(results.total / perPage)
         });
     });
 };

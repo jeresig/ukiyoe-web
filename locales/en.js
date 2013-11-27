@@ -10,5 +10,6 @@
 	"Language Redirect": "Language Redirect",
 	"": "",
 	"Home Page": "Home Page",
-	"ExtractedArtists": "ExtractedArtists"
+	"ExtractedArtists": "ExtractedArtists",
+	"ukiyoe-web": "ukiyoe-web"
 }
