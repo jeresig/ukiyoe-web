@@ -32,7 +32,7 @@
     "i18n-2": "~0.4.5",
     "swig": "~1.1.0",
     "config-leaf": "~0.1.0",
-    "mongoosastic": "jeresig/mongoosastic#fix-gen-map-objects",
+    "mongoosastic": "~0.2.1",
     "mongoose-versioner": "~0.1.1",
     "forms-mongoose": "~0.0.6",
     "lodash": "~2.3.0"
