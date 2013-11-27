@@ -2,6 +2,8 @@ var mongoose = require("mongoose"),
     mongoosastic = require("mongoosastic"),
     env = process.env.NODE_ENV || "development",
     config = require("../../config/config")[env],
+    async = require("async"),
+    _ = require("lodash"),
     Schema = mongoose.Schema,
     ObjectId = Schema.Types.ObjectId;
 
@@ -31,7 +33,7 @@ var YearRange = {
     current: {type: Boolean, es_indexed: true}
 };
 
-var ExtractedArtistSchema = new Schema({
+var BioSchema = new Schema({
     _id: ObjectId,
 
     // The date that this item was created
@@ -43,8 +45,8 @@ var ExtractedArtistSchema = new Schema({
     // The source of the artist information.
     source: {type: String, ref: "Source"},
 
-    master: {type: String, ref: "Artist"},
-    hasMaster: {type: Boolean, es_indexed: true, "default": false},
+    artist: {type: String, ref: "Artist"},
+    possibleArtists: [{type: String, ref: "Artist"}],
 
     extract: [String],
 
@@ -76,27 +78,27 @@ var ExtractedArtistSchema = new Schema({
     locations: [String]
 });
 
-ExtractedArtistSchema.methods = {
+BioSchema.methods = {
     mergeBios: function(b) {
         var a = this;
 
-        if (a.master && b.master) {
-            if (a.master !== b.master) {
+        if (a.artist && b.artist) {
+            if (a.artist !== b.artist) {
                 // TODO: Should this be automated?
-                a.master.mergeArtist(b.master);
-                b.master = a.master;
-                //masterArtists.splice(masterArtists.indexOf(a.master), 1);
+                a.artist.mergeArtist(b.artist);
+                b.artist = a.artist;
+                //masterArtists.splice(masterArtists.indexOf(a.artist), 1);
             }
-        } else if (a.master) {
-            a.master.addBio(b);
-        } else if (b.master) {
-            b.master.addBio(a);
+        } else if (a.artist) {
+            a.artist.addBio(b);
+        } else if (b.artist) {
+            b.artist.addBio(a);
         } else if (a._id !== b._id) {
             var artist = ArtistSchema.createArtist();
             artist.addBio(a);
             artist.addBio(b);
         } else {
-            console.log("Identical", (a.master === b.master))
+            console.log("Identical", (a.artist === b.artist))
         }
     },
 
@@ -104,46 +106,39 @@ ExtractedArtistSchema.methods = {
         var a = this;
 
         if (a.name.plain === b.name.plain && a.dateMatches(b) !== false) {
-            //console.log("name, date")
             return true;
         }
 
         if (a.name.generation && !a.name.surname && a.nameMatches(b)) {
-            //console.log("no sur, given, a")
             return true;
         }
 
         if (b.name.generation && !b.name.surname && a.nameMatches(b)) {
-            //console.log("no sur, given, b")
             return true;
         }
 
-        /*
-        if (a.aliases && a.aliases.some(function(artist) {
-            return artistsMatch({name: b.name, life: b.life, active: b.active},
-                {name: artist, life: a.life, active: a.active});
-        })) {
-            //console.log("aliases a")
+        if (a.dateMatches(b) && (a.nameMatches(b) ||
+                a.name.given && a.name.given === b.name.given)) {
             return true;
-        }
-
-        if (b.aliases && b.aliases.some(function(artist) {
-            return artistsMatch({name: a.name, life: a.life, active: a.active},
-                {name: artist, life: b.life, active: b.active});
-        })) {
-            //console.log("aliases b")
-            return true;
-        }
-        */
-
-        if (a.dateMatches(b)) {
-            if (a.nameMatches(b) ||
-                    a.name.given && a.name.given === b.name.given) {
-                return true;
-            }
         }
 
         return false;
+    },
+
+    aliasMatches: function(b) {
+        var a = this;
+
+        if (a.aliases && a.aliases.some(function(alias) {
+            return b.matches({name: alias, life: a.life, active: a.active});
+        })) {
+            return true;
+        }
+
+        if (b.aliases && b.aliases.some(function(alias) {
+            return a.matches({name: alias, life: b.life, active: b.active});
+        })) {
+            return true;
+        }
     },
 
     nameMatches: function(b) {
@@ -179,7 +174,7 @@ ExtractedArtistSchema.methods = {
     }
 };
 
-ExtractedArtistSchema.statics = {
+BioSchema.statics = {
     /**
      * Find artist by id
      *
@@ -208,10 +203,94 @@ ExtractedArtistSchema.statics = {
             .limit(options.perPage)
             .skip(options.perPage * options.page)
             .exec(callback);
+    },
+
+    mergeBios: function(source, callback) {
+        // TODO: Changing merging to go into a single mega artist entry
+        // TODO: Get rid of excess words?
+        // TODO: Get rid of Anonymous/Unidentified/Unsigned/etc.
+        // Not Identified/
+        // TODO: Attributed to/Artist in
+        // TODO: Various Artists?
+        // TODO: Remove prefixes (Sir)
+        console.log("Loading %s bios...", source);
+
+        var Artist = mongoose.model("Artist");
+
+        // TODO: Need to populate bios
+        this.find({source: source, artist: null}, function(err, bios) {
+            var toSave = [];
+
+            console.log("%s bios loaded.", bios.length);
+
+            async.eachLimit(bios, 5, function(bio, callback) {
+                // We don't want to handle bios that already have a master
+                if (bio.artist) {
+                    return callback();
+                }
+
+                Artist.potentialArtists(bio, function(err, artists) {
+                    var strongMatches = [];
+                    var weakMatches = [];
+
+                    artists.forEach(function(artist) {
+                        if (artist.matches(bio)) {
+                            strongMatches.push(artist);
+                        } else if (artist.nameMatches(bio) ||
+                                artist.aliasMatches(bio)) {
+                            weakMatches.push(artist);
+                        }
+                    });
+
+                    var artist;
+
+                    if (strongMatches.length > 0) {
+                        if (strongMatches.length > 1) {
+                            bio.possibleArtists = strongMatches;
+                        } else {
+                            artist = strongMatches[0];
+                        }
+                    } else if (weakMatches.length > 1) {
+                        bio.possibleArtists = weakMatches;
+                    } else {
+                        artist = new Artist();
+                    }
+
+                    if (artist) {
+                        console.log("Saving artist: %s",
+                            artist.name && artist.name.name || "New Artist");
+
+                        artist.addBio(bio);
+
+                        artist.save(function() {
+                            console.log("Saving bio %s to %s.", bio.name.name,
+                                artist.name.name);
+
+                            bio.save(callback);
+                        });
+
+                    } else {
+                        console.log("Saving bio %s possibilities (%s).",
+                            bio.name.name,
+                            bio.possibleArtists.map(function(artist) {
+                                return artist.name.name;
+                            }).join(", ")
+                        );
+
+                        bio.save(callback);
+                    }
+                });
+            }, function(err) {
+                async.eachLimit(toSave, 5, function(artist, callback) {
+                    console.log("Saving artist %s...", artist.name.name);
+                    artist.save(callback);
+                }, callback);
+            });
+        });
     }
 };
 
-ExtractedArtistSchema.plugin(mongoosastic);
+BioSchema.plugin(mongoosastic);
 
 var ArtistSchema = new Schema({
     _id: ObjectId,
@@ -232,7 +311,7 @@ var ArtistSchema = new Schema({
 
     // Need a list of slugs to redirect?
 
-    bios: [{type: ObjectId, ref: "ExtractedArtist"}],
+    bios: [{type: ObjectId, ref: "Bio"}],
 
     /*
 
@@ -247,7 +326,7 @@ var ArtistSchema = new Schema({
 
     // Eras in which the artist was active
     eras: [{type: ObjectId, ref: "Era"}],
-    
+
     */
 
     active: YearRange,
@@ -257,27 +336,32 @@ var ArtistSchema = new Schema({
 });
 
 ArtistSchema.methods = {
-    addBio: function(other) {
-        var base = this;
+    addBio: function(bio) {
+        var artist = this;
 
-        if (!base.name.given) {
-            if (other.name.given) {
-                base.name.given = other.name.given;
+        if (!artist.name.given) {
+            if (bio.name.given) {
+                artist.name.given = bio.name.given;
+                artist.name.name = artist.name.given;
             }
-            if (other.name.given_kana) {
-                base.name.given_kana = other.name.given_kana;
-            }
-            if (other.name.given_kanji) {
-                base.name.given_kanji = other.name.given_kanji;
+            if (bio.name.given_kana) {
+                artist.name.given_kana = bio.name.given_kana;
             }
         }
 
-        if (!base.name.surname && other.name.surname ||
-            !base.name.surname_kanji && other.name.surname_kanji) {
-                if (base.name.given || base.name.given_kanji) {
-                    base.aliases.push(base.name);
+        if (!artist.name.given_kanji ||
+            bio.name.given_kanji && ) {
+            if (bio.name.given_kanji) {
+                artist.name.given_kanji = bio.name.given_kanji;
+            }
+        }
+
+        if (!artist.name.surname && bio.name.surname ||
+            !artist.name.surname_kanji && bio.name.surname_kanji) {
+                if (artist.name.given || artist.name.given_kanji) {
+                    artist.aliases.push(artist.name);
                 }
-                base.name = _.clone(other.name);
+                artist.name = _.clone(bio.name);
         }
 
         // TODO: If the given names are equal copy over the kanji if it exists
@@ -285,69 +369,77 @@ ArtistSchema.methods = {
         // TODO: Check if there is no surname
 
         // TODO: We may have found each other based upon kanji
-        if (!base.name.kanji && other.name.kanji) {
-            base.name.kanji = other.name.kanji;
-            base.name.given_kanji = other.name.given_kanji;
-            if (other.name.surname_kanji) {
-                base.name.surname_kanji = other.name.surname_kanji;
+        if (!artist.name.kanji && bio.name.kanji) {
+            artist.name.kanji = bio.name.kanji;
+            artist.name.given_kanji = bio.name.given_kanji;
+            if (bio.name.surname_kanji) {
+                artist.name.surname_kanji = bio.name.surname_kanji;
             }
         }
 
         // Merge on the aliases
-        if (other.aliases && other.aliases.length > 0) {
-            base.aliases = base.aliases.concat(other.aliases);
+        if (bio.aliases && bio.aliases.length > 0) {
+            artist.aliases = artist.aliases.concat(bio.aliases);
         }
 
         // TODO: Merge locations
 
         // TODO: Find way of merging in kanji from aliases
-        if (!base.name.kanij) {
-            base.aliases.forEach(function(name) {
+        if (!artist.name.kanij) {
+            artist.aliases.forEach(function(name) {
 
             });
         }
 
         //
-        if (base.life && other.life) {
-            if (!base.life.start && other.life.start) {
-                base.life.start = other.life.start;
-                base.life.start_ca = other.life.start_ca;
+        if (artist.life && bio.life) {
+            if (!artist.life.start && bio.life.start) {
+                artist.life.start = bio.life.start;
+                artist.life.start_ca = bio.life.start_ca;
             }
-            if (!base.life.end && other.life.end) {
-                base.life.end = other.life.end;
-                base.life.end_ca = other.life.end_ca;
+            if (!artist.life.end && bio.life.end) {
+                artist.life.end = bio.life.end;
+                artist.life.end_ca = bio.life.end_ca;
             }
 
-        } else if (!base.life && other.life) {
-            base.life = other.life;
+        } else if (!artist.life && bio.life) {
+            artist.life = bio.life;
         }
 
-        if (base.active && other.active) {
-            if (!base.active.start && other.active.start) {
-                base.active.start = other.active.start;
-                base.active.start_ca = other.active.start_ca;
+        if (artist.active && bio.active) {
+            if (!artist.active.start && bio.active.start) {
+                artist.active.start = bio.active.start;
+                artist.active.start_ca = bio.active.start_ca;
             }
-            if (!base.active.end && other.active.end) {
-                base.active.end = other.active.end;
-                base.active.end_ca = other.active.end_ca;
+            if (!artist.active.end && bio.active.end) {
+                artist.active.end = bio.active.end;
+                artist.active.end_ca = bio.active.end_ca;
             }
 
-        } else if (!base.active && other.active) {
-            base.active = other.active;
+        } else if (!artist.active && bio.active) {
+            artist.active = bio.active;
         }
 
-        if (other.bios) {
-            base.bios = base.bios.concat(other.bios);
+        // If we're merging in another artist
+        if (bio.bios) {
+            artist.bios = artist.bios.concat(bio.bios);
         } else {
-            base.bios.push(other);
+            artist.bios.push(bio);
         }
 
-        other.master = base;
+        artist.aliases = _.uniq(artist.aliases.filter(function(alias) {
+            return alias.plain && alias.plain !== artist.name.plain;
+        }), false, function(alias) {
+            return alias.plain;
+        });
+
+        bio.artist = artist;
     },
 
-    nameMatches: ExtractedArtistSchema.methods.nameMatches,
-    dateMatches: ExtractedArtistSchema.methods.dateMatches,
-    matches: ExtractedArtistSchema.methods.matches,
+    nameMatches: BioSchema.methods.nameMatches,
+    aliasMatches: BioSchema.methods.aliasMatches,
+    dateMatches: BioSchema.methods.dateMatches,
+    matches: BioSchema.methods.matches,
 
     mergeArtist: function(other) {
         var self = this;
@@ -390,196 +482,47 @@ ArtistSchema.statics = {
             .skip(options.perPage * options.page)
             .exec(callback);
     },
-    
-    mergeArtists: function(callback) {
-        // TODO: Need to populate bios
-        ExtractedArtistSchema.find(function(err, artists) {
-            var mergeNames = {};
-            var count = 0;
-            var jaArtists = [];
-            var otherArtists = {};
-            var allMatches = [];
-            var noMatches = [];
-            var deadMatches = [];
-            var masterArtists = [];
 
-            console.log("Processing...")
+    potentialArtists: function(bio, callback) {
+        var query = [];
 
-            artists.forEach(function(artist) {
-                artist.matches = [];
+        query.push(bio.name.name);
+        query.push(bio.name.kanji);
 
-                if (artist.name.locale === "ja") {
-                    var given = artist.name.given;
-                    var surname = artist.name.surname;
-                    var given_kanji = artist.name.given_kanji;
-
-                    if (!given) {
-                        console.log(artist)
-                    }
-
-                    if (!(given in jaArtists)) {
-                        jaArtists[given] = [];
-                    }
-
-                    jaArtists[given].push(artist);
-
-                    artist.aliases.forEach(function(name) {
-                        if (name.given) {
-                            if (!(name.given in jaArtists)) {
-                                jaArtists[name.given] = [];
-                            }
-
-                            jaArtists[name.given].push(artist);
-                        }
-
-                        if (name.given_kanji) {
-                            if (!(name.given_kanji in jaArtists)) {
-                                jaArtists[name.given_kanji] = [];
-                            }
-
-                            jaArtists[name.given_kanji].push(artist);
-                        }
-                    });
-
-                    if (given_kanji) {
-                        if (!(given_kanji in jaArtists)) {
-                            jaArtists[given_kanji] = [];
-                        }
-
-                        jaArtists[given_kanji].push(artist);
-                    }
-
-                } else {
-                    var name = artist.name.name;
-                    var flippedName = romajiName.flipName(name);
-
-                    if (flippedName in otherArtists) {
-                        name = flippedName;
-                    }
-
-                    if (!(name in otherArtists)) {
-                        otherArtists[name] = [];
-                    }
-
-                    otherArtists[name].push(artist);
-                }
-            });
-
-            var total = 0;
-
-            console.log("Processing Japanese Artists...");
-
-            // TODO: Busted merging: 1a31cf9161c64e4cfdac8759cda0b059
-            // TODO: Changing merging to go into a single mega artist entry
-            // TODO: Get rid of excess words?
-            // TODO: Get rid of Anonymous/Unidentified/Unsigned/etc.
-            // Not Identified/
-            // TODO: Attributed to/Artist in
-            // TODO: Various Artists?
-            // TODO: Remove prefixes (Sir)
-
-            // Add ExtractedArtist into Artist
-            // Merge Artist into Artist
-
-            for (var given in jaArtists) {
-                var matches = jaArtists[given];
-                if (matches.length === 1) {
-                    noMatches.push(matches);
-                } else {
-                    if (given === "Kunisada") {
-                        console.log(given);
-                    }
-                    // TODO: Process entries here
-                    for (var i = 0; i < matches.length - 1; i++) {
-                        for (var j = i + 1; j < matches.length; j++) {
-                            if (matches[i].matches(matches[j])) {
-                                if (given === "Kunisada") {
-                                    console.log("MATCH", matches[i].name.plain, matches[i]._id,
-                                        matches[j].name.plain, matches[j]._id)
-                                }
-                                mergeArtists(matches[i], matches[j]);
-                            }
-                        }
-                    }
-
-                    if (given === "Kunihiro") {
-                        //console.log(matches)
-                    }
-                }
-            }
-
-            console.log("Processing Other Artists...");
-
-            for (var name in otherArtists) {
-                var matches = otherArtists[name];
-                if (matches.length === 1) {
-                    deadMatches.push(matches[0]);
-                } else {
-                    console.log(name)
-                    allMatches.push(matches);
-                    total += matches.length;
-                }
-            }
-
-            Object.keys(jaArtists).sort(function(a, b) {
-                return jaArtists[b].length - jaArtists[a].length;
-            }).slice(0, 50).forEach(function(given) {
-                console.log(given + ": " + jaArtists[given].length);
-                console.log(jaArtists[given].map(function(artist) {
-                    return artist.name.name;
-                }).join(", "))
-            });
-
-            //console.log(deadMatches.map(function(artist) {
-                //return artist.name.name;
-            //}).sort().join("\n"))
-
-            console.log(artists.length);
-            console.log("MATCHED: " + total);
-            console.log("NO MATCHES: " + noMatches.length);
-            console.log("DEAD: " + deadMatches.length);
-
-            // TODO:
-            // - Utagawa Toyoshige II inserted twice
-            // - Kunisada II/III gobble up a lot of entries
-            // - Find all entries that gobble up more than a couple bios
-
-            artists.forEach(function(artist) {
-                if (artist.master && masterArtists.indexOf(artist.master) < 0) {
-                    // Disconcerting that this has happened...
-                    masterArtists.push(artist.master);
-                    //console.log(artist.name.plain)
-                }
-            })
-
-            async.eachLimit(masterArtists, 5, function(artist, callback) {
-                artist.aliases = _.uniq(artist.aliases.filter(function(alias) {
-                    return alias.plain && alias.plain !== artist.name.plain;
-                }), false, function(alias) {
-                    return alias.plain;
-                });
-
-                artist.save(callback);
-            }, callback);
-
-            //console.log(Object.keys(mergeNames).sort());
-            //console.log(Object.keys(mergeNames).length + "/" + count);
+        bio.aliases.forEach(function(alias) {
+            query.push(alias.name);
+            query.push(alias.kanji);
         });
-    },
 
-    createArtist: function() {
-        var artist = new ArtistSchema();
-        masterArtists.push(artist);
-        return artist;
+        if (bio.life) {
+            query.push(bio.life.start);
+            query.push(bio.life.end);
+        }
+
+        if (bio.active) {
+            query.push(bio.active.start);
+            query.push(bio.active.end);
+        }
+
+        query = query.filter(function(part) {
+            return !!part;
+        }).join(" ");
+
+        this.search({query: query}, {hydrate: true, hydrateOptions: {populate: "bios"}}, function(err, results) {
+            // Filter out all the artists that already have a bio from the
+            // same source as this one, as that'll likely be problematic
+            callback(err, results.hits.filter(function(artist) {
+                return artist.bios.every(function(otherBio) {
+                    return bio.source !== otherBio.source;
+                });
+            }));
+        });
     }
 };
 
 ArtistSchema.plugin(mongoosastic);
 
-mongoose.model("ExtractedArtist", ExtractedArtistSchema);
-mongoose.model("Artist", ArtistSchema);
-
 module.exports = {
-    ExtractedArtist: ExtractedArtistSchema,
-    Artist: ArtistSchema
+    Bio: mongoose.model("Bio", BioSchema),
+    Artist: mongoose.model("Artist", ArtistSchema)
 };

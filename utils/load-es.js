@@ -1,7 +1,7 @@
 var mongoose = require("mongoose"),
     schemas = require("../app/models/artist"),
-    Artist = mongoose.model('Artist',
-        schemas.Artist);
+    Bio = mongoose.model('Bio', schemas.Bio)
+    Artist = mongoose.model('Artist', schemas.Artist);
 
 mongoose.connect('mongodb://localhost/extract');
 
@@ -25,7 +25,7 @@ mongoose.connection.once('open', function() {
         ExtractedArtist.search({query: "Yoshitoshi", size: 20}, function(err, results){
             console.log(JSON.stringify(results))
         })
-    } else {
+    } else if (!true) {
         Artist.createMapping(function(err, mapping) {
             var stream = Artist.synchronize();
             var count = 0;
@@ -39,6 +39,11 @@ mongoose.connection.once('open', function() {
             stream.on('error', function(err){
                 console.log(err);
             });
+        });
+    } else {
+        Bio.update({artist: {$ne: null}}, {artist: null}, {multi: true}, function(err, num) {
+            console.log("DONE: ", num);
+            process.exit(0);
         });
     }
 });
