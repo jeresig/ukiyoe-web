@@ -10,7 +10,7 @@ mongoose.connection.on('error', function(err) {
 
 mongoose.connection.once('open', function() {
 
-    if (true) {
+    if (!true) {
         Bio.createMapping(function(err, mapping) {
             var stream = Bio.synchronize();
             var count = 0;
@@ -25,7 +25,7 @@ mongoose.connection.once('open', function() {
                 console.log(err);
             });
         });
-    } else if (!true) {
+    } else if (true) {
         Artist.createMapping(function(err, mapping) {
             var stream = Artist.synchronize();
             var count = 0;

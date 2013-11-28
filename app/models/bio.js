@@ -2,14 +2,10 @@ var mongoose = require("mongoose"),
     mongoosastic = require("mongoosastic"),
     async = require("async"),
     _ = require("lodash"),
-    Schema = mongoose.Schema,
-    ObjectId = Schema.Types.ObjectId,
     Name = require("./name"),
     YearRange = require("./yearrange");
 
-var BioSchema = new Schema({
-    _id: ObjectId,
-
+var BioSchema = new mongoose.Schema({
     // The date that this item was created
     created: {type: Date, "default": Date.now},
 
@@ -174,7 +170,7 @@ BioSchema.statics = {
 
             console.log("%s bios loaded.", bios.length);
 
-            async.eachLimit(bios, 5, function(bio, callback) {
+            async.eachLimit(bios, 1, function(bio, callback) {
                 // We don't want to handle bios that already have a master
                 if (bio.artist) {
                     return callback();
@@ -213,7 +209,7 @@ BioSchema.statics = {
 
                         artist.addBio(bio);
 
-                        artist.save(function() {
+                        artist.save(function(err) {
                             console.log("Saving bio %s to %s.", bio.name.name,
                                 artist.name.name);
 

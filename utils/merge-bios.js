@@ -1,4 +1,5 @@
 var mongoose = require("mongoose"),
+    Artist = require("../app/models/artist"),
     Bio = require("../app/models/bio");
 
 mongoose.connect('mongodb://localhost/extract');

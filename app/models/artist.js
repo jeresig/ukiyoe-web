@@ -8,8 +8,6 @@ var mongoose = require("mongoose"),
     Bio = require("./bio");
 
 var ArtistSchema = new Schema({
-    _id: ObjectId,
-
     // The date that this item was created
     created: {type: Date, "default": Date.now},
 
@@ -147,7 +145,7 @@ ArtistSchema.methods = {
             return alias.plain;
         });
 
-        bio.artist = artist;
+        bio.artist = artist._id;
     },
 
     nameMatches: Bio.prototype.nameMatches,
