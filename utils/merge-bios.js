@@ -1,6 +1,5 @@
 var mongoose = require("mongoose"),
-    schemas = require("../app/models/artist"),
-    Bio = schemas.Bio;
+    Bio = require("../app/models/bio");
 
 mongoose.connect('mongodb://localhost/extract');
 
