@@ -4,8 +4,8 @@
 
 {% block content %}
 
-{% for artist in extractedartists %}
-    <p>{{ artist.name.name }}</p>
+{% for bio in bios %}
+    <p>{{ bio.name.name }}</p>
 {% endfor %}
 
 {% endblock %}

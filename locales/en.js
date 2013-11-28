@@ -12,5 +12,6 @@
 	"Home Page": "Home Page",
 	"ExtractedArtists": "ExtractedArtists",
 	"ukiyoe-web": "ukiyoe-web",
-	"Artists": "Artists"
+	"Artists": "Artists",
+	"Bios": "Bios"
 }

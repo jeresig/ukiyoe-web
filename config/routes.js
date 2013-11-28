@@ -1,6 +1,6 @@
 var auth = require("./middlewares/authorization");
 var users = require("../app/controllers/users");
-var extractedartists = require("../app/controllers/extractedartists");
+var bios = require("../app/controllers/bios");
 var artists = require("../app/controllers/artists");
 
 var extractedartistAuth = [
@@ -27,23 +27,23 @@ module.exports = function (app, passport) {
 
     app.param("userId", users.user);
 
-    app.get("/extracted/artists", extractedartists.index);
-    app.get("/extracted/artists/new", auth.requiresLogin, extractedartists.new);
-    app.post("/extracted/artists", auth.requiresLogin, extractedartists.create);
-    app.get("/extracted/artists/:eaId", extractedartists.show);
-    app.get("/extracted/artists/:eaId/edit", extractedartistAuth, extractedartists.edit);
-    app.put("/extracted/artists/:eaId", extractedartistAuth, extractedartists.update);
-    app.del("/extracted/artists/:eaId", extractedartistAuth, extractedartists.destroy);
+    app.get("/bios", bios.index);
+    app.get("/bios/new", auth.requiresLogin, bios.new);
+    app.post("/bios", auth.requiresLogin, bios.create);
+    app.get("/bios/:bioId", bios.show);
+    app.get("/bios/:bioId/edit", extractedartistAuth, bios.edit);
+    app.put("/bios/:bioId", extractedartistAuth, bios.update);
+    app.del("/bios/:bioId", extractedartistAuth, bios.destroy);
 
-    app.param("eaId", extractedartists.load);
+    app.param("bioId", bios.load);
 
     app.get("/artists", artists.index);
     app.get("/artists/new", auth.requiresLogin, artists.new);
     app.post("/artists", auth.requiresLogin, artists.create);
-    app.get("/artists/:eaId", artists.show);
-    app.get("/artists/:eaId/edit", artistAuth, artists.edit);
-    app.put("/artists/:eaId", artistAuth, artists.update);
-    app.del("/artists/:eaId", artistAuth, artists.destroy);
+    app.get("/artists/:artistId", artists.show);
+    app.get("/artists/:artistId/edit", artistAuth, artists.edit);
+    app.put("/artists/:artistId", artistAuth, artists.update);
+    app.del("/artists/:artistId", artistAuth, artists.destroy);
 
     app.param("artistId", artists.load);
 

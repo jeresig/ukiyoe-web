@@ -79,29 +79,6 @@ var BioSchema = new Schema({
 });
 
 BioSchema.methods = {
-    mergeBios: function(b) {
-        var a = this;
-
-        if (a.artist && b.artist) {
-            if (a.artist !== b.artist) {
-                // TODO: Should this be automated?
-                a.artist.mergeArtist(b.artist);
-                b.artist = a.artist;
-                //masterArtists.splice(masterArtists.indexOf(a.artist), 1);
-            }
-        } else if (a.artist) {
-            a.artist.addBio(b);
-        } else if (b.artist) {
-            b.artist.addBio(a);
-        } else if (a._id !== b._id) {
-            var artist = ArtistSchema.createArtist();
-            artist.addBio(a);
-            artist.addBio(b);
-        } else {
-            console.log("Identical", (a.artist === b.artist))
-        }
-    },
-
     matches: function(b) {
         var a = this;
 
@@ -349,8 +326,7 @@ ArtistSchema.methods = {
             }
         }
 
-        if (!artist.name.given_kanji ||
-            bio.name.given_kanji && ) {
+        if (!artist.name.given_kanji) {
             if (bio.name.given_kanji) {
                 artist.name.given_kanji = bio.name.given_kanji;
             }
@@ -449,8 +425,6 @@ ArtistSchema.methods = {
         });
     }
 };
-
-var unknown = /Unidentified|Unknown|Unsigned|Unread|Anonymous/i;
 
 ArtistSchema.statics = {
     /**
