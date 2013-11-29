@@ -151,22 +151,6 @@ describe("Alias Match", function () {
     });
 });
 
-// TODO: Test that merging in a bio does, in fact, cause it to match the bio
-
-/*
-TODO: Need to test:
-
-Date:
-- Test all permutations
-
-Alias:
-- Make sure that the name remains untouched
-- Make sure that the alias is added
-- Make sure that duplicates are removed
-- Make sure that the source is added
-
-*/
-
 describe("Name Merge", function () {
     var names = Object.keys(data.names);
 
@@ -179,27 +163,46 @@ describe("Name Merge", function () {
             (function(name, otherName){
 
                 it("merge " + name + " into " + otherName, function(done) {
-                    a.name = _.clone(data.names[name]);
+                    a.name = data.names[name];
                     rootArtist.name = _.clone(data.names[otherName]);
                     rootArtist.bios = [];
                     rootArtist.aliases = [];
 
                     var expected = data.nameMerges[name][otherName];
+                    var expectedAliases;
 
                     if (expected === true) {
-                        expected = _.clone(data.names[name]);
+                        expected = data.names[name];
                     } else if (expected === false) {
-                        expected = _.clone(data.names[otherName]);
+                        expected = data.names[otherName];
+                    }
+
+                    // Figure out if we're going to have an alias, or not
+                    if (rootArtist._isAliasDuplicate(a.name) && otherName !== "none" &&
+                            data.nameMerges[name][otherName] !== true) {
+                        expectedAliases = [data.names[name]];
+                    } else {
+                        expectedAliases = [];
                     }
 
                     rootArtist.addBio(a);
 
-                    if (expected === a.name) {
-                        console.log(rootArtist.name)
-                        console.log(a.name)
-                    }
-
+                    // Check that name merge went correctly
                     should(JSON.parse(JSON.stringify(rootArtist.name))).eql(expected);
+
+                    // Check aliases
+                    var aliasResults = JSON.parse(JSON.stringify(rootArtist.aliases));
+                    aliasResults = aliasResults.map(function(alias) {
+                        should(alias).have.property("source").should.not.be.empty;
+                        should(alias).have.property("_id").should.not.be.empty;
+                        return _.omit(alias, ["source", "_id"]);
+                    });
+                    should(aliasResults).eql(expectedAliases);
+
+                    // Test that merging in a bio does, in fact, cause it to
+                    // match the bio.
+                    should(rootArtist.matches(a)).not.eql(0);
+
                     done();
                 });
 
@@ -207,6 +210,8 @@ describe("Name Merge", function () {
         }
     }
 });
+
+// TODO: Need to test: Date Merging
 
 after(function (done) {
     done();

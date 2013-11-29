@@ -134,13 +134,10 @@ ArtistSchema.methods = {
             }
         }
 
-        if (current.given !== other.given ||
-            current.surname !== other.surname ||
-            current.given_kanji !== other.given_kanji ||
-            current.surname_kanji !== other.surname_kanji) {
-                var alias = _.clone(other);
-                alias.source = bio;
-                artist.aliases.push(alias);
+        if (artist._isAliasDuplicate(other)) {
+            var alias = _.clone(other);
+            alias.source = bio;
+            artist.aliases.push(alias);
         }
 
         // Merge the aliases
@@ -165,11 +162,19 @@ ArtistSchema.methods = {
 
         // Remove any duplicate aliases
         artist.aliases = _.uniq(artist.aliases.filter(function(alias) {
-            return (!alias.plain || alias.plain !== current.plain) &&
-                (!alias.kanji || alias.kanji !== current.kanji);
+            return artist._isAliasDuplicate(alias);
         }), false, function(alias) {
             return alias.plain;
         });
+    },
+
+    _isAliasDuplicate: function(alias) {
+        var artist = this;
+        return artist.name.given !== alias.given ||
+            artist.name.surname !== alias.surname ||
+            artist.name.given_kanji !== alias.given_kanji ||
+            artist.name.surname_kanji !== alias.surname_kanji ||
+            artist.name.generation !== alias.generation;
     },
 
     mergeDates: function(bio, type) {
@@ -250,6 +255,7 @@ ArtistSchema.methods = {
 
     nameMatches: Bio.prototype.nameMatches,
     aliasMatches: Bio.prototype.aliasMatches,
+    _checkDate: Bio.prototype._checkDate,
     dateMatches: Bio.prototype.dateMatches,
     matches: Bio.prototype.matches
 };
