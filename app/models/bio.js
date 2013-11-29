@@ -52,72 +52,128 @@ BioSchema.methods = {
     matches: function(b) {
         var a = this;
 
-        if (a.name.plain === b.name.plain && a.dateMatches(b) !== false) {
-            return true;
+        // Start by comparing the names in the two bios
+        // falling back to checking the aliases if no name match happens
+        var total = a.nameMatches(b) || a.aliasMatches(b);
+
+        if (total > 0) {
+            // The date works as a modifier
+            total += a.dateMatches(b) - 1;
         }
 
-        if (a.name.generation && !a.name.surname && a.nameMatches(b)) {
-            return true;
-        }
-
-        if (b.name.generation && !b.name.surname && a.nameMatches(b)) {
-            return true;
-        }
-
-        if (a.dateMatches(b) && (a.nameMatches(b) ||
-                a.name.given && a.name.given === b.name.given)) {
-            return true;
-        }
-
-        return false;
+        return Math.min(2, total);
     },
 
     aliasMatches: function(b) {
         var a = this;
+        var best = 0;
 
-        if (a.aliases && a.aliases.some(function(alias) {
-            return b.matches({name: alias, life: a.life, active: a.active});
-        })) {
-            return true;
+        if (a.aliases) {
+            a.aliases.forEach(function(alias) {
+                best = Math.max(best, b.nameMatches({name: alias}));
+            });
         }
 
-        if (b.aliases && b.aliases.some(function(alias) {
-            return a.matches({name: alias, life: b.life, active: b.active});
-        })) {
-            return true;
+        if (b.aliases) {
+            b.aliases.forEach(function(alias) {
+                best = Math.max(best, a.nameMatches({name: alias}));
+            });
         }
+
+        return best;
     },
 
     nameMatches: function(b) {
         var a = this;
-        return (a.name.given && a.name.given === b.name.given ||
-                // These are just the worst. :(
-                a.name.given && a.name.given === b.name.surname ||
-                b.name.given && b.name.given === a.name.surname ||
-                a.name.given_kanji && a.name.given_kanji === b.name.given_kanji) &&
-            a.name.generation === b.name.generation;
+
+        if (a.name.locale !== b.name.locale) {
+            // Locales do not match, certainly not a match
+            return 0;
+        }
+
+        if (a.name.generation !== b.name.generation) {
+            // The generations are different, certainly not a match
+            return 0;
+        }
+
+        if (a.name.given && b.name.given) {
+            if (a.name.given === b.name.given) {
+                if (a.name.surname === b.name.surname) {
+                    // Full given, surname, generation match
+                    return 2;
+                } else if (!a.name.surname || !b.name.surname) {
+                    // given, generation match, one surname is blank
+                    return 1;
+                } else if (a.name.locale === "ja") {
+                    // surnames differ, but with Japanese name changes
+                    // this happens more frequently, we want to detect this.
+                    return 1;
+                }
+            }
+            // TODO: Check swapped name :(
+        }
+
+        if (a.name.given_kanji && b.name.given_kanji) {
+            if (a.name.given_kanji === b.name.given_kanji) {
+                if (a.name.surname_kanji === b.name.surname_kanji) {
+                    // Full given, surname, generation match
+                    return 2;
+                } else {
+                    // surnames differ, but with Japanese name changes
+                    // this happens more frequently, we want to detect this.
+                    return 1;
+                }
+            }
+        }
+
+        // Nothing matches!
+        return 0;
+    },
+
+    _checkDate: function(a, b) {
+        if (a.start && b.start && a.end && b.end) {
+            if (a.start === b.start && a.end === b.end) {
+                // Start and end dates exist and match
+                return 2;
+            } else if (a.start === b.start || a.end === b.end) {
+                // One of start or end dates match
+                return 1;
+            }
+        } else if (a.start && b.start) {
+            if (!a.end && !b.end && a.current === b.current) {
+                // The person might still be alive
+                return 2;
+            } else if (a.start === b.start) {
+                // Start dates match (but one is blank)
+                return 1;
+            }
+        } else if (a.end && b.end) {
+            if (a.end === b.end || a.current || b.current) {
+                // End dates match (but one is blank)
+                // or artist might still be alive
+                return 1;
+            }
+        }
+
+        // Nothing matches
+        return 0;
     },
 
     dateMatches: function(b) {
         var a = this;
+        var total = 0;
 
         if (a.life && b.life) {
-            if (a.life.start && b.life.start) {
-                return a.life.start === b.life.start;
-            }
-            if (a.life.end && b.life.end) {
-                return a.life.end === b.life.end;
-            }
+            total += this._checkDate(a.life, b.life);
         }
 
         if (a.active && b.active) {
-            if (a.active.start && b.active.start) {
-                return a.active.start === b.active.start;
-            }
-            if (a.active.end && b.active.end) {
-                return a.active.end === b.active.end;
-            }
+            total += this._checkDate(a.active, b.active);
         }
+
+        // Make it so that if one date matches in life and
+        // one date matches in active then it's a strong match.
+        return Math.min(total, 2);
     }
 };
 

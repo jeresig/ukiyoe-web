@@ -184,7 +184,9 @@ module.exports = {
             kanji: "柴田是眞",
             surname_kanji: "柴田",
             given_kanji: "是眞"
-        }
+        },
+
+        none: {}
     },
 
     dates: {
@@ -225,244 +227,281 @@ module.exports = {
         current: {
             start: 1984,
             current: true
+        },
+
+        none: {}
+    },
+    
+    nameMatches: {
+        jaAll: {
+            jaAll2: 1,
+    		jaAll3: 0,
+    		jaAll4: 0,
+    		jaNoSurname: 1,
+    		jaNoSurname2: 0,
+    		jaNoSurname3: 0,
+    		jaGivenOnly: 0,
+    		jaGivenOnly2: 0,
+    		en: 0,
+    		en2: 0,
+    		en3: 0,
+    		kanji: 0,
+    		kanji2: 0,
+    		kanji3: 0,
+    		kanji4: 2,
+    		kanji5: 0,
+            none: 0
+        },
+
+    	jaAll2: {
+    		jaAll3: 0,
+    		jaAll4: 0,
+    		jaNoSurname: 1,
+    		jaNoSurname2: 0,
+    		jaNoSurname3: 0,
+    		jaGivenOnly: 0,
+    		jaGivenOnly2: 0,
+    		en: 0,
+    		en2: 0,
+    		en3: 0,
+    		kanji: 0,
+    		kanji2: 0,
+    		kanji3: 0,
+    		kanji4: 1,
+    		kanji5: 0,
+            none: 0
+    	},
+
+    	jaAll3: {
+    		jaAll4: 0,
+    		jaNoSurname: 0,
+    		jaNoSurname2: 0,
+    		jaNoSurname3: 0,
+    		jaGivenOnly: 0,
+    		jaGivenOnly2: 0,
+    		en: 0,
+    		en2: 0,
+    		en3: 0,
+    		kanji: 0,
+    		kanji2: 0,
+    		kanji3: 0,
+    		kanji4: 0,
+    		kanji5: 0,
+            none: 0
+    	},
+	
+    	jaAll4: {
+    		jaNoSurname: 0,
+    		jaNoSurname2: 0,
+    		jaNoSurname3: 1,
+    		jaGivenOnly: 1,
+    		jaGivenOnly2: 0,
+    		en: 0,
+    		en2: 0,
+    		en3: 0,
+    		kanji: 0,
+    		kanji2: 0,
+    		kanji3: 0,
+    		kanji4: 0,
+    		kanji5: 2,
+            none: 0
+    	},
+	
+    	jaNoSurname: {
+    		jaNoSurname2: 0,
+    		jaNoSurname3: 0,
+    		jaGivenOnly: 0,
+    		jaGivenOnly2: 0,
+    		en: 0,
+    		en2: 0,
+    		en3: 0,
+    		kanji: 0,
+    		kanji2: 0,
+    		kanji3: 0,
+    		kanji4: 1,
+    		kanji5: 0,
+            none: 0
+    	},
+	
+    	jaNoSurname2: {
+    		jaNoSurname3: 0,
+    		jaGivenOnly: 0,
+    		jaGivenOnly2: 0,
+    		en: 0,
+    		en2: 0,
+    		en3: 0,
+    		kanji: 0,
+    		kanji2: 0,
+    		kanji3: 0,
+    		kanji4: 0,
+    		kanji5: 0,
+            none: 0
+    	},
+	
+    	jaNoSurname3: {
+    		jaGivenOnly: 2,
+    		jaGivenOnly2: 0,
+    		en: 0,
+    		en2: 0,
+    		en3: 0,
+    		kanji: 0,
+    		kanji2: 0,
+    		kanji3: 0,
+    		kanji4: 0,
+    		kanji5: 1,
+            none: 0
+    	},
+	
+    	jaGivenOnly: {
+    		jaGivenOnly2: 0,
+    		en: 0,
+    		en2: 0,
+    		en3: 0,
+    		kanji: 0,
+    		kanji2: 0,
+    		kanji3: 0,
+    		kanji4: 0,
+    		kanji5: 0,
+            none: 0
+    	},
+	
+    	jaGivenOnly2: {
+    		en: 0,
+    		en2: 0,
+    		en3: 0,
+    		kanji: 0,
+    		kanji2: 0,
+    		kanji3: 0,
+    		kanji4: 0,
+    		kanji5: 0,
+            none: 0
+    	},
+	
+    	en: {
+    		en2: 0,
+    		en3: 0,
+    		kanji: 0,
+    		kanji2: 0,
+    		kanji3: 0,
+    		kanji4: 0,
+    		kanji5: 0,
+            none: 0
+    	},
+	
+    	en2: {
+    		en3: 0,
+    		kanji: 0,
+    		kanji2: 0,
+    		kanji3: 0,
+    		kanji4: 0,
+    		kanji5: 0,
+            none: 0
+    	},
+	
+    	en3: {
+    		kanji: 0,
+    		kanji2: 0,
+    		kanji3: 0,
+    		kanji4: 0,
+    		kanji5: 0,
+            none: 0
+    	},
+	
+    	kanji: {
+    		kanji2: 1,
+    		kanji3: 0,
+    		kanji4: 0,
+    		kanji5: 0,
+            none: 0
+    	},
+	
+    	kanji2: {
+    		kanji3: 0,
+    		kanji4: 0,
+    		kanji5: 0,
+            none: 0
+    	},
+	
+    	kanji3: {
+    		kanji4: 0,
+    		kanji5: 0,
+            none: 0
+    	},
+	
+    	kanji4: {
+    		kanji5: 0,
+            none: 0
+    	},
+
+        kanji5: {
+            none: 0
         }
-    }
-};
-
-_.extend(module.exports.names, {
-    jaNoKanji: _.omit(module.exports.names.jaAll,
-        ["kanji", "given_kanji", "surname_kanji"]),
-
-    jaNoKanji2: _.omit(module.exports.names.jaAll2,
-        ["kanji", "given_kanji", "surname_kanji"]),
-
-    jaNoKanji3: _.omit(module.exports.names.jaAll3,
-        ["kanji", "given_kanji", "surname_kanji"])
-});
-
-module.exports.nameMatches = {
-    jaAll: {
-        jaAll2: 1,
-		jaAll3: 0,
-		jaAll4: 0,
-		jaNoSurname: 1,
-		jaNoSurname2: 0,
-		jaNoSurname3: 0,
-		jaGivenOnly: 0,
-		jaGivenOnly2: 0
-		en: 0,
-		en2: 0,
-		en3: 0
-		kanji: 0,
-		kanji2: 0,
-		kanji3: 0,
-		kanji4: 2,
-		kanji5: 0
     },
 
-	jaAll2: {
-		jaAll3: 0,
-		jaAll4: 0,
-		jaNoSurname: 1,
-		jaNoSurname2: 0,
-		jaNoSurname3: 0,
-		jaGivenOnly: 0,
-		jaGivenOnly2: 0
-		en: 0,
-		en2: 0,
-		en3: 0
-		kanji: 0,
-		kanji2: 0,
-		kanji3: 0,
-		kanji4: 1,
-		kanji5: 0
-	},
+    dateMatches: {
+    	all: {
+    		all2: 1,
+    		all3: 1,
+    		noCA: 2,
+    		startOnly: 1,
+    		endOnly: 1,
+    		current: 0,
+            none: 0
+    	},
+	
+    	all2: {
+    		all3: 0,
+    		noCA: 1,
+    		startOnly: 1,
+    		endOnly: 0,
+    		current: 0,
+            none: 0
+    	},
 
-	jaAll3: {
-		jaAll4: 0,
-		jaNoSurname: 0,
-		jaNoSurname2: 0,
-		jaNoSurname3: 0,
-		jaGivenOnly: 0,
-		jaGivenOnly2: 0
-		en: 0,
-		en2: 0,
-		en3: 0
-		kanji: 0,
-		kanji2: 0,
-		kanji3: 2,
-		kanji4: 0
-		kanji5: 0
-	},
-	
-	jaAll4: {
-		jaNoSurname: 0,
-		jaNoSurname2: 0,
-		jaNoSurname3: 1,
-		jaGivenOnly: 1,
-		jaGivenOnly2: 0
-		en: 0,
-		en2: 0,
-		en3: 0
-		kanji: 0,
-		kanji2: 0,
-		kanji3: 0,
-		kanji4: 0,
-		kanji5: 2
-	},
-	
-	jaNoSurname: {
-		jaNoSurname2: 0,
-		jaNoSurname3: 0,
-		jaGivenOnly: 0,
-		jaGivenOnly2: 0
-		en: 0,
-		en2: 0,
-		en3: 0
-		kanji: 0,
-		kanji2: 0,
-		kanji3: 0,
-		kanji4: 1,
-		kanji5: 0
-	},
-	
-	jaNoSurname2: {
-		jaNoSurname3: 0,
-		jaGivenOnly: 0,
-		jaGivenOnly2: 0
-		en: 0,
-		en2: 0,
-		en3: 0
-		kanji: 0,
-		kanji2: 0,
-		kanji3: 0,
-		kanji4: 0,
-		kanji5: 0
-	},
-	
-	jaNoSurname3: {
-		jaGivenOnly: 0,
-		jaGivenOnly2: 0
-		en: 0,
-		en2: 0,
-		en3: 0
-		kanji: 0,
-		kanji2: 0,
-		kanji3: 0,
-		kanji4: 0,
-		kanji5: 1
-	},
-	
-	jaGivenOnly: {
-		jaGivenOnly2: 0
-		en: 0,
-		en2: 0,
-		en3: 0
-		kanji: 0,
-		kanji2: 0,
-		kanji3: 0,
-		kanji4: 0,
-		kanji5: 0
-	},
-	
-	jaGivenOnly2: {
-		en: 0,
-		en2: 0,
-		en3: 0
-		kanji: 0,
-		kanji2: 0,
-		kanji3: 0,
-		kanji4: 0,
-		kanji5: 0
-	},
-	
-	en: {
-		en2: 0,
-		en3: 0
-		kanji: 0,
-		kanji2: 0,
-		kanji3: 0,
-		kanji4: 0,
-		kanji5: 0
-	},
-	
-	en2: {
-		en3: 0
-		kanji: 0,
-		kanji2: 0,
-		kanji3: 0,
-		kanji4: 0,
-		kanji5: 0
-	},
-	
-	en3: {
-		kanji: 0,
-		kanji2: 0,
-		kanji3: 0,
-		kanji4: 0,
-		kanji5: 0
-	},
-	
-	kanji: {
-		kanji2: 1,
-		kanji3: 0,
-		kanji4: 0,
-		kanji5: 0
-	},
-	
-	kanji2: {
-		kanji3: 0,
-		kanji4: 0,
-		kanji5: 0
-	},
-	
-	kanji3: {
-		kanji4: 0,
-		kanji5: 0
-	},
-	
-	kanji4: {
-		kanji5: 0
-	}
-};
+    	all3: {
+    		noCA: 1,
+    		startOnly: 0,
+    		endOnly: 1,
+    		current: 0,
+            none: 0
+    	},
 
-module.exports.dateMatches = {
-	all: {
-		all2: 1,
-		all3: 1,
-		noCA: 2,
-		startOnly: 2,
-		endOnly: 2,
-		current: 0
-	},
+    	noCA: {
+    		startOnly: 1,
+    		endOnly: 1,
+    		current: 0,
+            none: 0
+    	},
+
+    	startOnly: {
+    		endOnly: 0,
+    		current: 0,
+            none: 0
+    	},
 	
-	all2: {
-		all3: 0,
-		noCA: 1,
-		startOnly: 2,
-		endOnly: 0,
-		current: 0
-	},
+    	endOnly: {
+    		current: 0,
+            none: 0
+    	},
 
-	all3: {
-		noCA: 1,
-		startOnly: 0,
-		endOnly: 2,
-		current: 0
-	},
+        current: {
+            none: 0
+        },
 
-	noCA: {
-		startOnly: 0,
-		endOnly: 0,
-		current: 0
-	},
+        none: {}
+    },
 
-	startOnly: {
-		endOnly: 0,
-		current: 0
-	},
-	
-	endOnly: {
-		current: 0
-	}
+    bioMatches: {
+        name: [
+            ["jaAll", "en"],
+            ["jaAll", "jaAll2"],
+            ["jaAll", "jaAll"]
+        ],
+
+        date: [
+            ["all", "current"],
+            ["all", "all2"],
+            ["all", "all"]
+        ]
+    }
 };
