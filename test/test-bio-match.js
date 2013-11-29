@@ -211,7 +211,61 @@ describe("Name Merge", function () {
     }
 });
 
-// TODO: Need to test: Date Merging
+
+describe("Date Merge", function () {
+    var dates = Object.keys(data.dates);
+
+    for (var d = 0; d < dates.length; d++) {
+        var date = dates[d];
+
+        for (var e = d + 1; e < dates.length; e++) {
+            var otherDate = dates[e];
+
+            (function(date, otherDate){
+
+                it("life " + date + " vs. " + otherDate, function(done) {
+                    a.life = data.dates[date];
+                    a.active = null;
+                    b.life = data.dates[otherDate];
+                    b.active = null;
+                    var expected = data.dateMatches[date][otherDate];
+                    should(a.dateMatches(b)).eql(expected);
+                    done();
+                });
+
+                it("strong active " + date + " vs. " + otherDate, function(done) {
+                    a.active = data.dates[date];
+                    a.life = data.dates.all;
+                    b.active = data.dates[otherDate];
+                    b.life = data.dates.all;
+                    should(a.dateMatches(b)).eql(2);
+                    done();
+                });
+
+                it("weak active " + date + " vs. " + otherDate, function(done) {
+                    a.active = data.dates[date];
+                    a.life = data.dates.all;
+                    b.active = data.dates[otherDate];
+                    b.life = data.dates.startOnly;
+                    var expected = Math.min(2, data.dateMatches[date][otherDate] + 1);
+                    should(a.dateMatches(b)).eql(expected);
+                    done();
+                });
+
+                it("normal active " + date + " vs. " + otherDate, function(done) {
+                    a.active = data.dates[date];
+                    a.life = null;
+                    b.active = data.dates[otherDate];
+                    b.life = null;
+                    var expected = data.dateMatches[date][otherDate];
+                    should(a.dateMatches(b)).eql(expected);
+                    done();
+                });
+
+            })(date, otherDate);
+        }
+    }
+});
 
 after(function (done) {
     done();

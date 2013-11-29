@@ -931,5 +931,9 @@ module.exports = {
             kanji5: false,
             none: true
         }
+    },
+
+    dateMerges: {
+
     }
 };

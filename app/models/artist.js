@@ -189,6 +189,8 @@ ArtistSchema.methods = {
         var current = artist[type];
         var other = bio[type];
 
+        // TODO: Add _ca if merging
+
         if (current && other) {
             if (!current.start && other.start) {
                 current.start = other.start;
@@ -207,15 +209,18 @@ ArtistSchema.methods = {
         }
 
         // If there is a mis-match then we need to add it as an alt
-        if (current && other &&
-            (current.start !== other.start ||
-            current.end !== other.end ||
-            current.current !== other.current)) {
-                // Push the date on and add bio source
-                var altDate = _.clone(other);
-                altDate.source = bio;
-                artist[type + "Alt"].push(altDate);
+        if (artist._isDateDuplicate(other)) {
+            // Push the date on and add bio source
+            var altDate = _.clone(other);
+            altDate.source = bio;
+            artist[type + "Alt"].push(altDate);
         }
+    },
+
+    _isDateDuplicate: function(other) {
+        var current = this.date;
+        return current && other && (current.start !== other.start ||
+            current.end !== other.end || current.current !== other.current);
     },
 
     addBio: function(bio) {
