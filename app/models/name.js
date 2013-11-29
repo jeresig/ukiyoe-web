@@ -1,3 +1,6 @@
+var mongoose = require("mongoose");
+var ObjectId = mongoose.Schema.Types.ObjectId;
+
 module.exports = {
     original: String,
     name: {type: String, es_indexed: true},
@@ -12,5 +15,6 @@ module.exports = {
     kana: String,
     kanji: {type: String, es_indexed: true},
     locale: String,
-    generation: Number
+    generation: Number,
+    source: {type: ObjectId, ref: "Bio"}
 };

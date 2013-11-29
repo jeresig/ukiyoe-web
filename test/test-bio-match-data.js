@@ -115,11 +115,11 @@ module.exports = {
 
         jaGivenOnly2: {
             locale: "ja",
-            given: "Shun\"ei",
+            given: "Shun\'ei",
             given_kana: "しゅんえい",
-            name: "Shun\"ei",
-            ascii: "Shun\"ei",
-            plain: "Shun\"ei",
+            name: "Shun\'ei",
+            ascii: "Shun\'ei",
+            plain: "Shun\'ei",
             kana: "しゅんえい"
         },
 
@@ -144,7 +144,7 @@ module.exports = {
         en3: {
             locale: "",
             given: "Ted",
-            surname: "Ted",
+            surname: "Smith",
             name: "Ted Smith",
             ascii: "Ted Smith",
             plain: "Ted Smith"
@@ -170,7 +170,7 @@ module.exports = {
             surname_kanji: "歌川",
             given_kanji: "国富"
         },
-        
+
         kanji4: {
             locale: "ja",
             kanji: "柴田是眞",
@@ -178,7 +178,7 @@ module.exports = {
             given_kanji: "是眞",
             generation: 2
         },
-        
+
         kanji5: {
             locale: "ja",
             kanji: "柴田是眞",
@@ -219,11 +219,11 @@ module.exports = {
         startOnly: {
             start: 1700
         },
-        
+
         endOnly: {
             end: 1800
         },
-        
+
         current: {
             start: 1984,
             current: true
@@ -231,7 +231,7 @@ module.exports = {
 
         none: {}
     },
-    
+
     nameMatches: {
         jaAll: {
             jaAll2: 1,
@@ -289,7 +289,7 @@ module.exports = {
             kanji5: 0,
             none: 0
         },
-    
+
         jaAll4: {
             jaNoSurname: 0,
             jaNoSurname2: 0,
@@ -306,7 +306,7 @@ module.exports = {
             kanji5: 2,
             none: 0
         },
-    
+
         jaNoSurname: {
             jaNoSurname2: 0,
             jaNoSurname3: 0,
@@ -322,7 +322,7 @@ module.exports = {
             kanji5: 0,
             none: 0
         },
-    
+
         jaNoSurname2: {
             jaNoSurname3: 0,
             jaGivenOnly: 0,
@@ -337,7 +337,7 @@ module.exports = {
             kanji5: 0,
             none: 0
         },
-    
+
         jaNoSurname3: {
             jaGivenOnly: 2,
             jaGivenOnly2: 0,
@@ -351,7 +351,7 @@ module.exports = {
             kanji5: 1,
             none: 0
         },
-    
+
         jaGivenOnly: {
             jaGivenOnly2: 0,
             en: 0,
@@ -364,7 +364,7 @@ module.exports = {
             kanji5: 0,
             none: 0
         },
-    
+
         jaGivenOnly2: {
             en: 0,
             en2: 0,
@@ -376,7 +376,7 @@ module.exports = {
             kanji5: 0,
             none: 0
         },
-    
+
         en: {
             en2: 0,
             en3: 0,
@@ -387,7 +387,7 @@ module.exports = {
             kanji5: 0,
             none: 0
         },
-    
+
         en2: {
             en3: 0,
             kanji: 0,
@@ -397,7 +397,7 @@ module.exports = {
             kanji5: 0,
             none: 0
         },
-    
+
         en3: {
             kanji: 0,
             kanji2: 0,
@@ -406,7 +406,7 @@ module.exports = {
             kanji5: 0,
             none: 0
         },
-    
+
         kanji: {
             kanji2: 1,
             kanji3: 0,
@@ -414,20 +414,20 @@ module.exports = {
             kanji5: 0,
             none: 0
         },
-    
+
         kanji2: {
             kanji3: 0,
             kanji4: 0,
             kanji5: 0,
             none: 0
         },
-    
+
         kanji3: {
             kanji4: 0,
             kanji5: 0,
             none: 0
         },
-    
+
         kanji4: {
             kanji5: 0,
             none: 0
@@ -448,7 +448,7 @@ module.exports = {
             current: 0,
             none: 0
         },
-    
+
         all2: {
             all3: 0,
             noCA: 1,
@@ -478,7 +478,7 @@ module.exports = {
             current: 0,
             none: 0
         },
-    
+
         endOnly: {
             current: 0,
             none: 0
@@ -503,5 +503,433 @@ module.exports = {
             ["all", "all2"],
             ["all", "all"]
         ]
+    },
+
+    nameMerges: {
+        jaAll: {
+            jaAll: true,
+            jaAll2: false,
+            jaAll3: false,
+            jaAll4: false,
+            jaNoSurname: true,
+            jaNoSurname2: false,
+            jaNoSurname3: false,
+            jaGivenOnly: false,
+            jaGivenOnly2: false,
+            en: false,
+            en2: false,
+            en3: false,
+            kanji: false,
+            kanji2: false,
+            kanji3: false,
+            kanji4: true,
+            kanji5: false,
+            none: true
+        },
+
+        jaAll2: {
+            jaAll: false,
+            jaAll2: true,
+            jaAll3: false,
+            jaAll4: false,
+            jaNoSurname: true,
+            jaNoSurname2: false,
+            jaNoSurname3: false,
+            jaGivenOnly: false,
+            jaGivenOnly2: false,
+            en: false,
+            en2: false,
+            en3: false,
+            kanji: false,
+            kanji2: false,
+            kanji3: false,
+            kanji4: { generation: 2,
+                given_kanji: '是眞',
+                surname_kanji: '柴田',
+                kanji: '柴田是眞',
+                locale: 'ja',
+                given: 'Zeshin',
+                given_kana: 'ぜしん',
+                name: 'Zeshin II',
+                ascii: 'Zeshin II',
+                plain: 'Zeshin II',
+                kana: 'ぜしん' },
+            kanji5: false,
+            none: true
+        },
+
+        jaAll3: {
+            jaAll: false,
+            jaAll2: false,
+            jaAll3: true,
+            jaAll4: false,
+            jaNoSurname: false,
+            jaNoSurname2: false,
+            jaNoSurname3: false,
+            jaGivenOnly: false,
+            jaGivenOnly2: false,
+            en: false,
+            en2: false,
+            en3: false,
+            kanji: false,
+            kanji2: false,
+            kanji3: false,
+            kanji4: false,
+            kanji5: false,
+            none: true
+        },
+
+        jaAll4: {
+            jaAll: false,
+            jaAll2: false,
+            jaAll3: false,
+            jaAll4: true,
+            jaNoSurname: false,
+            jaNoSurname2: false,
+            jaNoSurname3: true,
+            jaGivenOnly: true,
+            jaGivenOnly2: false,
+            en: false,
+            en2: false,
+            en3: false,
+            kanji: false,
+            kanji2: false,
+            kanji3: false,
+            kanji4: false,
+            kanji5: true,
+            none: true
+        },
+
+        jaNoSurname: {
+            jaAll: false,
+            jaAll2: false,
+            jaAll3: false,
+            jaAll4: false,
+            jaNoSurname: true,
+            jaNoSurname2: false,
+            jaNoSurname3: false,
+            jaGivenOnly: false,
+            jaGivenOnly2: false,
+            en: false,
+            en2: false,
+            en3: false,
+            kanji: false,
+            kanji2: false,
+            kanji3: false,
+            kanji4: { generation: 2,
+                kana: 'ぜしん',
+                plain: 'Zeshin II',
+                ascii: 'Zeshin II',
+                name: 'Zeshin II',
+                given_kanji: '是眞',
+                given_kana: 'ぜしん',
+                given: 'Zeshin',
+                kanji: '柴田是眞',
+                locale: 'ja',
+                surname_kanji: '柴田' },
+            kanji5: false,
+            none: true
+        },
+
+        jaNoSurname2: {
+            jaAll: false,
+            jaAll2: false,
+            jaAll3: false,
+            jaAll4: false,
+            jaNoSurname: false,
+            jaNoSurname2: true,
+            jaNoSurname3: false,
+            jaGivenOnly: false,
+            jaGivenOnly2: false,
+            en: false,
+            en2: false,
+            en3: false,
+            kanji: false,
+            kanji2: false,
+            kanji3: false,
+            kanji4: false,
+            kanji5: false,
+            none: true
+        },
+
+        jaNoSurname3: {
+            jaAll: false,
+            jaAll2: false,
+            jaAll3: false,
+            jaAll4: false,
+            jaNoSurname: false,
+            jaNoSurname2: false,
+            jaNoSurname3: true,
+            jaGivenOnly: true,
+            jaGivenOnly2: false,
+            en: false,
+            en2: false,
+            en3: false,
+            kanji: false,
+            kanji2: false,
+            kanji3: false,
+            kanji4: false,
+            kanji5: { kana: 'ぜしん',
+                plain: 'Zeshin',
+                ascii: 'Zeshin',
+                name: 'Zeshin',
+                given_kanji: '是眞',
+                given_kana: 'ぜしん',
+                given: 'Zeshin',
+                kanji: '柴田是眞',
+                locale: 'ja',
+                surname_kanji: '柴田' },
+            none: true
+        },
+
+        jaGivenOnly: {
+            jaAll: false,
+            jaAll2: false,
+            jaAll3: false,
+            jaAll4: false,
+            jaNoSurname: false,
+            jaNoSurname2: false,
+            jaNoSurname3: false,
+            jaGivenOnly: true,
+            jaGivenOnly2: false,
+            en: false,
+            en2: false,
+            en3: false,
+            kanji: false,
+            kanji2: false,
+            kanji3: false,
+            kanji4: false,
+            kanji5: false,
+            none: true
+        },
+
+        jaGivenOnly2: {
+            jaAll: false,
+            jaAll2: false,
+            jaAll3: false,
+            jaAll4: false,
+            jaNoSurname: false,
+            jaNoSurname2: false,
+            jaNoSurname3: false,
+            jaGivenOnly: false,
+            jaGivenOnly2: true,
+            en: false,
+            en2: false,
+            en3: false,
+            kanji: false,
+            kanji2: false,
+            kanji3: false,
+            kanji4: false,
+            kanji5: false,
+            none: true
+        },
+
+        en: {
+            jaAll: false,
+            jaAll2: false,
+            jaAll3: false,
+            jaAll4: false,
+            jaNoSurname: false,
+            jaNoSurname2: false,
+            jaNoSurname3: false,
+            jaGivenOnly: false,
+            jaGivenOnly2: false,
+            en: true,
+            en2: false,
+            en3: false,
+            kanji: false,
+            kanji2: false,
+            kanji3: false,
+            kanji4: false,
+            kanji5: false,
+            none: true
+        },
+
+        en2: {
+            jaAll: false,
+            jaAll2: false,
+            jaAll3: false,
+            jaAll4: false,
+            jaNoSurname: false,
+            jaNoSurname2: false,
+            jaNoSurname3: false,
+            jaGivenOnly: false,
+            jaGivenOnly2: false,
+            en: false,
+            en2: true,
+            en3: false,
+            kanji: false,
+            kanji2: false,
+            kanji3: false,
+            kanji4: false,
+            kanji5: false,
+            none: true
+        },
+
+        en3: {
+            jaAll: false,
+            jaAll2: false,
+            jaAll3: false,
+            jaAll4: false,
+            jaNoSurname: false,
+            jaNoSurname2: false,
+            jaNoSurname3: false,
+            jaGivenOnly: false,
+            jaGivenOnly2: false,
+            en: false,
+            en2: false,
+            en3: true,
+            kanji: false,
+            kanji2: false,
+            kanji3: false,
+            kanji4: false,
+            kanji5: false,
+            none: true
+        },
+
+        kanji: {
+            jaAll: false,
+            jaAll2: false,
+            jaAll3: false,
+            jaAll4: false,
+            jaNoSurname: false,
+            jaNoSurname2: false,
+            jaNoSurname3: false,
+            jaGivenOnly: false,
+            jaGivenOnly2: false,
+            en: false,
+            en2: false,
+            en3: false,
+            kanji: true,
+            kanji2: false,
+            kanji3: false,
+            kanji4: false,
+            kanji5: false,
+            none: true
+        },
+
+        kanji2: {
+            jaAll: false,
+            jaAll2: false,
+            jaAll3: false,
+            jaAll4: false,
+            jaNoSurname: false,
+            jaNoSurname2: false,
+            jaNoSurname3: false,
+            jaGivenOnly: false,
+            jaGivenOnly2: false,
+            en: false,
+            en2: false,
+            en3: false,
+            kanji: false,
+            kanji2: true,
+            kanji3: false,
+            kanji4: false,
+            kanji5: false,
+            none: true
+        },
+
+        kanji3: {
+            jaAll: false,
+            jaAll2: false,
+            jaAll3: false,
+            jaAll4: false,
+            jaNoSurname: false,
+            jaNoSurname2: false,
+            jaNoSurname3: false,
+            jaGivenOnly: false,
+            jaGivenOnly2: false,
+            en: false,
+            en2: false,
+            en3: false,
+            kanji: false,
+            kanji2: false,
+            kanji3: true,
+            kanji4: false,
+            kanji5: false,
+            none: true
+        },
+
+        kanji4: {
+            jaAll: false,
+            jaAll2: false,
+            jaAll3: false,
+            jaAll4: false,
+            jaNoSurname: { generation: 2,
+                kana: 'ぜしん',
+                plain: 'Zeshin II',
+                ascii: 'Zeshin II',
+                name: 'Zeshin II',
+                given_kanji: '是眞',
+                given_kana: 'ぜしん',
+                given: 'Zeshin',
+                kanji: '柴田是眞',
+                locale: 'ja',
+                surname_kanji: '柴田' },
+            jaNoSurname2: false,
+            jaNoSurname3: false,
+            jaGivenOnly: false,
+            jaGivenOnly2: false,
+            en: false,
+            en2: false,
+            en3: false,
+            kanji: false,
+            kanji2: false,
+            kanji3: false,
+            kanji4: true,
+            kanji5: false,
+            none: true
+        },
+
+        kanji5: {
+            jaAll: false,
+            jaAll2: false,
+            jaAll3: false,
+            jaAll4: false,
+            jaNoSurname: false,
+            jaNoSurname2: false,
+            jaNoSurname3: { kana: 'ぜしん',
+                plain: 'Zeshin',
+                ascii: 'Zeshin',
+                name: 'Zeshin',
+                given_kanji: '是眞',
+                given_kana: 'ぜしん',
+                given: 'Zeshin',
+                kanji: '柴田是眞',
+                locale: 'ja',
+                surname_kanji: '柴田' },
+            jaGivenOnly: false,
+            jaGivenOnly2: false,
+            en: false,
+            en2: false,
+            en3: false,
+            kanji: false,
+            kanji2: false,
+            kanji3: false,
+            kanji4: false,
+            kanji5: true,
+            none: true
+        },
+
+        none: {
+            jaAll: false,
+            jaAll2: false,
+            jaAll3: false,
+            jaAll4: false,
+            jaNoSurname: false,
+            jaNoSurname2: false,
+            jaNoSurname3: false,
+            jaGivenOnly: false,
+            jaGivenOnly2: false,
+            en: false,
+            en2: false,
+            en3: false,
+            kanji: false,
+            kanji2: false,
+            kanji3: true,
+            kanji4: false,
+            kanji5: false,
+            none: true
+        }
     }
 };

@@ -5,7 +5,8 @@ var mongoose = require("mongoose"),
     ObjectId = Schema.Types.ObjectId,
     Name = require("./name"),
     YearRange = require("./yearrange"),
-    Bio = require("./bio");
+    Bio = require("./bio"),
+    romajiName = require("romaji-name");
 
 var ArtistSchema = new Schema({
     // The date that this item was created
@@ -16,7 +17,6 @@ var ArtistSchema = new Schema({
 
     // The name of the artist
     name: Name,
-
     aliases: [Name],
 
     // TODO: Index this or make it the _id
@@ -34,124 +34,211 @@ var ArtistSchema = new Schema({
     // An image depicting the artist
     artistImage: {type: String, ref: "Image"},
 
-    // Locations in which the artist was active
-    locations: [{type: ObjectId, ref: "Location"}],
-
     // Eras in which the artist was active
     eras: [{type: ObjectId, ref: "Era"}],
 
     */
 
+    // Locations in which the artist was active
+    locations: [String],
+
     active: YearRange,
+    activeAlt: [YearRange],
     life: YearRange,
+    lifeAlt: [YearRange],
 
     gender: {type: String, es_indexed: true}
 });
 
 ArtistSchema.methods = {
-    addBio: function(bio) {
+    mergeName: function(bio) {
         var artist = this;
+        var current = artist.name;
+        var other = bio.name;
 
-        if (!artist.name.given) {
-            if (bio.name.given) {
-                artist.name.given = bio.name.given;
-                artist.name.name = artist.name.given;
-            }
-            if (bio.name.given_kana) {
-                artist.name.given_kana = bio.name.given_kana;
-            }
-        }
-
-        if (!artist.name.given_kanji) {
-            if (bio.name.given_kanji) {
-                artist.name.given_kanji = bio.name.given_kanji;
-            }
-        }
-
-        if (!artist.name.surname && bio.name.surname ||
-            !artist.name.surname_kanji && bio.name.surname_kanji) {
-                if (artist.name.given || artist.name.given_kanji) {
-                    artist.aliases.push(artist.name);
+        if (!current.locale || current.locale == other.locale) {
+            // Handle ja locale differently
+            if (other.locale === "ja") {
+                if (!current.given) {
+                    if (!current.given_kanji && !other.given_kanji ||
+                            current.given_kanji === other.given_kanji &&
+                            current.generation === other.generation ||
+                            !current.given_kanji && !current.given) {
+                        if (!current.given_kanji && !current.given &&
+                                !current.generation && other.generation) {
+                            current.generation = other.generation;
+                        }
+                        if (other.given) {
+                            current.given = other.given;
+                        }
+                        if (other.given_kana) {
+                            current.given_kana = other.given_kana;
+                        }
+                    }
                 }
-                artist.name = _.clone(bio.name);
-        }
 
-        // TODO: If the given names are equal copy over the kanji if it exists
+                if (!current.surname) {
+                    if (current.given === other.given &&
+                        current.generation === other.generation &&
+                        (current.surname_kanji === other.surname_kanji ||
+                        !current.surname_kanji)) {
+                        if (other.surname) {
+                            current.surname = other.surname;
+                        }
+                        if (other.surname_kana) {
+                            current.surname_kana = other.surname_kana;
+                        }
+                    }
+                }
 
-        // TODO: Check if there is no surname
+                if (!current.given_kanji) {
+                    if (!current.given && !other.given ||
+                            current.given === other.given &&
+                            current.generation === other.generation ||
+                            !current.given_kanji && !current.given) {
+                        if (other.given_kanji) {
+                            current.given_kanji = other.given_kanji;
+                        }
+                        if (other.generation) {
+                            current.generation = other.generation;
+                        }
+                    }
+                }
 
-        // TODO: We may have found each other based upon kanji
-        if (!artist.name.kanji && bio.name.kanji) {
-            artist.name.kanji = bio.name.kanji;
-            artist.name.given_kanji = bio.name.given_kanji;
-            if (bio.name.surname_kanji) {
-                artist.name.surname_kanji = bio.name.surname_kanji;
+                if (!current.surname_kanji) {
+                    if (current.given_kanji === other.given_kanji &&
+                        current.generation === other.generation) {
+                        if (other.surname_kanji) {
+                            current.surname_kanji = other.surname_kanji;
+                        }
+                    }
+                }
+            } else {
+                if (!current.given && !current.surname) {
+                    if (other.given) {
+                        current.given = other.given;
+                    }
+                    if (other.surname) {
+                        current.surname = other.surname;
+                    }
+                    if (other.generation) {
+                        current.generation = other.generation;
+                    }
+                }
             }
         }
 
-        // Merge on the aliases
+        if (current.locale === undefined) {
+            if (other.locale !== undefined) {
+                current.locale = other.locale;
+            }
+        }
+
+        if (current.given !== other.given ||
+            current.surname !== other.surname ||
+            current.given_kanji !== other.given_kanji ||
+            current.surname_kanji !== other.surname_kanji) {
+                var alias = _.clone(other);
+                alias.source = bio;
+                artist.aliases.push(alias);
+        }
+
+        // Merge the aliases
         if (bio.aliases && bio.aliases.length > 0) {
-            artist.aliases = artist.aliases.concat(bio.aliases);
-        }
-
-        // TODO: Merge locations
-
-        // TODO: Find way of merging in kanji from aliases
-        if (!artist.name.kanij) {
-            artist.aliases.forEach(function(name) {
-
+            // Push the aliases on and add bio source
+            bio.aliases.forEach(function(alias) {
+                alias = _.clone(alias);
+                alias.source = bio;
+                artist.aliases.push(alias);
             });
+
+            // Try to merge in missing details from aliases
+            if (!current.given_kanji || !current.surname_kanji || !current.surname) {
+                artist.aliases.forEach(function(alias) {
+                    artist.mergeName({name: alias});
+                });
+            }
         }
 
-        //
-        if (artist.life && bio.life) {
-            if (!artist.life.start && bio.life.start) {
-                artist.life.start = bio.life.start;
-                artist.life.start_ca = bio.life.start_ca;
-            }
-            if (!artist.life.end && bio.life.end) {
-                artist.life.end = bio.life.end;
-                artist.life.end_ca = bio.life.end_ca;
-            }
+        // Re-gen kanji, name, plain, ascii
+        romajiName.injectFullName(current);
 
-        } else if (!artist.life && bio.life) {
-            artist.life = bio.life;
-        }
-
-        if (artist.active && bio.active) {
-            if (!artist.active.start && bio.active.start) {
-                artist.active.start = bio.active.start;
-                artist.active.start_ca = bio.active.start_ca;
-            }
-            if (!artist.active.end && bio.active.end) {
-                artist.active.end = bio.active.end;
-                artist.active.end_ca = bio.active.end_ca;
-            }
-
-        } else if (!artist.active && bio.active) {
-            artist.active = bio.active;
-        }
-
-        // If we're merging in another artist
-        if (bio.bios) {
-            artist.bios = artist.bios.concat(bio.bios);
-        } else {
-            artist.bios.push(bio);
-        }
-
+        // Remove any duplicate aliases
         artist.aliases = _.uniq(artist.aliases.filter(function(alias) {
-            return alias.plain && alias.plain !== artist.name.plain;
+            return (!alias.plain || alias.plain !== current.plain) &&
+                (!alias.kanji || alias.kanji !== current.kanji);
         }), false, function(alias) {
             return alias.plain;
         });
-
-        bio.artist = artist._id;
     },
 
-    nameMatches: Bio.prototype.nameMatches,
-    aliasMatches: Bio.prototype.aliasMatches,
-    dateMatches: Bio.prototype.dateMatches,
-    matches: Bio.prototype.matches,
+    mergeDates: function(bio, type) {
+        var artist = this;
+
+        if (!type) {
+            artist.mergeDates(bio, "life");
+            artist.mergeDates(bio, "active");
+            return;
+        }
+
+        var current = artist[type];
+        var other = bio[type];
+
+        if (current && other) {
+            if (!current.start && other.start) {
+                current.start = other.start;
+                current.start_ca = other.start_ca;
+            }
+            if (!current.end && other.end) {
+                current.end = other.end;
+                current.end_ca = other.end_ca;
+            }
+            if (!current.end && other.current) {
+                current.current = other.current;
+            }
+
+        } else if (!current && other) {
+            current = artist[type] = _.clone(other);
+        }
+
+        // If there is a mis-match then we need to add it as an alt
+        if (current && other &&
+            (current.start !== other.start ||
+            current.end !== other.end ||
+            current.current !== other.current)) {
+                // Push the date on and add bio source
+                var altDate = _.clone(other);
+                altDate.source = bio;
+                artist[type + "Alt"].push(altDate);
+        }
+    },
+
+    addBio: function(bio) {
+        var artist = this;
+
+        // Merge in artist name and aliases
+        artist.mergeName(bio);
+
+        // Merge in artist life and active dates
+        artist.mergeDates(bio);
+
+        // Merge locations
+        if (bio.locations && bio.locations.length > 0) {
+            artist.locations =
+                _.uniq(artist.locations.concat(bio.locations), false);
+        }
+
+        // Merge in gender information
+        if (!artist.gender) {
+            artist.gender = bio.gender;
+        }
+
+        // Add bio to artist
+        artist.bios.push(bio);
+
+        // Add artist to bio
+        bio.artist = artist._id;
+    },
 
     mergeArtist: function(other) {
         var self = this;
@@ -159,7 +246,12 @@ ArtistSchema.methods = {
         other.bios.forEach(function(bio) {
             self.addBio(bio);
         });
-    }
+    },
+
+    nameMatches: Bio.prototype.nameMatches,
+    aliasMatches: Bio.prototype.aliasMatches,
+    dateMatches: Bio.prototype.dateMatches,
+    matches: Bio.prototype.matches
 };
 
 ArtistSchema.statics = {

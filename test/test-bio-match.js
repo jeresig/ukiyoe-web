@@ -3,6 +3,7 @@
  */
 
 var should = require("should");
+var _ = require("lodash");
 var data = require("./test-bio-match-data");
 
 var mongoose = require("mongoose"),
@@ -10,10 +11,13 @@ var mongoose = require("mongoose"),
     Artist = require("../app/models/artist");
 
 var a, b;
+var rootArtist;
 
 before(function (done) {
     a = new Bio();
     b = new Bio();
+
+    rootArtist = new Artist();
 
     done();
 });
@@ -36,7 +40,7 @@ describe("Name Match", function () {
                     should(a.nameMatches(b)).eql(expected);
                     done();
                 });
-            
+
             })(name, otherName);
         }
     }
@@ -50,7 +54,7 @@ describe("Date Match", function () {
 
         for (var e = d + 1; e < dates.length; e++) {
             var otherDate = dates[e];
-            
+
             (function(date, otherDate){
 
                 it("life " + date + " vs. " + otherDate, function(done) {
@@ -81,7 +85,7 @@ describe("Date Match", function () {
                     should(a.dateMatches(b)).eql(expected);
                     done();
                 });
-                
+
                 it("normal active " + date + " vs. " + otherDate, function(done) {
                     a.active = data.dates[date];
                     a.life = null;
@@ -145,6 +149,63 @@ describe("Alias Match", function () {
             });
         });
     });
+});
+
+// TODO: Test that merging in a bio does, in fact, cause it to match the bio
+
+/*
+TODO: Need to test:
+
+Date:
+- Test all permutations
+
+Alias:
+- Make sure that the name remains untouched
+- Make sure that the alias is added
+- Make sure that duplicates are removed
+- Make sure that the source is added
+
+*/
+
+describe("Name Merge", function () {
+    var names = Object.keys(data.names);
+
+    for (var i = 0; i < names.length - 1; i++) {
+        var name = names[i];
+
+        for (var j = 0; j < names.length; j++) {
+            var otherName = names[j];
+
+            (function(name, otherName){
+
+                it("merge " + name + " into " + otherName, function(done) {
+                    a.name = _.clone(data.names[name]);
+                    rootArtist.name = _.clone(data.names[otherName]);
+                    rootArtist.bios = [];
+                    rootArtist.aliases = [];
+
+                    var expected = data.nameMerges[name][otherName];
+
+                    if (expected === true) {
+                        expected = _.clone(data.names[name]);
+                    } else if (expected === false) {
+                        expected = _.clone(data.names[otherName]);
+                    }
+
+                    rootArtist.addBio(a);
+
+                    if (expected === a.name) {
+                        console.log(rootArtist.name)
+                        console.log(a.name)
+                    }
+
+                    should(JSON.parse(JSON.stringify(rootArtist.name))).eql(expected);
+                    done();
+                });
+
+            })(name, otherName);
+        }
+    }
 });
 
 after(function (done) {
