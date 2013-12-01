@@ -211,54 +211,56 @@ describe("Name Merge", function () {
     }
 });
 
-
 describe("Date Merge", function () {
     var dates = Object.keys(data.dates);
 
     for (var d = 0; d < dates.length; d++) {
         var date = dates[d];
 
-        for (var e = d + 1; e < dates.length; e++) {
+        for (var e = 0; e < dates.length; e++) {
             var otherDate = dates[e];
 
             (function(date, otherDate){
 
-                it("life " + date + " vs. " + otherDate, function(done) {
+                it("merge date " + date + " into " + otherDate, function(done) {
+                    a.name = data.names.all;
                     a.life = data.dates[date];
-                    a.active = null;
-                    b.life = data.dates[otherDate];
-                    b.active = null;
-                    var expected = data.dateMatches[date][otherDate];
-                    should(a.dateMatches(b)).eql(expected);
-                    done();
-                });
+                    rootArtist.name = data.names.all;
+                    rootArtist.life = _.clone(data.dates[otherDate]);
+                    rootArtist.bios = [];
+                    rootArtist.lifeAlt = [];
 
-                it("strong active " + date + " vs. " + otherDate, function(done) {
-                    a.active = data.dates[date];
-                    a.life = data.dates.all;
-                    b.active = data.dates[otherDate];
-                    b.life = data.dates.all;
-                    should(a.dateMatches(b)).eql(2);
-                    done();
-                });
+                    var expected = data.dateMerges[date][otherDate];
+                    var expectedAlts;
 
-                it("weak active " + date + " vs. " + otherDate, function(done) {
-                    a.active = data.dates[date];
-                    a.life = data.dates.all;
-                    b.active = data.dates[otherDate];
-                    b.life = data.dates.startOnly;
-                    var expected = Math.min(2, data.dateMatches[date][otherDate] + 1);
-                    should(a.dateMatches(b)).eql(expected);
-                    done();
-                });
+                    if (expected === true) {
+                        expected = data.dates[date];
+                    } else if (expected === false) {
+                        expected = data.dates[otherDate];
+                    }
 
-                it("normal active " + date + " vs. " + otherDate, function(done) {
-                    a.active = data.dates[date];
-                    a.life = null;
-                    b.active = data.dates[otherDate];
-                    b.life = null;
-                    var expected = data.dateMatches[date][otherDate];
-                    should(a.dateMatches(b)).eql(expected);
+                    // Figure out if we're going to have an alt date, or not
+                    if (rootArtist._isDateDuplicate(a, "life") && otherDate !== "none" &&
+                            data.dateMerges[date][otherDate] !== true) {
+                        expectedAlts = [data.dates[date]];
+                    } else {
+                        expectedAlts = [];
+                    }
+
+                    rootArtist.addBio(a);
+
+                    // Check that name merge went correctly
+                    should(JSON.parse(JSON.stringify(rootArtist.life)) || {}).eql(expected);
+
+                    // Check alt dates
+                    var altResults = JSON.parse(JSON.stringify(rootArtist.lifeAlt));
+                    altResults = altResults.map(function(alias) {
+                        should(alias).have.property("source").should.not.be.empty;
+                        should(alias).have.property("_id").should.not.be.empty;
+                        return _.omit(alias, ["source", "_id"]);
+                    });
+                    should(altResults).eql(expectedAlts);
+
                     done();
                 });
 

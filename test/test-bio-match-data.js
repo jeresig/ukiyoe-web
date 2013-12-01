@@ -934,6 +934,131 @@ module.exports = {
     },
 
     dateMerges: {
+        all: {
+            all: true,
+            all2: false,
+            all3: false,
+            noCA: true,
+            startOnly: true,
+            endOnly: true,
+            current: false,
+            none: true
+        },
 
+        all2: {
+            all: false,
+            all2: true,
+            all3: false,
+            noCA: {
+                start: 1700,
+                start_ca: true,
+                end: 1800
+            },
+            startOnly: true,
+            endOnly: {
+                start: 1700,
+                start_ca: true,
+                end: 1800
+            },
+            current: false,
+            none: true
+        },
+
+        all3: {
+            all: false,
+            all2: false,
+            all3: true,
+            noCA: {
+                start: 1700,
+                end: 1800,
+                end_ca: true
+            },
+            startOnly: {
+                start: 1700,
+                end: 1800,
+                end_ca: true
+            },
+            endOnly: true,
+            current: false,
+            none: true
+        },
+
+        noCA: {
+            all: false,
+            all2: {
+                start: 1700,
+                start_ca: true,
+                end: 1801,
+                end_ca: true
+            },
+            all3: {
+                start: 1701,
+                start_ca: true,
+                end: 1800,
+                end_ca: true
+            },
+            noCA: true,
+            startOnly: true,
+            endOnly: true,
+            current: false,
+            none: true
+        },
+
+        startOnly: {
+            all: false,
+            all2: false,
+            all3: false,
+            noCA: false,
+            startOnly: true,
+            endOnly: {
+                start: 1700,
+                end: 1800
+            },
+            current: false,
+            none: true
+        },
+
+        endOnly: {
+            all: false,
+            all2: false,
+            all3: false,
+            noCA: false,
+            startOnly: {
+                start: 1700,
+                end: 1800
+            },
+            endOnly: true,
+            current: false,
+            none: true
+        },
+
+        current: {
+            all: false,
+            all2: false,
+            all3: false,
+            noCA: false,
+            startOnly: {
+                start: 1700,
+                current: true
+            },
+            endOnly: {
+                // TODO: May want to prevent this
+                start: 1984,
+                end: 1800
+            },
+            current: true,
+            none: true
+        },
+
+        none: {
+            all: false,
+            all2: false,
+            all3: false,
+            noCA: false,
+            startOnly: false,
+            endOnly: false,
+            current: false,
+            none: true
+        }
     }
 };
