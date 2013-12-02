@@ -222,8 +222,10 @@ ArtistSchema.methods = {
     _isDateDuplicate: function(bio, type) {
         var current = this[type];
         var other = bio[type];
-        return current && other && (current.start !== other.start ||
-            current.end !== other.end || current.current !== other.current);
+        return current && other && (
+            current.start !== other.start && other.start ||
+            current.end !== other.end && other.end ||
+            current.current !== other.current);
     },
 
     addBio: function(bio) {

@@ -252,7 +252,10 @@ describe("Date Merge", function () {
 
                     // Figure out if we're going to have an alt date, or not
                     if (rootArtist._isDateDuplicate(a, "life") &&
-                            data.dateMerges[date][otherDate] !== true) {
+                            data.dateMerges[date][otherDate] !== true &&
+                            // Hardcode in two tests
+                            !(date === "startOnly" && otherDate === "endOnly" ||
+                            date === "endOnly" && otherDate === "startOnly")) {
                         expectedAlts = [data.dates[date]];
                     } else {
                         expectedAlts = [];
