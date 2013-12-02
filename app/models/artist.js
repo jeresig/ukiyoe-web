@@ -78,7 +78,8 @@ ArtistSchema.methods = {
                 }
 
                 if (!current.surname) {
-                    if (current.given === other.given &&
+                    if ((current.given === other.given ||
+                        current.given_kanji === other.given_kanji) &&
                         current.generation === other.generation &&
                         (current.surname_kanji === other.surname_kanji ||
                         !current.surname_kanji)) {
@@ -144,6 +145,7 @@ ArtistSchema.methods = {
         if (bio.aliases && bio.aliases.length > 0) {
             // Push the aliases on and add bio source
             bio.aliases.forEach(function(alias) {
+                // TODO: Figure out why _.clone isn't working here.
                 alias = JSON.parse(JSON.stringify(alias));
                 alias = _.omit(alias, "_id");
                 alias.source = bio;
@@ -171,10 +173,10 @@ ArtistSchema.methods = {
 
     _isAliasDuplicate: function(alias) {
         var artist = this;
-        return artist.name.given !== alias.given ||
-            artist.name.surname !== alias.surname ||
-            artist.name.given_kanji !== alias.given_kanji ||
-            artist.name.surname_kanji !== alias.surname_kanji ||
+        return artist.name.given !== alias.given && alias.given ||
+            artist.name.surname !== alias.surname && alias.surname ||
+            artist.name.given_kanji !== alias.given_kanji && alias.given_kanji ||
+            artist.name.surname_kanji !== alias.surname_kanji && alias.surname_kanji ||
             artist.name.generation !== alias.generation;
     },
 

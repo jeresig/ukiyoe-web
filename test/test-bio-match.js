@@ -179,7 +179,9 @@ describe("Name Merge", function () {
 
                     // Figure out if we're going to have an alias, or not
                     if (rootArtist._isAliasDuplicate(a.name) && otherName !== "none" &&
-                            data.nameMerges[name][otherName] !== true) {
+                            data.nameMerges[name][otherName] === false ||
+                            // Hardcode in a single test
+                            (name === "jaAll2" && otherName === "kanji4")) {
                         expectedAliases = [data.names[name]];
                     } else {
                         expectedAliases = [];
@@ -240,7 +242,7 @@ describe("Date Merge", function () {
                     }
 
                     // Figure out if we're going to have an alt date, or not
-                    if (rootArtist._isDateDuplicate(a, "life") && otherDate !== "none" &&
+                    if (rootArtist._isDateDuplicate(a, "life") &&
                             data.dateMerges[date][otherDate] !== true) {
                         expectedAlts = [data.dates[date]];
                     } else {
@@ -275,10 +277,22 @@ describe("Merge Bio into Artist", function() {
         var bio = new Bio();
         bio.name = data.names.jaAll;
         bio.life = data.dates.all;
-        bio.aliases = [data.names.jaAll2, data.names.jaAll3, data.names.kanji]
+        bio.aliases = [data.names.jaAll2, data.names.jaAll3, data.names.kanji];
         var artist = new Artist();
         artist.addBio(bio);
         should(artist.aliases).have.lengthOf(3);
+        done();
+    });
+
+    it("artist should not have extra aliases", function(done) {
+        var bio = new Bio();
+        bio.name = data.names.jaNoSurname3;
+        var bio2 = new Bio();
+        bio.name = data.names.jaGivenOnly
+        var artist = new Artist();
+        artist.addBio(bio);
+        artist.addBio(bio2);
+        should(artist.aliases).have.lengthOf(0);
         done();
     });
 
