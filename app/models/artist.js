@@ -144,7 +144,8 @@ ArtistSchema.methods = {
         if (bio.aliases && bio.aliases.length > 0) {
             // Push the aliases on and add bio source
             bio.aliases.forEach(function(alias) {
-                alias = _.clone(alias);
+                alias = JSON.parse(JSON.stringify(alias));
+                alias = _.omit(alias, "_id");
                 alias.source = bio;
                 artist.aliases.push(alias);
             });
@@ -164,7 +165,7 @@ ArtistSchema.methods = {
         artist.aliases = _.uniq(artist.aliases.filter(function(alias) {
             return artist._isAliasDuplicate(alias);
         }), false, function(alias) {
-            return alias.plain;
+            return alias.plain || alias.kanji;
         });
     },
 

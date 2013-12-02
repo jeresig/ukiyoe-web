@@ -223,9 +223,9 @@ describe("Date Merge", function () {
             (function(date, otherDate){
 
                 it("merge date " + date + " into " + otherDate, function(done) {
-                    a.name = data.names.all;
+                    a.name = data.names.jaAll;
                     a.life = data.dates[date];
-                    rootArtist.name = data.names.all;
+                    rootArtist.name = data.names.jaAll;
                     rootArtist.life = _.clone(data.dates[otherDate]);
                     rootArtist.bios = [];
                     rootArtist.lifeAlt = [];
@@ -267,6 +267,21 @@ describe("Date Merge", function () {
             })(date, otherDate);
         }
     }
+});
+
+describe("Merge Bio into Artist", function() {
+
+    it("artist should have merged in aliases", function(done) {
+        var bio = new Bio();
+        bio.name = data.names.jaAll;
+        bio.life = data.dates.all;
+        bio.aliases = [data.names.jaAll2, data.names.jaAll3, data.names.kanji]
+        var artist = new Artist();
+        artist.addBio(bio);
+        should(artist.aliases).have.lengthOf(3);
+        done();
+    });
+
 });
 
 after(function (done) {
