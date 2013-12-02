@@ -446,7 +446,7 @@ module.exports = {
             startOnly: 1,
             endOnly: 1,
             current: 0,
-            none: 0
+            none: undefined
         },
 
         all2: {
@@ -455,7 +455,7 @@ module.exports = {
             startOnly: 1,
             endOnly: 0,
             current: 0,
-            none: 0
+            none: undefined
         },
 
         all3: {
@@ -463,29 +463,29 @@ module.exports = {
             startOnly: 0,
             endOnly: 1,
             current: 0,
-            none: 0
+            none: undefined
         },
 
         noCA: {
             startOnly: 1,
             endOnly: 1,
             current: 0,
-            none: 0
+            none: undefined
         },
 
         startOnly: {
-            endOnly: 0,
+            endOnly: undefined,
             current: 0,
-            none: 0
+            none: undefined
         },
 
         endOnly: {
             current: 0,
-            none: 0
+            none: undefined
         },
 
         current: {
-            none: 0
+            none: 1
         },
 
         none: {}

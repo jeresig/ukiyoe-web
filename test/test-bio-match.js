@@ -81,7 +81,12 @@ describe("Date Match", function () {
                     a.life = data.dates.all;
                     b.active = data.dates[otherDate];
                     b.life = data.dates.startOnly;
-                    var expected = Math.min(2, data.dateMatches[date][otherDate] + 1);
+                    var expected = data.dateMatches[date][otherDate];
+                    if (expected !== undefined) {
+                        expected = Math.min(2, expected + 1);
+                    } else {
+                        expected = 1;
+                    }
                     should(a.dateMatches(b)).eql(expected);
                     done();
                 });
@@ -109,6 +114,8 @@ describe("Bio Match", function () {
                 b.name = data.names[namePair[1]];
                 a.life = data.dates[datePair[0]];
                 b.life = data.dates[datePair[1]];
+                a.active = null;
+                b.active = null;
 
                 should(a.nameMatches(b)).eql(nameExpected, "Verify name matching.");
                 should(a.dateMatches(b)).eql(dateExpected, "Verify date matching.");
@@ -135,6 +142,8 @@ describe("Alias Match", function () {
                 b.aliases = [data.names[aliasPair[1]]];
                 a.life = data.dates[datePair[0]];
                 b.life = data.dates[datePair[1]];
+                a.active = null;
+                b.active = null;
 
                 should(a.aliasMatches(b)).eql(aliasExpected, "Verify alias matching.");
                 should(a.dateMatches(b)).eql(dateExpected, "Verify date matching.");
@@ -288,7 +297,7 @@ describe("Merge Bio into Artist", function() {
         var bio = new Bio();
         bio.name = data.names.jaNoSurname3;
         var bio2 = new Bio();
-        bio.name = data.names.jaGivenOnly
+        bio2.name = data.names.jaGivenOnly;
         var artist = new Artist();
         artist.addBio(bio);
         artist.addBio(bio2);
@@ -296,6 +305,16 @@ describe("Merge Bio into Artist", function() {
         done();
     });
 
+    it("bios with not enough date info should match", function(done) {
+        var bio = new Bio();
+        bio.name = data.names.jaAll;
+        bio.active = data.dates.all;
+        var bio2 = new Bio();
+        bio2.name = data.names.jaAll;
+        bio2.life = data.dates.all;
+        should(bio.matches(bio2)).eql(2);
+        done();
+    });
 });
 
 after(function (done) {

@@ -59,8 +59,11 @@ BioSchema.methods = {
         var total = a.nameMatches(b) || a.aliasMatches(b);
 
         if (total > 0) {
-            // The date works as a modifier
-            total += a.dateMatches(b) - 1;
+            var dateMatches = a.dateMatches(b);
+            if (dateMatches !== undefined) {
+                // The date works as a modifier
+                total += dateMatches - 1;
+            }
         }
 
         return Math.min(2, total);
@@ -149,12 +152,16 @@ BioSchema.methods = {
                 // Start dates match (but one is blank)
                 return 1;
             }
-        } else if (a.end && b.end) {
-            if (a.end === b.end || a.current || b.current) {
+        } else if (a.end && b.end || a.current || b.current) {
+            if (a.end === b.end || (a.current && !b.end) ||
+                    (b.current && !a.end)) {
                 // End dates match (but one is blank)
                 // or artist might still be alive
                 return 1;
             }
+        } else {
+            // Not enough data to make a match
+            return;
         }
 
         // Nothing matches
@@ -164,18 +171,32 @@ BioSchema.methods = {
     dateMatches: function(b) {
         var a = this;
         var total = 0;
+        var matchesFound = 0;
 
         if (a.life && b.life) {
-            total += this._checkDate(a.life, b.life);
+            var result = this._checkDate(a.life, b.life);
+            if (result !== undefined) {
+                total += result;
+                matchesFound += 1;
+            }
         }
 
         if (a.active && b.active) {
-            total += this._checkDate(a.active, b.active);
+            var result = this._checkDate(a.active, b.active);
+            if (result !== undefined) {
+                total += result;
+                matchesFound += 1;
+            }
         }
 
-        // Make it so that if one date matches in life and
-        // one date matches in active then it's a strong match.
-        return Math.min(total, 2);
+        // Not enough data for date matching
+        if (matchesFound === 0) {
+            return;
+        } else {
+            // Make it so that if one date matches in life and
+            // one date matches in active then it's a strong match.
+            return Math.min(total, 2);
+        }
     }
 };
 
