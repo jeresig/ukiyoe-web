@@ -324,11 +324,15 @@ ArtistSchema.statics = {
         this.search({query: query}, {hydrate: true, hydrateOptions: {populate: "bios"}}, function(err, results) {
             // Filter out all the artists that already have a bio from the
             // same source as this one, as that'll likely be problematic
-            callback(err, results.hits.filter(function(artist) {
-                return artist.bios.every(function(otherBio) {
-                    return bio.source !== otherBio.source;
-                });
-            }));
+            if (!err && results) {
+                callback(err, results.hits.filter(function(artist) {
+                    return artist.bios.every(function(otherBio) {
+                        return bio.source !== otherBio.source;
+                    });
+                }));
+            } else {
+                callback(err);
+            }
         });
     }
 };

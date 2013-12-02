@@ -9,7 +9,7 @@ mongoose.connection.on('error', function(err) {
 });
 
 mongoose.connection.once('open', function() {
-    Bio.mergeBios("bm", function() {
+    Bio.mergeBios(process.argv[2], function() {
         console.log("DONE");
         process.exit(0);
     });

@@ -25,7 +25,7 @@ mongoose.connection.once('open', function() {
                 console.log(err);
             });
         });
-    } else if (true) {
+    } else if (!true) {
         Artist.createMapping(function(err, mapping) {
             var stream = Artist.synchronize();
             var count = 0;

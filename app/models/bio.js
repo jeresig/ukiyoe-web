@@ -3,7 +3,9 @@ var mongoose = require("mongoose"),
     async = require("async"),
     _ = require("lodash"),
     Name = require("./name"),
-    YearRange = require("./yearrange");
+    YearRange = require("./yearrange"),
+    Schema = mongoose.Schema,
+    ObjectId = Schema.Types.ObjectId;
 
 var BioSchema = new mongoose.Schema({
     // The date that this item was created
@@ -15,8 +17,8 @@ var BioSchema = new mongoose.Schema({
     // The source of the artist information.
     source: {type: String, ref: "Source"},
 
-    artist: {type: String, ref: "Artist"},
-    possibleArtists: [{type: String, ref: "Artist"}],
+    artist: {type: ObjectId, ref: "Artist"},
+    possibleArtists: [{type: ObjectId, ref: "Artist"}],
 
     extract: [String],
 
@@ -235,13 +237,18 @@ BioSchema.statics = {
                 Artist.potentialArtists(bio, function(err, artists) {
                     var strongMatches = [];
                     var weakMatches = [];
+                    var artistsById = {};
 
                     artists.forEach(function(artist) {
-                        if (artist.matches(bio)) {
-                            strongMatches.push(artist);
-                        } else if (artist.nameMatches(bio) ||
-                                artist.aliasMatches(bio)) {
-                            weakMatches.push(artist);
+                        artistsById[artist._id] = artist;
+
+                        var match = artist.matches(bio);
+                        if (match >= 2) {
+                            strongMatches.push(artist._id);
+                            console.log("Strong Match:", artist.name.name)
+                        } else if (match > 0) {
+                            weakMatches.push(artist._id);
+                            console.log("Weak Match:", artist.name.name)
                         }
                     });
 
@@ -249,11 +256,13 @@ BioSchema.statics = {
 
                     if (strongMatches.length > 0) {
                         if (strongMatches.length > 1) {
+                            console.log("multiple srong matches")
                             bio.possibleArtists = strongMatches;
                         } else {
-                            artist = strongMatches[0];
+                            artist = artistsById[strongMatches[0]];
                         }
-                    } else if (weakMatches.length > 1) {
+                    } else if (weakMatches.length > 0) {
+                        console.log("multiple weak matches")
                         bio.possibleArtists = weakMatches;
                     } else {
                         artist = new Artist();
@@ -275,8 +284,8 @@ BioSchema.statics = {
                     } else {
                         console.log("Saving bio %s possibilities (%s).",
                             bio.name.name,
-                            bio.possibleArtists.map(function(artist) {
-                                return artist.name.name;
+                            bio.possibleArtists.map(function(id) {
+                                return artistsById[id].name.name;
                             }).join(", ")
                         );
 
