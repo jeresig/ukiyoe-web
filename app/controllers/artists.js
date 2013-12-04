@@ -58,9 +58,9 @@ exports.search = function(req, res) {
 
 exports.index = function(req, res) {
     var page = (req.param("page") > 0 ? req.param("page") : 1) - 1;
-    var perPage = 30;
+    var perPage = 100;
     var options = {
-        query: "Hiroshige",
+        query: "Utagawa",
         size: perPage,
         from: page * perPage
     };

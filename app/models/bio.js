@@ -131,6 +131,15 @@ BioSchema.methods = {
             }
         }
 
+        // Check swapped name :(
+        if (a.name.given && a.name.surname) {
+            if (a.name.given === b.name.surname &&
+                a.name.surname === b.name.given) {
+                // Full given, surname, generation match
+                return 2;
+            }
+        }
+
         // Nothing matches!
         return 0;
     },

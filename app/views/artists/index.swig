@@ -8,7 +8,7 @@
     <p>{{ artist.name.name }}</p>
 	<ul>
 		{% for bio in artist.bios %}
-			<li>{{ bio.name.name }}</li>
+			<li>{{ bio.name.name }} ({{ bio.source }})</li>
 		{% endfor %}
 	</ul>
 {% endfor %}
