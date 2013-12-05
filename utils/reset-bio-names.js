@@ -12,26 +12,25 @@ mongoose.connection.on('error', function(err) {
 });
 
 mongoose.connection.once('open', function() {
-    console.log("Finding bios...");
-    Bio.find({source: "bm"}, function(err, bios) {
-        async.eachLimit(bios, 1, function(bio, callback) {
-            var newName = romajiName.parseName(bio.name.original);
+    romajiName.init(function() {
+        console.log("Finding bios...");
+        Bio.find({source: "bm"}, function(err, bios) {
+            async.eachLimit(bios, 1, function(bio, callback) {
+                var newName = romajiName.parseName(bio.name.original);
 
-            if (newName.given !== bio.name.given ||
-                    newName.surname !== bio.name.surname ||
-                    newName.generation !== bio.name.generation) {
-                console.log("Updating: %s to %s", bio.name.name, newName.name);
-                console.log("Original: " + newName.original)
-                //bio.name = newName;
-                //bio.save(callback);
-                callback();
-            } else {
-                //console.log("\t" + bio.name.name);
-                callback();
-            }
-        }, function() {
-            console.log("DONE");
-            process.exit(0);
+                if (newName.given !== bio.name.given ||
+                        newName.surname !== bio.name.surname ||
+                        newName.generation !== bio.name.generation) {
+                    console.log("Updating: %s to %s", bio.name.name, newName.name);
+                    bio.name = newName;
+                    bio.save(callback);
+                } else {
+                    callback();
+                }
+            }, function() {
+                console.log("DONE");
+                process.exit(0);
+            });
         });
     });
 });
