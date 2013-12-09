@@ -15,6 +15,8 @@ require("express-namespace");
 mongoose.connect(config.db);
 
 // Bootstrap models
+require("ukiyoe-models")(mongoose);
+
 fs.readdirSync(__dirname + "/app/models").forEach(function (file) {
     if (~file.indexOf(".js")) {
         require(__dirname + "/app/models/" + file);
