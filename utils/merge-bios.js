@@ -1,6 +1,8 @@
-var mongoose = require("mongoose"),
-    Artist = require("../app/models/artist"),
-    Bio = require("../app/models/bio");
+var mongoose = require("mongoose");
+require("ukiyoe-models")(mongoose);
+
+var Artist = mongoose.model("Artist");
+var Bio = mongoose.model("Bio");
 
 mongoose.connect('mongodb://localhost/extract');
 
