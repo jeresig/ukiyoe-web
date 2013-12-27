@@ -7,7 +7,7 @@
 <table>
 {% for artist in artists %}
     <tr>
-        <td>{{ artist.name.name }}</td>
+        <td><a href="/artists/{{ artist.id }}">{{ artist.name.name }}</a></td>
         <td>{{ artist.name.kanji }}</td>
         <td>{{ artist.life.start }}</td>
         <td>{{ artist.life.end }}</td>

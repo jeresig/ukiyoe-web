@@ -151,7 +151,10 @@ exports.update = function(req, res) {
 exports.show = function(req, res) {
     res.render("artists/show", {
         title: req.artist.title,
-        artist: req.artist
+        artist: req.artist,
+        bio: req.artist.bios.sort(function(a, b) {
+            return b.length - a.elength;
+        })[0].bio
     });
 };
 
