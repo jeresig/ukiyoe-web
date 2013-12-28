@@ -37,7 +37,8 @@
     "lodash": "~2.3.0",
     "romaji-name": "0.0.12",
     "request": "~2.27.0",
-    "ukiyoe-models": "jeresig/ukiyoe-models"
+    "ukiyoe-models": "jeresig/ukiyoe-models",
+    "yearrange": "jeresig/node-yearrange"
   },
   "devDependencies": {
     "nodemon": "~0.7.10",
