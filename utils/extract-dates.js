@@ -1,6 +1,7 @@
 var fs = require("fs");
 var path = require("path");
 var async = require("async");
+var yr = require("yearrange");
 var mongoose = require("mongoose");
 require("ukiyoe-models")(mongoose);
 
@@ -17,7 +18,8 @@ var processImages = function(images) {
         }
 
         var date = image.dateCreated;
-        var key = date.replace(/[0-9]/g, "X");
+        var key = yr.cleanString(date);
+        key = key.replace(/[0-9]/g, "X");
 
         if (!dates[key]) {
             dates[key] = [];
@@ -34,6 +36,8 @@ var done = function() {
     });
 
     var outStream = fs.createWriteStream(outputFile);
+
+    outStream.write("Style\tCount\tExample\n");
 
     sortedKeys.forEach(function(key) {
         var data = [key, dates[key].length, dates[key][0]].join("\t");
