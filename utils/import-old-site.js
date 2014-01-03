@@ -50,14 +50,16 @@ mongoose.connection.once('open', function() {
 
                 console.log("Saving:", data.source, data.source_id);
 
+                var imageName = data.image_file.replace(/.jpg$/, "");
+
                 ExtractedImage.create({
-                    _id: data.source + "/" + data.source_id,
+                    _id: data.source + "/" + imageName,
                     source: data.source,
                     modified: Date.now(),
                     extract: ["", data.source_id],
                     extracted: true,
                     imageURL: data.source_image,
-                    imageName: data.image_file.replace(/.jpg$/, ""),
+                    imageName: imageName,
                     pageID: data.source_id,
                     url: data.source_url,
                     //lang: "en", // TODO: Fix this.
@@ -66,7 +68,13 @@ mongoose.connection.once('open', function() {
                     title: data.title,
                     description: data.description,
                     dateCreated: data.date ? yr.parse(data.date) : null
-                }, callback);
+                }, function(err) {
+                    if (err) {
+                        // Ignore the error (could be a duplicate key error)
+                        console.error(err);
+                    }
+                    callback();
+                });
             }, callback);
         });
     }, function(err) {
