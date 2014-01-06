@@ -11,6 +11,11 @@ var artistAuth = [
     auth.requiresLogin
 ];
 
+var imageAuth = [
+    auth.requiresLogin
+];
+
+
 var passportOptions = {
     failureFlash: "Invalid email or password.",
     failureRedirect: "/login"
@@ -46,6 +51,16 @@ module.exports = function (app, passport) {
     app.del("/artists/:artistId", artistAuth, artists.destroy);
 
     app.param("artistId", artists.load);
+
+    app.get("/images", images.index);
+    app.get("/images/new", auth.requiresLogin, images.new);
+    app.post("/images", auth.requiresLogin, images.create);
+    app.get("/images/:artistId", images.show);
+    app.get("/images/:artistId/edit", imageAuth, images.edit);
+    app.put("/images/:artistId", imageAuth, images.update);
+    app.del("/images/:artistId", imageAuth, images.destroy);
+
+    app.param("imageId", images.load);
 
     app.get("/", artists.search);
 };
