@@ -8,7 +8,6 @@ require("ukiyoe-models")(mongoose);
 var ExtractedImage = mongoose.model("ExtractedImage");
 
 var dates = {};
-var batchSize = 1000;
 var outputFile = path.resolve(__dirname + "/../data/date-styles.csv");
 
 var processImages = function(images) {
@@ -30,7 +29,6 @@ var processImages = function(images) {
 };
 
 var done = function() {
-    
     var sortedKeys = Object.keys(dates).sort(function(a, b) {
         return dates[b].length - dates[a].length;
     });
@@ -58,29 +56,15 @@ mongoose.connection.on('error', function(err) {
 });
 
 mongoose.connection.once('open', function() {
-    var pos = 0;
+    ExtractedImage.batchQuery({}, 1000, function(err, data) {
+        if (data.done) {
+            process.stdout.write("\nProcessing...\n");
+            done();
+            return;
+        }
 
-    ExtractedImage.count(function(err, count) {
-        async.whilst(
-            function() {
-                return pos < count;
-            },
-
-            function(callback) {
-                process.stdout.write("Getting " + pos + " to " +
-                    (pos + batchSize) + "\r");
-                ExtractedImage.find().limit(batchSize).skip(pos)
-                    .exec(function(err, images) {
-                        processImages(images);
-                        pos += batchSize;
-                        callback(err);
-                    });
-            },
-            
-            function(err) {
-                process.stdout.write("\nProcessing...\n");
-                done();
-            }
-        );
+        process.stdout.write("Processing " + data.from + " to " +
+            data.to + "\r");
+        processImages(data.images);
     });
 });

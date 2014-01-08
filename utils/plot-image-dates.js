@@ -12,7 +12,6 @@ var dateMax = 1940;
 var maxSpan = 40;
 
 var dates = {};
-var batchSize = 1000;
 var outputFile = path.resolve(__dirname + "/../data/date-bins.csv");
 
 var processImages = function(images) {
@@ -55,36 +54,21 @@ mongoose.connection.on('error', function(err) {
 });
 
 mongoose.connection.once('open', function() {
-    var pos = 0;
+    var query = {"dateCreated.start": {$ne: null}};
 
     for (var d = dateMin; d <= dateMax; d++) {
         dates[d] = 0;
     }
 
-    var query = {"dateCreated.start": {$ne: null}};
+    ExtractedImage.batchQuery(query, 1000, function(err, data) {
+        if (data.done) {
+            process.stdout.write("\nProcessing...\n");
+            done();
+            return;
+        }
 
-    ExtractedImage.count(query, function(err, count) {
-        async.whilst(
-            function() {
-                return pos < count;
-            },
-
-            function(callback) {
-                process.stdout.write("Getting " + pos + " to " +
-                    (pos + batchSize) + "\r");
-                ExtractedImage.find(query)
-                    .limit(batchSize).skip(pos)
-                    .exec(function(err, images) {
-                        processImages(images);
-                        pos += batchSize;
-                        callback(err);
-                    });
-            },
-
-            function(err) {
-                process.stdout.write("\nProcessing...\n");
-                done();
-            }
-        );
+        process.stdout.write("Processing " + data.from + " to " +
+            data.to + "\r");
+        processImages(data.images);
     });
 });
