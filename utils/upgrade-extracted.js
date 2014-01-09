@@ -1,4 +1,3 @@
-var _ = require("lodash");
 var async = require("async");
 var mongoose = require("mongoose");
 require("ukiyoe-models")(mongoose);
@@ -12,9 +11,7 @@ mongoose.connection.on('error', function(err) {
 });
 
 mongoose.connection.once('open', function() {
-    var query = {"image": {$eq: null}};
-
-    ExtractedImage.batchQuery(query, 1000, function(err, data) {
+    ExtractedImage.batchQuery({"image": null}, 1000, function(err, data) {
         if (data.done) {
             console.log("DONE");
             process.exit(0);
