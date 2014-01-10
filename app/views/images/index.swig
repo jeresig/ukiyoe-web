@@ -4,26 +4,10 @@
 
 {% block content %}
 
-<table>
-{% for artist in artists %}
-    <tr>
-        <td><a href="/artists/{{ artist.id }}">{{ artist.name.name }}</a></td>
-        <td>{{ artist.name.kanji }}</td>
-        <td>{{ artist.life.start }}</td>
-        <td>{{ artist.life.end }}</td>
-        <td>{{ artist.active.start }}</td>
-        <td>{{ artist.active.end }}</td>
-    </tr>
-    <tr>
-        <td colspan="6">
-            <ul>
-                {% for bio in artist.bios %}
-                    <li>{{ bio.name.name }} ({{ bio.source }})</li>
-                {% endfor %}
-            </ul>
-        </td>
-    </tr>
+
+{% for image in images %}
+<p><img src="http://data.ukiyo-e.org/{{ image.source }}/thumbs/{{ image.imageName }}.jpg"/></p>
+<p>{{ image.title }} by {% if image.artistNames[0] %}{{ image.artistNames[0].name }}{% endif %}</p>
 {% endfor %}
-</table>
 
 {% endblock %}

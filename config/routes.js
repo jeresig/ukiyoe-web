@@ -2,6 +2,7 @@ var auth = require("./middlewares/authorization");
 var users = require("../app/controllers/users");
 var bios = require("../app/controllers/bios");
 var artists = require("../app/controllers/artists");
+var images = require("../app/controllers/images");
 
 var extractedartistAuth = [
     auth.requiresLogin

@@ -4,8 +4,7 @@
  */
 
 var mongoose = require("mongoose"),
-    // TODO: Move to real Image model once ready
-    Image = mongoose.model("ExtractedImage"),
+    Image = mongoose.model("Image"),
     utils = require("../../lib/utils"),
     _ = require("lodash");
 
@@ -39,8 +38,8 @@ exports.search = function(req, res) {
         from: page * perPage
     };
 
-    // {hydrate: true, hydrateOptions: {populate: "bios"}},
-    Image.search(options, function(err, results){
+    // , hydrateOptions: {populate: "bios"}
+    Image.search(options, {hydrate: true}, function(err, results){
         if (err) {
             return res.render("500");
         }
@@ -67,8 +66,8 @@ exports.index = function(req, res) {
         from: page * perPage
     };
 
-    // {hydrate: true, hydrateOptions: {populate: "bios"}},
-    Image.search(options, function(err, results){
+    // , hydrateOptions: {populate: "bios"}
+    Image.search(options, {hydrate: true}, function(err, results){
         if (err) {
             return res.render("500");
         }
