@@ -17,6 +17,7 @@
   ],
   "dependencies": {
     "bootstrap": "~3.0.2",
-    "jquery": "1.10.2"
+    "jquery": "1.10.2",
+    "nouislider": "~5.0.0"
   }
 }

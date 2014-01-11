@@ -54,6 +54,7 @@ module.exports = function (app, passport) {
     app.param("artistId", artists.load);
 
     app.get("/images", images.index);
+    app.get("/images/search", images.search);
     app.get("/images/new", auth.requiresLogin, images.new);
     app.post("/images", auth.requiresLogin, images.create);
     app.get("/images/:artistId", images.show);

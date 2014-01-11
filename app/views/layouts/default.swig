@@ -11,6 +11,7 @@
 
 	{{ CDN("/bower/bootstrap/dist/css/bootstrap.min.css") }}
     {{ CDN("/bower/bootstrap/dist/css/bootstrap-theme.min.css") }}
+    {{ CDN("/bower/nouislider/jquery.nouislider.css") }}
     {{ CDN("/css/app.css") }}
 
     <!--[if lt IE 9]>
@@ -44,6 +45,8 @@
     </div>
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    {{ CDN("/bower/nouislider/jquery.nouislider.js") }}
     {{ CDN("/js/app.js") }}
+    {% block script %}{% endblock %}
 </body>
 </html>

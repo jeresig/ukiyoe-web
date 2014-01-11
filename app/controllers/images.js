@@ -31,9 +31,16 @@ exports.load = function(req, res, next, id) {
 
 exports.search = function(req, res) {
     var page = (req.param("page") > 0 ? req.param("page") : 1) - 1;
-    var perPage = 30;
+    var perPage = 100;
+    var q = req.param("q") || "";
+
+    if (req.param("startDate") && req.param("endDate")) {
+        q += " AND dateCreated.start:<=" + req.param("endDate") +
+            " AND dateCreated.end:>=" + req.param("startDate");
+    }
+
     var options = {
-        query: req.param("q") || "",
+        query: q,
         size: perPage,
         from: page * perPage
     };
@@ -46,6 +53,9 @@ exports.search = function(req, res) {
 
         res.render("images/index", {
             title: "Images",
+            q: req.param("q"),
+            startDate: req.param("startDate") || "1765",
+            endDate: req.param("endDate") || "1868",
             images: results.hits,
             page: page + 1,
             pages: Math.ceil(results.total / perPage)
