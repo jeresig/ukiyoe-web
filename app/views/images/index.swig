@@ -14,7 +14,10 @@
 </form>
 
 {% for image in images %}
+<div style="float:left;width:220px;height:240px;">
 <img src="http://data.ukiyo-e.org/{{ image.source }}/thumbs/{{ image.imageName }}.jpg"/>
+<span>{{ image.dateCreated.start }} - {{ image.dateCreated.end }}</span>
+</div>
 <!--<p>{{ image.title }} by {% if image.artistNames[0] %}{{ image.artistNames[0].name }}{% endif %}</p>-->
 {% endfor %}
 
@@ -31,6 +34,7 @@ $(function() {
         start: [$startDate.val(), $endDate.val()],
         step: 1,
         connect: true,
+        behaviour: "drag",
         serialization: {
             resolution: 1,
             to: [$startDate, $endDate]

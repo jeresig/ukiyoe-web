@@ -41,21 +41,41 @@ exports.search = function(req, res) {
         filtered: {
             filter: {},
             size: perPage,
-            from: page * perPage
+            from: page * perPage,
+            "sort": [
+                {
+                    "dateCreated.start": {
+                        "order": "asc"
+                    }
+                },
+                {
+                    "dateCreated.end": {
+                        "order": "asc"
+                    }
+                }
+            ]
         }
     };
 
     if (req.param("startDate") && req.param("endDate")) {
-        query.filtered.filter.range = {
-            "dateCreated.start": {
-                gte: parseFloat(req.param("startDate")),
-                lte: parseFloat(req.param("endDate"))
+        query.filtered.filter.and = [
+            {
+                range: {
+                    "dateCreated.start": {
+                        gte: parseFloat(req.param("startDate")),
+                        lte: parseFloat(req.param("endDate"))
+                    }
+                }
             },
-            "dateCreated.end": {
-                gte: parseFloat(req.param("startDate")),
-                lte: parseFloat(req.param("endDate"))
+            {
+                range: {
+                    "dateCreated.end": {
+                        gte: parseFloat(req.param("startDate")),
+                        lte: parseFloat(req.param("endDate"))
+                    }
+                }
             }
-        };
+        ];
     }
 
     // , hydrateOptions: {populate: "bios"}
