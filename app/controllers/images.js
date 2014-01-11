@@ -34,20 +34,34 @@ exports.search = function(req, res) {
     var perPage = 100;
     var q = req.param("q") || "";
 
-    if (req.param("startDate") && req.param("endDate")) {
-        q += " AND dateCreated.start:<=" + req.param("endDate") +
-            " AND dateCreated.end:>=" + req.param("startDate");
-    }
-
-    var options = {
-        query: q,
-        size: perPage,
-        from: page * perPage
+    var query = {
+        query_string: {
+            query: q
+        },
+        filtered: {
+            filter: {},
+            size: perPage,
+            from: page * perPage
+        }
     };
 
+    if (req.param("startDate") && req.param("endDate")) {
+        query.filtered.filter.range = {
+            "dateCreated.start": {
+                gte: parseFloat(req.param("startDate")),
+                lte: parseFloat(req.param("endDate"))
+            },
+            "dateCreated.end": {
+                gte: parseFloat(req.param("startDate")),
+                lte: parseFloat(req.param("endDate"))
+            }
+        };
+    }
+
     // , hydrateOptions: {populate: "bios"}
-    Image.search(options, {hydrate: true}, function(err, results){
+    Image.search({query: query}, {hydrate: true}, function(err, results){
         if (err) {
+            console.error(err);
             return res.render("500");
         }
 
