@@ -9,8 +9,9 @@
     <title>{{ title }}</title>
     {% if page_desc %}<meta name="description" content="{{ page_desc }}"/>{% endif %}
 
-	{{ CDN("/bower/bootstrap/dist/css/bootstrap.min.css") }}
+    {{ CDN("/bower/bootstrap/dist/css/bootstrap.min.css") }}
     {{ CDN("/bower/bootstrap/dist/css/bootstrap-theme.min.css") }}
+    {{ CDN("/bower/select2/select2.css") }}
     {{ CDN("/bower/nouislider/jquery.nouislider.css") }}
     {{ CDN("/css/app.css") }}
 
@@ -45,6 +46,7 @@
     </div>
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    {{ CDN("/bower/select2/select2.js") }}
     {{ CDN("/bower/nouislider/jquery.nouislider.js") }}
     {{ CDN("/js/app.js") }}
     {% block script %}{% endblock %}

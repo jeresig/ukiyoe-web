@@ -30,25 +30,14 @@ exports.load = function(req, res, next, id) {
  */
 
 exports.search = function(req, res) {
-    var page = (req.param("page") > 0 ? req.param("page") : 1) - 1;
-    var perPage = 30;
-    var options = {
-        query: req.param("q") || "",
-        size: perPage,
-        from: page * perPage
-    };
+    var query = req.param("q") || "";
 
-    Artist.search(options, {hydrate: true, hydrateOptions: {populate: "bios"}}, function(err, results){
+    Artist.searchByName(query, function(err, results) {
         if (err) {
             return res.render("500");
         }
 
-        res.render("artists/index", {
-            title: "Artists",
-            artists: results.hits,
-            page: page + 1,
-            pages: Math.ceil(results.total / perPage)
-        });
+        res.send(200, results);
     });
 };
 

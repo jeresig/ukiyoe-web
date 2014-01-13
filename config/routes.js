@@ -44,6 +44,7 @@ module.exports = function (app, passport) {
     app.param("bioId", bios.load);
 
     app.get("/artists", artists.index);
+    app.get("/artists/search", artists.search);
     app.get("/artists/new", auth.requiresLogin, artists.new);
     app.post("/artists", auth.requiresLogin, artists.create);
     app.get("/artists/:artistId", artists.show);

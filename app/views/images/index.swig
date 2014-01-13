@@ -3,6 +3,8 @@
 {% block title %}{{ __("Index Page") }}{% endblock %}
 
 {% block content %}
+<p><input type="hidden" id="selectArtist" style="width:500px;"/></p>
+
 <form action="/images/search" method="GET">
 <p>Query: <input type="search" name="q" value="{{q}}"/></p>
 <p>
@@ -26,6 +28,27 @@
 {% block script %}
 <script>
 $(function() {
+    $("#selectArtist").select2({
+        placeholder: "Search by Artist",
+        minimumInputLength: 3,
+        allowClear: true,
+        ajax: {
+            url: "/artists/search",
+            dataType: "json",
+            data: function(term) {
+                return {q: term};
+            },
+            results: function(data) {
+                return {
+                    results: data.matches,
+                    text: function(i) {
+                        return data.matches[i].name.name;
+                    }
+                };
+            }
+        }
+    });
+
     var $startDate = $("input[name='startDate']");
     var $endDate = $("input[name='endDate']");
 
