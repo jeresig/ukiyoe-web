@@ -30,7 +30,7 @@
 $(function() {
     $("#selectArtist").select2({
         placeholder: "Search by Artist",
-        minimumInputLength: 3,
+        minimumInputLength: 1,
         allowClear: true,
         ajax: {
             url: "/artists/search",

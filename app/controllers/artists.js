@@ -30,6 +30,44 @@ exports.load = function(req, res, next, id) {
  */
 
 exports.search = function(req, res) {
+    var perPage = 10;
+
+    var q = req.param("q") || "";
+    // TODO: Fix kanji searching
+    var query = q.trim().split(/\s+/).map(function(name) {
+        return name ? name + "*" : "";
+    }).filter(function(name) {
+        return !!name;
+    }).join(" AND ");
+
+    var options = {
+        query: query,
+        size: perPage
+    };
+
+    Artist.search(options, {hydrate: true}, function(err, artists){
+        if (err) {
+            console.error(err)
+            return res.render("500");
+        }
+
+        var results = {
+            matches: []
+        };
+
+        artists.hits.forEach(function(artist) {
+            // TODO: Figure out locale
+            results.matches.push({
+                id: artist._id,
+                text: artist.name.name
+            });
+        });
+
+        res.send(200, results);
+    });
+};
+
+exports.searchByName = function(req, res) {
     var query = req.param("q") || "";
 
     Artist.searchByName(query, function(err, results) {
