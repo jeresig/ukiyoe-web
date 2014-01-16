@@ -18,6 +18,13 @@
 {% for image in images %}
 <div style="float:left;width:220px;height:240px;">
 <img src="http://data.ukiyo-e.org/{{ image.source }}/thumbs/{{ image.imageName }}.jpg"/>
+<span>{% for artist in image.artists %}
+    {% if artist.artist %}
+        <a href="/artist/{{ artist.artist.name.name }}">{{ artist.artist.name.name }}</a>
+    {% else %}
+        {{ artist.name.name }}
+    {% endif %}
+{% endfor %}</span>
 <span>{{ image.dateCreated.start }} - {{ image.dateCreated.end }}</span>
 </div>
 <!--<p>{{ image.title }} by {% if image.artistNames[0] %}{{ image.artistNames[0].name }}{% endif %}</p>-->

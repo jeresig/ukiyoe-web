@@ -78,8 +78,7 @@ exports.search = function(req, res) {
         ];
     }
 
-    // , hydrateOptions: {populate: "bios"}
-    Image.search({query: query}, {hydrate: true}, function(err, results){
+    Image.search({query: query}, {hydrate: true, hydrateOptions: {populate: "artists.artist"}}, function(err, results){
         if (err) {
             console.error(err);
             return res.render("500");
