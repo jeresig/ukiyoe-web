@@ -11,7 +11,13 @@ mongoose.connection.on('error', function(err) {
 });
 
 mongoose.connection.once('open', function() {
-    ExtractedImage.batchQuery({"image": null}, 1000, function(err, data, callback) {
+    var query = {"image": null};
+
+    if (process.argv[2]) {
+        query.source = process.argv[2];
+    }
+
+    ExtractedImage.batchQuery(query, 1000, function(err, data, callback) {
         if (err) {
             console.error(err);
             return;
