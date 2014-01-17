@@ -21,7 +21,7 @@ mongoose.connection.once('open', function() {
 
             console.log(results.match && results.match.name.name,
                 results.matches.map(function(match) {
-                    return match.artist.name.name + " " + match.score;
+                    return match.text + " " + match.score;
                 })
             );
         });
