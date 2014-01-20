@@ -17,31 +17,21 @@ mongoose.connection.once('open', function() {
         query.source = process.argv[2];
     }
 
-    ExtractedImage.batchQuery(query, 1000, function(err, data, callback) {
-        if (err) {
+    var queue = async.queue(function(extracted, callback) {
+        console.log(extracted._id);
+        extracted.upgrade(callback);
+    }, 10);
+
+    queue.drain = function() {
+        console.log("DONE");
+        process.exit(0);
+    };
+
+    ExtractedImage.find(query).stream()
+        .on("data", function(extracted) {
+            queue.push(extracted);
+        })
+        .on("error", function(err) {
             console.error(err);
-            return;
-        }
-
-        if (data.done) {
-            console.log("DONE");
-            process.exit(0);
-            return;
-        }
-
-        console.log("Processing " + data.from + " to " + data.to);
-
-        async.eachLimit(data.images, 10, function(extracted, callback) {
-            console.log(extracted._id);
-            extracted.upgrade(callback);
-        }, function(err) {
-            if (err) {
-                console.error(err);
-            }
-
-            if (callback) {
-                callback();
-            }
         });
-    });
 });
