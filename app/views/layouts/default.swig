@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="{{ __("en-US") }}" class="{{ __("en-US") }}">
 <head>
-    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <meta charset="utf-8">
     <meta http-equiv="content-language" content="{{ __("en-US") }}"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
