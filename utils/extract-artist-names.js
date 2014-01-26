@@ -11,6 +11,8 @@ var ExtractedImage = mongoose.model("ExtractedImage");
 var files = process.argv.slice(2);
 
 var nameCache = {};
+var swapCheck = {};
+var names = {};
 
 var nameOptions = {
     stripParens: true
@@ -23,7 +25,25 @@ var lookupName = function(name, options) {
 
     var results = romajiName.parseName(name, options);
     nameCache[name] = results;
-    console.log(results);
+    //console.log(results.name + "\t" + results.kanji + "\t" + results.original);
+
+    if (results.name) {
+        var ordered = results.surname + " " + results.given;
+        var reversed = results.given + " " + results.surname;
+
+        swapCheck[ordered] = true;
+
+        if (reversed in swapCheck) {
+            names[results.surname] = (names[results.surname] || 0) + 1;
+            names[results.given] = (names[results.given] || 0) + 1;
+            console.log("SWAPPED", results);
+        }
+    }
+
+    if (/paul/i.test(results.name)) {
+        //console.log(results)
+    }
+
     return results;
 };
 
@@ -34,23 +54,31 @@ mongoose.connection.on('error', function(err) {
 });
 
 mongoose.connection.once('open', function() {
-    files.forEach(function(file) {
-        //console.log("Processing:", file);
+    romajiName.init(function() {
+        files.forEach(function(file) {
+            //console.log("Processing:", file);
 
-        var datas = JSON.parse(fs.readFileSync(file, "utf8"));
+            var datas = JSON.parse(fs.readFileSync(file, "utf8"));
 
-        nameCache = {};
+            //nameCache = {};
 
-        datas.forEach(function(data) {
-            if (data.artist) {
-                //if (/various/i.test(data.artist)) {
-                    //console.log(data.artist)
-                //}
-                lookupName(data.artist, nameOptions)
-            }
+            datas.forEach(function(data) {
+                if (data.artist) {
+                    if (/\bl\b/i.test(data.artist)) {
+                        //console.log(data.artist)
+                    }
+                    lookupName(data.artist, nameOptions)
+                }
+            });
         });
-    });
 
-    console.log("DONE");
-    process.exit(0);
+        Object.keys(names).sort(function(a, b) {
+            return names[a] - names[b];
+        }).forEach(function(name) {
+            console.log(name, names[name]);
+        })
+
+        console.log("DONE");
+        process.exit(0);
+    });
 });
