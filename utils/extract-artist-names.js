@@ -40,8 +40,8 @@ var lookupName = function(name, options) {
         }
     }
 
-    if (/paul/i.test(results.name)) {
-        //console.log(results)
+    if (results.locale === "" && !results.unknown) {
+        console.log(results.name + "\t" + results.original);
     }
 
     return results;
