@@ -6,21 +6,26 @@
 <div class="artist_details container">
 <div class="row">
 <div class="col-lg-4">
-<table class="artist_name">
-    <tr class="romaji">
-        <td class="surname">{{ artist.name.surname }}&nbsp;</td>
-        <td class="given">{{ artist.name.given }}</td>
-        <td class="generation">&nbsp;{{ artist.name.generation }}</td>
-    </tr>
-    <tr class="kana">
-        <td class="surname">{{ artist.name.surname_kana }}&nbsp;</td>
-        <td class="given">{{ artist.name.given_kana }}</td>
-    </tr>
-    <tr class="kanji">
-        <td class="surname">{{ artist.name.surname_kanji }}&nbsp;</td>
-        <td class="given">{{ artist.name.given_kanji }}</td>
-    </tr>
-</table>
+<span class="artist_name">
+    {{ artist.name.name }}
+
+    {% if artist.name.given_kanji %}
+    (<ruby class="artist_kanji">
+        {{ artist.name.surname_kanji }}
+        <rp>(</rp><rt>{{ artist.name.surname_kana }}</rt><rp>)</rp>
+        {{ artist.name.given_kanji }}
+        <rp>(</rp><rt>{{ artist.name.given_kana }}</rt><rp>)</rp>
+    </ruby>)
+    {% else %}
+    {% if artist.name.kanji %}
+    (<ruby class="artist_kanji">
+        {{ artist.name.kanji }}
+        <rp>(</rp><rt>{{ artist.name.kana }}</rt><rp>)</rp>
+    </ruby>)
+    {% endif %}
+    {% endif %}
+</span>
+
 </div>
 
 <div class="artist_dates col-lg-4">
