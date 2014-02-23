@@ -2,11 +2,12 @@
 /**
  * Module dependencies.
  */
+module.exports = function(ukiyoe) {
 
-var mongoose = require("mongoose"),
-    Artist = mongoose.model("Artist"),
+var Artist = ukiyoe.db.model("Artist"),
     utils = require("../../lib/utils"),
-    _ = require("lodash");
+    _ = require("lodash"),
+    exports = {};
 
 /**
  * Load
@@ -195,4 +196,7 @@ exports.destroy = function(req, res) {
         req.flash("info", "Deleted successfully")
         res.redirect("/artists")
     });
+};
+
+return exports;
 };

@@ -3,15 +3,15 @@
  * Module dependencies.
  */
 
-var mongoose = require("mongoose");
 var LocalStrategy = require("passport-local").Strategy;
-var User = mongoose.model("User");
 
 /**
  * Expose
  */
 
-module.exports = function (passport, config) {
+module.exports = function (passport, config, ukiyoe) {
+    var User = ukiyoe.db.model("User");
+
     // serialize sessions
     passport.serializeUser(function(user, done) {
         done(null, user.id);

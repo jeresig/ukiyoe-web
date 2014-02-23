@@ -1,8 +1,4 @@
 var auth = require("./middlewares/authorization");
-var users = require("../app/controllers/users");
-var bios = require("../app/controllers/bios");
-var artists = require("../app/controllers/artists");
-var images = require("../app/controllers/images");
 
 var extractedartistAuth = [
     auth.requiresLogin
@@ -22,7 +18,12 @@ var passportOptions = {
     failureRedirect: "/login"
 };
 
-module.exports = function (app, passport) {
+module.exports = function (app, passport, ukiyoe) {
+    var users = require("../app/controllers/users")(ukiyoe);
+    var bios = require("../app/controllers/bios")(ukiyoe);
+    var artists = require("../app/controllers/artists")(ukiyoe);
+    var images = require("../app/controllers/images")(ukiyoe);
+
     app.get("/login", users.login);
     app.get("/signup", users.signup);
     app.get("/logout", users.logout);

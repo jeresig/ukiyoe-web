@@ -1,16 +1,15 @@
 /**
  * Module dependencies.
  */
+module.exports = function(ukiyoe) {
 
-var mongoose = require("mongoose"),
-    Schema = mongoose.Schema,
-    crypto = require("crypto");
+var crypto = require("crypto");
 
 /**
  * User Schema
  */
 
-var UserSchema = new Schema({
+var UserSchema = new ukiyoe.db.schema({
     name: { type: String, default: "" },
     email: { type: String, default: "" },
     hashed_password: { type: String, default: "" },
@@ -46,7 +45,7 @@ UserSchema.path("name").validate(validatePresenceOf, "Name cannot be blank");
 UserSchema.path("email").validate(validatePresenceOf, "Email cannot be blank");
 
 UserSchema.path("email").validate(function(email, fn) {
-    var User = mongoose.model("User");
+    var User = ukiyoe.db.model("User");
 
     // Check only when it is a new user or when email field is modified
     if (this.isNew || this.isModified("email")) {
@@ -128,4 +127,6 @@ UserSchema.methods = {
     }
 };
 
-mongoose.model("User", UserSchema);
+ukiyoe.db.model("User", UserSchema);
+
+};

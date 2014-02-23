@@ -2,10 +2,11 @@
 /**
  * Module dependencies.
  */
+module.exports = function(ukiyoe) {
 
-var mongoose = require("mongoose"),
-    User = mongoose.model("User"),
-    utils = require("../../lib/utils");
+var User = ukiyoe.db.model("User"),
+    utils = require("../../lib/utils"),
+    exports = {};
 
 var login = function(req, res) {
     if (req.session.returnTo) {
@@ -114,4 +115,7 @@ exports.user = function(req, res, next, id) {
             req.profile = user;
             next();
         });
+};
+
+return exports;
 };

@@ -2,3 +2,4 @@ node_modules
 bower_components
 config/config.js
 .DS_Store
+.env
