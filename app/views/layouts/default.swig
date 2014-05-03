@@ -5,16 +5,6 @@
     <meta http-equiv="content-language" content="{{ __("en-US") }}"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-{% if req.image %}
-    <!-- https://dev.twitter.com/docs/cards/types/photo-card -->
-    <meta name="twitter:card" content="photo">
-    <meta name="twitter:site" content="@ukiyo-e.org">
-    <meta name="twitter:creator" content="@jeresig">
-    <meta name="twitter:title" content="{{ title }}">
-    <meta name="twitter:image" content="{{ image_url }}">
-    <meta name="twitter:image:width" content="{{ image_width }}">
-    <meta name="twitter:image:height" content="{{ image_height }}">
-{% endif %}
     <link rel="icon" href="{{ CDN("/images/favicon.png", {"raw": true}) }}" type="image/x-icon"/>
     <title>{{ title }}</title>
     {% if page_desc %}<meta name="description" content="{{ page_desc }}"/>{% endif %}
