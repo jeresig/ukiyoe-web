@@ -181,7 +181,7 @@ exports.show = function(req, res) {
         title: req.artist.title,
         artist: req.artist,
         bio: req.artist.bios.sort(function(a, b) {
-            return b.length - a.elength;
+            return (b.bio ? b.bio.length : 0) - (a.bio ? a.bio.length : 0);
         })[0].bio
     });
 };
