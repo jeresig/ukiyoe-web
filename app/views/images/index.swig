@@ -61,7 +61,7 @@ $(function() {
 
     $(".slider").noUiSlider({
         range: [1603, (new Date).getYear() + 1900],
-        start: [$startDate.val(), $endDate.val()],
+        start: [$startDate.val() || 1603, $endDate.val() || (new Date).getYear() + 1900],
         step: 1,
         connect: true,
         behaviour: "drag",

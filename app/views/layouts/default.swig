@@ -45,7 +45,7 @@
         {% block content %}{% endblock %}
     </div>
 
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="/bower/jquery/jquery.min.js"></script>
     {{ CDN("/bower/select2/select2.js") }}
     {{ CDN("/bower/nouislider/jquery.nouislider.js") }}
     {{ CDN("/js/app.js") }}
