@@ -116,7 +116,7 @@ module.exports = function(app, config, passport) {
                 return req.i18n.getLocale() === "en" ? "ja" : "en";
             };
 
-            res.locals.getOtherURL: function() {
+            res.locals.getOtherURL = function() {
                 return site.genURL(otherLocale(req), req.path);
             };
 
