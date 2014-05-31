@@ -111,6 +111,45 @@ module.exports = function(app, config, passport) {
 
         app.use(function(req, res, next) {
             res.locals.CDN = CDN(req, res);
+
+            var otherLocale = function(req) {
+                return req.i18n.getLocale() === "en" ? "ja" : "en";
+            };
+
+            res.locals.getOtherURL: function() {
+                return site.genURL(otherLocale(req), req.path);
+            };
+
+            res.locals.curLocale = function(req) {
+                return req.i18n.getLocale();
+            };
+
+            res.locals.URL = function(req) {
+                return function(path) {
+                    return path.getURL ?
+                        path.getURL(req.i18n.getLocale()) :
+                        site.genURL(req.i18n.getLocale(), path);
+                }
+            };
+
+            res.locals.fullName = function(req) {
+                return function(item) {
+                    return item.getFullName(req.i18n.getLocale());
+                };
+            };
+
+            res.locals.shortName = function(req) {
+                return function(item) {
+                    return item.getShortName(req.i18n.getLocale());
+                };
+            };
+
+            res.locals.getTitle = function(req) {
+                return function(item) {
+                    return item.getTitle(req.i18n.getLocale());
+                };
+            };
+
             next();
         });
 

@@ -5,85 +5,85 @@
 {% block content %}
 <div id="result" class="row">
 	<div class="span8 imageholder">
-		<a href="{{ match.file }}"><img src="{{ match.scaled }}"
-			alt="{{ getTitle(match) }}"
-			title="{{ getTitle(match) }}"/></a>
+		<a href="{{ image.file }}"><img src="{{ image.scaled }}"
+			alt="{{ getTitle(image) }}"
+			title="{{ getTitle(image) }}"/></a>
 	</div>
 	<div class="details span4">
-		{% if match.artist %}
+		{% if image.artist %}
 			<p class="row artist">
 				<strong class="span1 right">{{ __("Artist:") }}</strong>
-				<span class="span3"><a href="{{ URL(match.artist) }}"
-					title="{{ fullName(match.artist) }}">
-					{{ fullName(match.artist) }}</a></span>
+				<span class="span3"><a href="{{ URL(image.artist) }}"
+					title="{{ fullName(image.artist) }}">
+					{{ fullName(image.artist) }}</a></span>
 			</p>
 		{% endif %}
-		{% if match.title %}
+		{% if image.title %}
 			<p class="row title">
 				<strong class="span1 right">{{ __("Title:") }}</strong>
-				<span class="span3">{{ match.title }}</span>
+				<span class="span3">{{ image.title }}</span>
 			</p>
 		{% endif %}
-		{% if match.date %}
+		{% if image.date %}
 			<p class="row date">
 				<strong class="span1 right">{{ __("Date:") }}</strong>
-				<span class="span3">{{ match.date }}</span>
+				<span class="span3">{{ image.date }}</span>
 			</p>
 		{% endif %}
-		{% if match.source_url %}
+		{% if image.source_url %}
 			<p class="row details">
 				<strong class="span1 right">
-					{% if match.source.commercial %}
+					{% if image.source.commercial %}
 						<small>{{ __("Details &amp;&nbsp;Prices:") }}</small>
 					{% else %}
 						{{ __("Details:") }}
 					{% endif %}
 				</strong>
 				<span class="span3">
-					{% if match.source.inactive %}
+					{% if image.source.inactive %}
 						<small>{{ __("Unfortunately the source of this print no longer exists.") }}</small>
-					{% else if match.source.hide_links %}
+					{% else if image.source.hide_links %}
 						<small>{{ __("There is no way to link to this print on the source site. Please visit the source and search for the print there.") }}</small>
-					{% else if match.source.title_link %}
-						<small><a href="{{ match.source_url }}"
-							title="{{ match.source.title_link }}">
-							{{ getTitle(match) }}</a></small>
+					{% else if image.source.title_link %}
+						<small><a href="{{ image.source_url }}"
+							title="{{ image.source.title_link }}">
+							{{ getTitle(image) }}</a></small>
 					{% else %}
-						<a href="{{ match.source_url }}">
+						<a href="{{ image.source_url }}">
 							{{ __("More information...") }}</a>
 					{% endif %}
 				</span>
 			</p>
 		{% endif %}
-		{% if match.source && match.source.id != "uploads" %}
-			{% if match.source.inactive %}
+		{% if image.source && image.source.id != "uploads" %}
+			{% if image.source.inactive %}
 				<p class="row source">
 					<strong class="span1 right">{{ __("Source:") }}</strong>
-					<span class="span3"><a href="{{ URL(match.source) }}" title="{{ fullName(match.source) }}">
-						{{ fullName(match.source) }}</a></span>
+					<span class="span3"><a href="{{ URL(image.source) }}" title="{{ fullName(image.source) }}">
+						{{ fullName(image.source) }}</a></span>
 				</p>
 			{% else %}
 				<p class="row source">
 					<strong class="span1 right">{{ __("Source:") }}</strong>
-					<span class="span3"><a href="{{ match.source.url }}">
-						{% if match.source.link_text %}
-							{{ match.source.link_text }}
+					<span class="span3"><a href="{{ image.source.url }}">
+						{% if image.source.link_text %}
+							{{ image.source.link_text }}
 						{% else %}
-							{{ fullName(match.source) }}
+							{{ fullName(image.source) }}
 						{% endif %}
 					</a><br/>
-					<small><a href="{{ URL(match.source) }}" title="{{ fullName(match.source) }}">
-						{{ __("Browse all %s prints...", match.source.count_string) }}</a></small></span>
+					<small><a href="{{ URL(image.source) }}" title="{{ fullName(image.source) }}">
+						{{ __("Browse all %s prints...", image.source.count_string) }}</a></small></span>
 				</p>
 			{% endif %}
 		{% endif %}
-		{% if match.upload %}
+		{% if image.upload %}
 			{% if results.length == 0 %}
 				<h3>{{ __("Uh oh!") }}</h3>
 				<p>{{ __("No other copies of this print have been found.") }}</p>
 				<div class="hide-ja">
 				<p>It might be worthwhile to copy the uploaded image URL:</p>
-				<pre>{{ match.file }}</pre>
+				<pre>{{ image.file }}</pre>
 				<p>and ask the Ukiyo-e Q&amp;A community for help:</p>
 				<p><a href="http://www.ukiyo-e.se/wwwboard/wwwboard.html">
 					http://www.ukiyo-e.se/wwwboard/wwwboard.html</a></p>
@@ -164,7 +164,7 @@
 
 </div>
 
-{% if results.length > 0 && match.upload %}
+{% if results.length > 0 && image.upload %}
 <div class="row">
 	<div class="span8">
 	<h3>{{ __("Learn More") }}</h3>
@@ -182,7 +182,7 @@
 {% endif %}
 
 <script type="text/javascript">
-var matchData = {{ match|json_encode|raw }};
+var imageData = {{ image|json_encode|raw }};
 var results = {{ results|json_encode|raw }};
 </script>
 
