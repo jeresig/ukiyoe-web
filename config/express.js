@@ -132,10 +132,8 @@ module.exports = function(app, config, passport) {
                 }
             };
 
-            res.locals.fullName = function(req) {
-                return function(item) {
-                    return item.getFullName(req.i18n.getLocale());
-                };
+            res.locals.fullName = function(item) {
+                return item.getFullName(req.i18n.getLocale());
             };
 
             res.locals.shortName = function(req) {

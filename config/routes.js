@@ -23,6 +23,7 @@ module.exports = function (app, passport, ukiyoe) {
     var bios = require("../app/controllers/bios")(ukiyoe);
     var artists = require("../app/controllers/artists")(ukiyoe);
     var images = require("../app/controllers/images")(ukiyoe);
+    var sources = require("../app/controllers/sources")(ukiyoe);
 
     app.get("/login", users.login);
     app.get("/signup", users.signup);
@@ -65,6 +66,8 @@ module.exports = function (app, passport, ukiyoe) {
     app.del("/images/:artistId", imageAuth, images.destroy);
 
     app.param("imageId", images.load);
+
+    app.get("/sources", sources.index);
 
     app.get("/", artists.search);
 };
