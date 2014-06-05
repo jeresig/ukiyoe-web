@@ -59,5 +59,8 @@
 	"United States: Michigan": "United States: Michigan",
 	"United States: Washington": "United States: Washington",
 	"Canada": "Canada",
-	"Italy": "Italy"
+	"Italy": "Italy",
+	"United States: Hawaii": "United States: Hawaii",
+	"United States: Minnesota": "United States: Minnesota",
+	"United States: Wisconsin": "United States: Wisconsin"
 }

@@ -13,7 +13,7 @@
         {% set rows = activeSources[sourceType.type] %}
         {% if rows %}
             <div class="row">
-                <div class="span12">
+                <div class="col-md-12">
                     <h4>{{ __(sourceType.name) }}</h4>
                 </div>
             </div>
@@ -21,7 +21,7 @@
         {% for row in rows %}
             <div class="row">
             {% for source in row %}
-                <div class="span3">
+                <div class="col-md-3">
                 <p><a href="{{ source.url }}">{{ fullName(source) }}</a><br/>
                     <small><a href="{{ URL(source) }}"
                         title="{{ fullName(source) }}">
@@ -43,7 +43,7 @@
         {% set rows = estimatedSources[sourceType.type] %}
         {% if rows %}
             <div class="row">
-                <div class="span12">
+                <div class="col-md-12">
                     <h4>{{ __(sourceType.name) }}</h4>
                 </div>
             </div>
@@ -51,7 +51,7 @@
         {% for row in rows %}
             <div class="row">
             {% for source in row %}
-                <div class="span3">
+                <div class="col-md-3">
                 <p><a href="{{ source.url }}">{{ fullName(source) }}</a><br/>
                     <small>{{ __("est. %s print images.", source.estNumPrints) }}</a><br/>
                         {{ __(source.location) }}</small></p>

@@ -43,13 +43,12 @@ exports.index = function(req, res) {
         var estimatedSources = {};
 
         sources.forEach(function(source) {
-            if (source.numPrints) {
-                total += source.numPrints;
-                clusterSource(source, activeSources);
-
-            } else if (source.estNumPrints) {
+            if (source.estNumPrints) {
                 totalEstimated += source.estNumPrints;
                 clusterSource(source, estimatedSources);
+            } else {
+                total += source.numPrints;
+                clusterSource(source, activeSources);
             }
         });
 
