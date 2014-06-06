@@ -1,7 +1,98 @@
 {% extends "../layouts/default.swig" %}
 
-{% block title %}{{ __("Index Page") }}{% endblock %}
+{% block title %}{{ __("Search Japanese Woodblock Prints") }}{% endblock %}
 
 {% block content %}
-Index Page
+<div id="search-box" class="row">
+    <div class="col-md-12">
+        <h2 class="hidden-phone">{{ __("Japanese Woodblock Print Search") }}</h2>
+
+        <p class="hidden-phone">{{ __("Ukiyo-e Search provides an incredible resource: The ability to both search for Japanese woodblock prints by simply taking a picture of an existing print AND the ability to see similar prints across multiple collections of prints. Below is an example print, click to see it in action.") }}</p>
+    </div>
+
+    <div class="col-md-7 image-example">
+        <a href="{{ URL("/image/met/DP141256") }}">
+            <img src="http://data.ukiyo-e.org/met/thumbs/DP141256.jpg"
+                style="width:220px;height:220px;"
+                class="hidden-phone large-image" /></a>
+        <a href="{{ URL("/image/met/DP141256") }}">
+            {{ CDN("/images/example-compare.png", {"style": "height:220px;width:446px;", "class": "hidden-phone"}) }}</a>
+    </div>
+
+    <div class="col-md-5 upload-box">
+        <h4>{{ __("Search %s prints:", total) }}</h4>
+        <form action="/search" method="GET" class="form-search search">
+            <input type="search" id="q" name="q" placeholder="{{ __("Search") }}" class="input-medium search-query" />
+            <input type="submit" value="{{ __("Search") }}" class="btn" />
+        </form>
+
+        <h4>{{ __("Search by Image:") }}</h4>
+        <p>{{ __("Upload a picture of a print to find similar prints across multiple collections.") }}</p>
+
+        <div class="tabblable">
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="#upload" data-toggle="tab">{{ __("Upload an Image") }}</a></li>
+                <li><a href="#paste" data-toggle="tab">{{ __("Paste image URL") }}</a></li>
+            </ul>
+            <form action="/upload" method="POST" enctype="multipart/form-data" class="upload">
+                <input type="hidden" name="test" value=""/>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="upload">
+                        <p><input type="file" id="file" name="file" />
+                        <input type="submit" value="{{ __("Search by Image") }}" class="btn pull-right" /></p>
+                    </div>
+                    <div class="tab-pane" id="paste">
+                        <p><input type="text" id="url" name="url" value="http://" />
+                        <input type="submit" value="{{ __("Search by Image") }}" class="btn pull-right" /></p>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="alert hidden-phone hide-ja">
+            <strong>Update (<a href="http://blog.ukiyo-e.org/2014/03/japanese-prints-at-nyc-asia-week-2014/">NYC Asia Week 2014</a>):</strong> 3 new sources added!
+            <ol>
+                  <li><a href="http://ukiyo-e.org/source/artofjapan">The Art of Japan (1,399 images)</a></li>
+                <li><a href="http://ukiyo-e.org/source/robynbuntin">Robyn Buntin of Honolulu (4,310 images)</a></li>
+                <li><a href="http://ukiyo-e.org/source/scholten">Scholten Japanese Art (854 images)</a></li>
+              </ol>
+        </div>
+    </div>
+</div>
+
+<div class="row hidden-phone hide-ja">
+    <div class="col-md-8">
+        <div class="alert alert-success">
+            Better data, hundreds of thousands of additional images, and better search capabilities are forthcoming. Sign-up to be notified when additional features are ready.
+        </div>
+    </div>
+    <div class="col-md-4 hidden-phone">
+        <form action="http://jquery.us1.list-manage1.com/subscribe/post?u=9d97dbe5f30bdee8c85a45e9e&amp;id=e32c42f014" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate form-horizontal" target="_blank">
+            <h4>Subscribe for Updates</h4>
+            <div class="mc-field-group">
+                <input type="email" value="" name="EMAIL" class="required email input-medium" id="mce-EMAIL" placeholder="Email Address">
+                <input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button btn">
+            </div>
+        </form>
+    </div>
+</div>
+
+<div id="results" class="ages">
+    {% for age in ages %}
+        <h2>{{ __(age.title) }}</h2>
+        <div class="row">
+        {% for item in age.artists %}
+            <div class="img col-md-3" data-slug="{{ item.artist.slug }}">
+                <a class="img" href="{{ URL(item.artist) }}">
+                    <img src="{{ item.thumb }}" alt="{{ fullName(item.artist) }}"/></a>
+                <div class="details">
+                    <div class="wrap">
+                    <a class="artist" href="{{ URL(item.artist) }}" title="{{ fullName(item.artist) }}">{{ fullName(item.artist) }}</a>
+                    ({{ item.artist.matches }})
+                    </div>
+                </div>
+          </div>
+        {% endfor %}
+        </div>
+    {% endfor %}
+</div>
 {% endblock %}

@@ -13,7 +13,7 @@
     {{ CDN("/bower/bootstrap/dist/css/bootstrap-theme.min.css") }}
     {{ CDN("/bower/select2/select2.css") }}
     {{ CDN("/bower/nouislider/jquery.nouislider.css") }}
-    {{ CDN("/css/app.css") }}
+    {{ CDN("/css/style.css") }}
 
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>

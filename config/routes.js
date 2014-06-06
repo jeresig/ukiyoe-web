@@ -24,6 +24,7 @@ module.exports = function (app, passport, ukiyoe) {
     var artists = require("../app/controllers/artists")(ukiyoe);
     var images = require("../app/controllers/images")(ukiyoe);
     var sources = require("../app/controllers/sources")(ukiyoe);
+    var home = require("../app/controllers/home")(ukiyoe);
 
     app.get("/login", users.login);
     app.get("/signup", users.signup);
@@ -69,5 +70,6 @@ module.exports = function (app, passport, ukiyoe) {
 
     app.get("/sources", sources.index);
 
-    app.get("/", artists.search);
+    app.get("/about", home.about);
+    app.get("/", home.index);
 };
