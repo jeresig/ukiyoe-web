@@ -74,5 +74,13 @@
 	"About The Site": "About The Site",
 	"Video Overview": "Video Overview",
 	"About John Resig": "About John Resig",
-	"Contributors": "Contributors"
+	"Contributors": "Contributors",
+	"Japanese Woodblock print search engine. Searches thousands of Ukiyo-e, Meiji, Shin Hanga, and Sosaku Hanga prints.": "Japanese Woodblock print search engine. Searches thousands of Ukiyo-e, Meiji, Shin Hanga, and Sosaku Hanga prints.",
+	"Early Ukiyo-e (Early-Mid 1700s)": "Early Ukiyo-e (Early-Mid 1700s)",
+	"Birth of Full-Color Printing (1740s to 1780s)": "Birth of Full-Color Printing (1740s to 1780s)",
+	"Golden Age of Ukiyo-e (1780 to 1804)": "Golden Age of Ukiyo-e (1780 to 1804)",
+	"Popularization of Woodblock Printing (1804 to 1868)": "Popularization of Woodblock Printing (1804 to 1868)",
+	"Meiji Period (1868 to 1912)": "Meiji Period (1868 to 1912)",
+	"Shin Hanga and Sosaku Hanga Movements (1915 to 1940s)": "Shin Hanga and Sosaku Hanga Movements (1915 to 1940s)",
+	"Modern and Contemporary (1950s to Now)": "Modern and Contemporary (1950s to Now)"
 }
