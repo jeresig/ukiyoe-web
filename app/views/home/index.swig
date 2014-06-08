@@ -77,17 +77,17 @@
 </div>
 
 <div id="results" class="ages">
-    {% for age in ages %}
-        <h2>{{ __(age.title) }}</h2>
+    {% for era in eras %}
+        <h2>{{ __(era.name) }}</h2>
         <div class="row">
-        {% for item in age.artists %}
-            <div class="img col-md-3" data-slug="{{ item.artist.slug }}">
-                <a class="img" href="{{ URL(item.artist) }}">
-                    <img src="{{ item.thumb }}" alt="{{ fullName(item.artist) }}"/></a>
+        {% for artist in era.artists %}
+            <div class="img col-md-3" data-slug="{{ artist.slug }}">
+                <a class="img" href="{{ URL(artist) }}">
+                    <img src="{{ artist.repImage.thumb }}" alt="{{ fullName(artist) }}"/></a>
                 <div class="details">
                     <div class="wrap">
-                    <a class="artist" href="{{ URL(item.artist) }}" title="{{ fullName(item.artist) }}">{{ fullName(item.artist) }}</a>
-                    ({{ item.artist.matches }})
+                    <a class="artist" href="{{ URL(artist) }}" title="{{ fullName(artist) }}">{{ fullName(artist) }}</a>
+                    ({{ artist.printCount }})
                     </div>
                 </div>
           </div>
