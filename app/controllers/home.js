@@ -1,7 +1,3 @@
-
-/*!
- * Module dependencies.
- */
 module.exports = function(ukiyoe) {
 
 var Era = ukiyoe.db.model("Era");
