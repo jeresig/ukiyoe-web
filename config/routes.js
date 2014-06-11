@@ -71,6 +71,11 @@ module.exports = function(app, passport, ukiyoe) {
 
     app.get("/sources", sources.index);
 
+    app.get("/sitemap.xml", sitemaps.index);
+    app.get("/sitemap-sources.xml", sitemaps.sources);
+    app.get("/sitemap-artists.xml", sitemaps.artists);
+    app.get("/sitemap-search-:start.xml", sitemaps.search);
+
     app.get("/about", home.about);
     app.get("/", home.index);
 };
