@@ -14,7 +14,7 @@ require("express-namespace");
 // Bootstrap models
 var ukiyoe = require("ukiyoe-models");
 
-ukiyoe.init(function() {
+ukiyoe.db.connect(function() {
     fs.readdirSync(__dirname + "/app/models").forEach(function (file) {
         if (~file.indexOf(".js")) {
             require(__dirname + "/app/models/" + file)(ukiyoe);
