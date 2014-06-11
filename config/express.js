@@ -109,6 +109,39 @@ module.exports = function(app, config, passport) {
             locales: ["en"]
         });
 
+        // Supported locales
+        app.locales = ["en", "ja"];
+
+        // Generate a URL given a path and a locale
+        app.genURL = function(locale, path) {
+            var base = locale === "en" || !locale || env === "development" ?
+                app.baseURL() :
+                app.baseURL().replace(/:\/\//, "://" + locale + ".");
+
+            // Only use a query string in dev mode and if we're
+            // on a non-default locale
+            if (env === "development" && locale !== app.locales[0]) {
+                path += (/\?/.test(path) ? "&" : "?") + "lang=" + locale;
+            }
+
+            return base + path;
+        };
+
+        // The base URL for all pages
+        app.baseURL = function() {
+            return process.env.BASE_URL;
+        };
+
+        // The base URL for storage
+        app.baseDataURL = function() {
+            return process.env.BASE_DATA_URL;
+        };
+
+        // Generate a data URL
+        app.dataURL = function(source, type) {
+            return app.baseDataURL() + source + "/" + (type || "");
+        };
+
         app.use(function(req, res, next) {
             res.locals.CDN = CDN(req, res);
 
@@ -117,35 +150,29 @@ module.exports = function(app, config, passport) {
             };
 
             res.locals.getOtherURL = function() {
-                return site.genURL(otherLocale(req), req.path);
+                return app.genURL(otherLocale(req), req.path);
             };
 
-            res.locals.curLocale = function(req) {
+            res.locals.curLocale = function() {
                 return req.i18n.getLocale();
             };
 
-            res.locals.URL = function(req) {
-                return function(path) {
-                    return path.getURL ?
-                        path.getURL(req.i18n.getLocale()) :
-                        site.genURL(req.i18n.getLocale(), path);
-                }
+            res.locals.URL = function(path) {
+                return path.getURL ?
+                    path.getURL(req.i18n.getLocale()) :
+                    app.genURL(req.i18n.getLocale(), path);
             };
 
             res.locals.fullName = function(item) {
                 return item.getFullName(req.i18n.getLocale());
             };
 
-            res.locals.shortName = function(req) {
-                return function(item) {
-                    return item.getShortName(req.i18n.getLocale());
-                };
+            res.locals.shortName = function(item) {
+                return item.getShortName(req.i18n.getLocale());
             };
 
             res.locals.getTitle = function(req) {
-                return function(item) {
-                    return item.getTitle(req.i18n.getLocale());
-                };
+                return item.getTitle(req.i18n.getLocale());
             };
 
             next();

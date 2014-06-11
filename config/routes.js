@@ -18,13 +18,14 @@ var passportOptions = {
     failureRedirect: "/login"
 };
 
-module.exports = function (app, passport, ukiyoe) {
+module.exports = function(app, passport, ukiyoe) {
     var users = require("../app/controllers/users")(ukiyoe);
     var bios = require("../app/controllers/bios")(ukiyoe);
     var artists = require("../app/controllers/artists")(ukiyoe);
     var images = require("../app/controllers/images")(ukiyoe);
     var sources = require("../app/controllers/sources")(ukiyoe);
     var home = require("../app/controllers/home")(ukiyoe);
+    var sitemaps = require("../app/controllers/sitemaps")(ukiyoe, app);
 
     app.get("/login", users.login);
     app.get("/signup", users.signup);
