@@ -34,6 +34,18 @@ ukiyoe.db.connect(function() {
 
     // Start the app by listening on <port>
     var port = process.env.PORT || config.server.port;
-    app.listen(port);
-    console.log("Express app started on port " + port)
+
+    console.log("PORT: " + port);
+
+    app.listen(port, function() {
+        if (process.send) {
+            process.send("online");
+        }
+    });
+
+    process.on("message", function(message) {
+        if (message === "shutdown") {
+            process.exit(0);
+        }
+    });
 });
