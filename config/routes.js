@@ -27,6 +27,7 @@ module.exports = function(app, passport, ukiyoe) {
     var home = require("../app/controllers/home")(ukiyoe);
     var sitemaps = require("../app/controllers/sitemaps")(ukiyoe, app);
 
+    /*
     app.get("/login", users.login);
     app.get("/signup", users.signup);
     app.get("/logout", users.logout);
@@ -36,7 +37,9 @@ module.exports = function(app, passport, ukiyoe) {
     app.get("/users/:userId", users.show);
 
     app.param("userId", users.user);
+    */
 
+    /*
     app.get("/bios", bios.index);
     app.get("/bios/new", auth.requiresLogin, bios.new);
     app.post("/bios", auth.requiresLogin, bios.create);
@@ -46,28 +49,33 @@ module.exports = function(app, passport, ukiyoe) {
     app.del("/bios/:bioId", extractedartistAuth, bios.destroy);
 
     app.param("bioId", bios.load);
+    */
 
     app.get("/artists", artists.index);
-    app.get("/artists/search", artists.search);
-    app.get("/artists/new", auth.requiresLogin, artists.new);
-    app.post("/artists", auth.requiresLogin, artists.create);
+    //app.get("/artists/search", artists.search);
+    //app.get("/artists/new", auth.requiresLogin, artists.new);
+    //app.post("/artists", auth.requiresLogin, artists.create);
     app.get("/artists/:artistId", artists.show);
-    app.get("/artists/:artistId/edit", artistAuth, artists.edit);
-    app.put("/artists/:artistId", artistAuth, artists.update);
-    app.del("/artists/:artistId", artistAuth, artists.destroy);
+    //app.get("/artists/:artistId/edit", artistAuth, artists.edit);
+    //app.put("/artists/:artistId", artistAuth, artists.update);
+    //app.del("/artists/:artistId", artistAuth, artists.destroy);
 
     app.param("artistId", artists.load);
 
     app.get("/images", images.index);
-    app.get("/images/search", images.search);
-    app.get("/images/new", auth.requiresLogin, images.new);
-    app.post("/images", auth.requiresLogin, images.create);
-    app.get("/images/:artistId", images.show);
-    app.get("/images/:artistId/edit", imageAuth, images.edit);
-    app.put("/images/:artistId", imageAuth, images.update);
-    app.del("/images/:artistId", imageAuth, images.destroy);
+    app.get("/search", images.search);
+    //app.get("/images/new", auth.requiresLogin, images.new);
+    //app.post("/images", auth.requiresLogin, images.create);
+    app.get("/images/:imageId", images.show);
+    //app.get("/images/:imageId/edit", imageAuth, images.edit);
+    //app.put("/images/:imageId", imageAuth, images.update);
+    //app.del("/images/:imageId", imageAuth, images.destroy);
 
     app.param("imageId", images.load);
+
+    app.get("/source/:sourceId", sources.show);
+
+    app.param("sourceId", source.load);
 
     app.get("/sources", sources.index);
 

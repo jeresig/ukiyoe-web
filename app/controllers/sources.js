@@ -64,5 +64,22 @@ exports.index = function(req, res) {
     });
 };
 
+exports.show = function(req, res) {
+
+};
+
+exports.load = function(req, res, next, id) {
+    Source.load(id, function(err, source) {
+        if (err) {
+            return next(err);
+        }
+        if (!source) {
+            return next(new Error("not found"));
+        }
+        req.source = source;
+        next();
+    });
+};
+
 return exports;
 };
