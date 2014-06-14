@@ -1,4 +1,4 @@
-module.exports = function(ukiyoe) {
+module.exports = function(ukiyoe, app) {
 
 var Source = ukiyoe.db.model("Source"),
     utils = require("../../lib/utils"),
@@ -7,6 +7,12 @@ var Source = ukiyoe.db.model("Source"),
     sourceTypeMap = {},
     exports = {},
     numColumns = 4;
+
+
+Source.prototype.getURL = function(locale) {
+    console.log("getURL", locale, this._id)
+    return app.genURL(locale, "source/" + this._id);
+};
 
 sourceTypes.forEach(function(type) {
     // Create a mapping for the source types

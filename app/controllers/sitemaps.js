@@ -1,8 +1,8 @@
 module.exports = function(ukiyoe, app) {
 
-var Image = ukiyoe.db.models("Image");
-var Source = ukiyoe.db.models("Source");
-var Artist = ukiyoe.db.models("Artist");
+var Image = ukiyoe.db.model("Image");
+var Source = ukiyoe.db.model("Source");
+var Artist = ukiyoe.db.model("Artist");
 
 var numPerMap = 1000;
 

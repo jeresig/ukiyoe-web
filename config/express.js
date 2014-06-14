@@ -129,12 +129,14 @@ module.exports = function(app, config, passport) {
 
         // The base URL for all pages
         app.baseURL = function() {
-            return process.env.BASE_URL;
+            return process.env.BASE_URL ||
+                "http://localhost:" + process.env.PORT + "/";
         };
 
         // The base URL for storage
         app.baseDataURL = function() {
-            return process.env.BASE_DATA_URL;
+            return process.env.BASE_DATA_URL ||
+                "http://localhost:" + process.env.PORT + "/";
         };
 
         // Generate a data URL

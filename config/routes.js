@@ -20,12 +20,12 @@ var passportOptions = {
 };
 
 module.exports = function(app, passport, ukiyoe) {
-    var users = require("../app/controllers/users")(ukiyoe);
-    var bios = require("../app/controllers/bios")(ukiyoe);
-    var artists = require("../app/controllers/artists")(ukiyoe);
-    var images = require("../app/controllers/images")(ukiyoe);
-    var sources = require("../app/controllers/sources")(ukiyoe);
-    var home = require("../app/controllers/home")(ukiyoe);
+    var users = require("../app/controllers/users")(ukiyoe, app);
+    var bios = require("../app/controllers/bios")(ukiyoe, app);
+    var artists = require("../app/controllers/artists")(ukiyoe, app);
+    var images = require("../app/controllers/images")(ukiyoe, app);
+    var sources = require("../app/controllers/sources")(ukiyoe, app);
+    var home = require("../app/controllers/home")(ukiyoe, app);
     var sitemaps = require("../app/controllers/sitemaps")(ukiyoe, app);
 
     // Utility method of setting the cache header on a request
@@ -88,7 +88,7 @@ module.exports = function(app, passport, ukiyoe) {
     app.get("/sources", cache(1), sources.index);
     app.get("/source/:sourceId", cache(12), sources.show);
 
-    app.param("sourceId", source.load);
+    app.param("sourceId", sources.load);
 
     app.get("/sitemap.xml", sitemaps.index);
     app.get("/sitemap-sources.xml", sitemaps.sources);

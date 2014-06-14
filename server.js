@@ -1,8 +1,3 @@
-
-/**
- * Module dependencies
- */
-
 var express = require("express");
 var passport = require("passport");
 var env = process.env.NODE_ENV || "development";
@@ -11,7 +6,6 @@ var fs = require("fs");
 
 require("express-namespace");
 
-// Bootstrap models
 var ukiyoe = require("ukiyoe-models");
 
 ukiyoe.db.connect(function() {
@@ -24,7 +18,7 @@ ukiyoe.db.connect(function() {
     // Bootstrap passport config
     require("./config/passport")(passport, config, ukiyoe);
 
-    var app = express()
+    var app = express();
 
     // Bootstrap application settings
     require("./config/express")(app, config, passport);
