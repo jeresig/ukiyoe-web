@@ -1,6 +1,10 @@
+var async = require("async");
+
 module.exports = function(ukiyoe) {
 
 var Era = ukiyoe.db.model("Era");
+var Image = ukiyoe.db.model("Image");
+var Artist = ukiyoe.db.model("Artist");
 
 var exports = {};
 

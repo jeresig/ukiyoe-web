@@ -142,5 +142,7 @@
 	"These sources of Japanese Woodblock prints have been integrated into the database and are searchable.": "These sources of Japanese Woodblock prints have been integrated into the database and are searchable.",
 	"Artist Analysis: <a href='%s'>%s</a>": "Artist Analysis: <a href='%s'>%s</a>",
 	"Attribution Analysis: %s": "Attribution Analysis: %s",
-	"United States: South Carolina": "United States: South Carolina"
+	"United States: South Carolina": "United States: South Carolina",
+	"ukiyoe-web": "ukiyoe-web",
+	"Images": "Images"
 }
