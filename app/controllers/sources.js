@@ -93,8 +93,6 @@ exports.show = function(req, res) {
             return res.render("500");
         }
 
-        console.log(results)
-
         res.render("images/index", {
             title: "Images",
             q: req.param("q"),

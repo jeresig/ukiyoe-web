@@ -78,12 +78,12 @@ module.exports = function(app, passport, ukiyoe) {
     app.get("/search", cache(1), images.search);
     //app.get("/images/new", auth.requiresLogin, images.new);
     //app.post("/images", auth.requiresLogin, images.create);
-    app.get("/images/:imageId", images.show);
+    app.get("/images/:sourceId/:imageName", images.show);
     //app.get("/images/:imageId/edit", imageAuth, images.edit);
     //app.put("/images/:imageId", imageAuth, images.update);
     //app.del("/images/:imageId", imageAuth, images.destroy);
 
-    app.param("imageId", images.load);
+    app.param("imageName", images.load);
 
     app.get("/sources", cache(1), sources.index);
     app.get("/source/:sourceId", cache(12), sources.show);

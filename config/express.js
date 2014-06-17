@@ -173,7 +173,7 @@ module.exports = function(app, config, passport) {
                 return item.getShortName(req.i18n.getLocale());
             };
 
-            res.locals.getTitle = function(req) {
+            res.locals.getTitle = function(item) {
                 return item.getTitle(req.i18n.getLocale());
             };
 

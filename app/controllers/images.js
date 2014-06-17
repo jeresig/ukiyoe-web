@@ -13,17 +13,22 @@ var Image = ukiyoe.db.model("Image"),
  * Load
  */
 
-exports.load = function(req, res, next, id) {
-    Image.load(id, function(err, image) {
-        if (err) {
-            return next(err);
-        }
-        if (!image) {
-            return next(new Error("not found"));
-        }
-        req.image = image;
-        next();
-    });
+exports.load = function(req, res, next, imageName) {
+    Image.findById(req.params.sourceId + "/" + imageName)
+        .populate("similar.image")
+        .populate("artist")
+        .populate("source")
+        .exec(function(err, image) {
+            if (err) {
+                return next(err);
+            }
+            if (!image) {
+                console.log("not found")
+                return next(new Error("not found"));
+            }
+            req.image = image;
+            next();
+        });
 };
 
 /**
@@ -197,7 +202,7 @@ exports.update = function(req, res) {
 exports.show = function(req, res) {
     res.render("images/show", {
         //title: req.image.title,
-        imatch: req.image,
+        image: req.image,
         results: req.image.similar
     });
 };

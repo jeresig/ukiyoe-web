@@ -17,7 +17,7 @@
 
 {% for image in images %}
 <div style="float:left;width:220px;height:240px;">
-<img src="http://data.ukiyo-e.org/{{ image.source }}/thumbs/{{ image.imageName }}.jpg"/>
+<a href="{{ URL("/images/" + image.source + "/" + image.imageName) }}"><img src="http://data.ukiyo-e.org/{{ image.source }}/thumbs/{{ image.imageName }}.jpg"/></a>
 <span>{% for artist in image.artists %}
     {% if artist.artist %}
         <a href="/artist/{{ artist.artist.name.name }}">{{ artist.artist.name.name }}</a>
