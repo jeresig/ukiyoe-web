@@ -2,22 +2,37 @@
 /**
  * Module dependencies.
  */
-module.exports = function(ukiyoe) {
+module.exports = function(ukiyoe, app) {
 
 var Image = ukiyoe.db.model("Image"),
     utils = require("../../lib/utils"),
     _ = require("lodash"),
     exports = {};
 
-/**
- * Load
- */
+Image.prototype.getURL = function(locale) {
+    return app.genURL(locale, "images/" + this._id);
+};
+
+Image.prototype.getOriginalURL = function(locale) {
+    return app.dataURL(this.source._id || this.source,
+        "images/" + this.imageName + ".jpg");
+};
+
+Image.prototype.getScaledURL = function(locale) {
+    return app.dataURL(this.source._id || this.source,
+        "scaled/" + this.imageName + ".jpg");
+};
+
+Image.prototype.getThumbURL = function(locale) {
+    return app.dataURL(this.source._id || this.source,
+        "thumbs/" + this.imageName + ".jpg");
+};
 
 exports.load = function(req, res, next, imageName) {
     Image.findById(req.params.sourceId + "/" + imageName)
         .populate("similar.image")
         .populate("artist")
-        .populate("source")
+        .populate("source") // TODO: Don't do this.
         .exec(function(err, image) {
             if (err) {
                 return next(err);
@@ -30,10 +45,6 @@ exports.load = function(req, res, next, imageName) {
             next();
         });
 };
-
-/**
- * Search
- */
 
 exports.search = function(req, res) {
     var page = (req.param("page") > 0 ? req.param("page") : 1) - 1;

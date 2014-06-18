@@ -4,42 +4,43 @@
 
 {% block content %}
 <div id="result" class="row">
-    <div class="span8 imageholder">
-        <a href="{{ image.file }}"><img src="{{ image.scaled }}"
-            alt="{{ getTitle(image) }}"
-            title="{{ getTitle(image) }}"/></a>
+    <div class="col-md-8 imageholder">
+        <a href="{{ image.getOriginalURL() }}">
+            <img src="{{ image.getScaledURL() }}"
+                alt="{{ getTitle(image) }}"
+                title="{{ getTitle(image) }}"/></a>
     </div>
-    <div class="details span4">
+    <div class="details col-md-4">
         {% if image.artist %}
             <p class="row artist">
-                <strong class="span1 right">{{ __("Artist:") }}</strong>
-                <span class="span3"><a href="{{ URL(image.artist) }}"
+                <strong class="col-md-3 right">{{ __("Artist:") }}</strong>
+                <span class="col-md-9"><a href="{{ URL(image.artist) }}"
                     title="{{ fullName(image.artist) }}">
                     {{ fullName(image.artist) }}</a></span>
             </p>
         {% endif %}
         {% if image.title %}
             <p class="row title">
-                <strong class="span1 right">{{ __("Title:") }}</strong>
-                <span class="span3">{{ image.title }}</span>
+                <strong class="col-md-3 right">{{ __("Title:") }}</strong>
+                <span class="col-md-9">{{ image.title }}</span>
             </p>
         {% endif %}
         {% if image.date %}
             <p class="row date">
-                <strong class="span1 right">{{ __("Date:") }}</strong>
-                <span class="span3">{{ image.date }}</span>
+                <strong class="col-md-3 right">{{ __("Date:") }}</strong>
+                <span class="col-md-9">{{ image.date }}</span>
             </p>
         {% endif %}
         {% if image.source_url %}
             <p class="row details">
-                <strong class="span1 right">
+                <strong class="col-md-3 right">
                     {% if image.source.commercial %}
                         <small>{{ __("Details &amp;&nbsp;Prices:") }}</small>
                     {% else %}
                         {{ __("Details:") }}
                     {% endif %}
                 </strong>
-                <span class="span3">
+                <span class="col-md-9">
                     {% if image.source.inactive %}
                         <small>{{ __("Unfortunately the source of this print no longer exists.") }}</small>
                     {% elif image.source.hide_links %}
@@ -58,14 +59,14 @@
         {% if image.source && image.source.id != "uploads" %}
             {% if image.source.inactive %}
                 <p class="row source">
-                    <strong class="span1 right">{{ __("Source:") }}</strong>
-                    <span class="span3"><a href="{{ URL(image.source) }}" title="{{ fullName(image.source) }}">
+                    <strong class="col-md-3 right">{{ __("Source:") }}</strong>
+                    <span class="col-md-9"><a href="{{ URL(image.source) }}" title="{{ fullName(image.source) }}">
                         {{ fullName(image.source) }}</a></span>
                 </p>
             {% else %}
                 <p class="row source">
-                    <strong class="span1 right">{{ __("Source:") }}</strong>
-                    <span class="span3"><a href="{{ image.source.url }}">
+                    <strong class="col-md-3 right">{{ __("Source:") }}</strong>
+                    <span class="col-md-9"><a href="{{ image.source.url }}">
                         {% if image.source.link_text %}
                             {{ image.source.link_text }}
                         {% else %}
@@ -95,7 +96,7 @@
 
 <div class="row">
     {% if results.length > 0 %}
-    <div class="span8">
+    <div class="col-md-8">
         <h2>{{ __("Other Copies") }}
         {% if results.length > 0 %}
             <a href="" class="btn compare-all"><i class="icon-eye-open"></i>
@@ -103,7 +104,7 @@
         {% endif %}</h2>
     </div>
     {% endif %}
-    <div class="{% if results.length > 0 %}span4{% else %}span12{% endif %}">
+    <div class="{% if results.length > 0 %}col-md-4{% else %}col-md-12{% endif %}">
         <h2>{{ __("Discuss This Print") }}</h2>
     </div>
 </div>
@@ -111,12 +112,12 @@
 <div class="row">
 
 {% if results.length > 0 %}
-<div id="results" class="span8">
+<div id="results" class="col-md-8">
     <div class="row">
     {% for item in results %}
-        <div class="img span2">
-            <a class="img" href="{{ URL(item) }}">
-                <img src="{{ item.thumb }}"
+        <div class="img col-md-3">
+            <a class="img" href="{{ URL(item.image) }}">
+                <img src="{{ item.image.getThumbURL() }}"
                     alt="{{ getTitle(item.image) }}"
                     title="{{ getTitle(item.image) }}"/></a>
             <div class="details">
@@ -160,13 +161,13 @@
 </div>
 {% endif %}
 
-<div id="disqus_thread" class="{% if results.length > 0 %}span4{% else %}span12{% endif %}"></div>
+<div id="disqus_thread" class="{% if results.length > 0 %}col-md-4{% else %}col-md-12{% endif %}"></div>
 
 </div>
 
 {% if results.length > 0 && image.upload %}
 <div class="row">
-    <div class="span8">
+    <div class="col-md-8">
     <h3>{{ __("Learn More") }}</h3>
     {% for group in groups %}
         <p><strong><a href="{{ URL(group.source) }}">
