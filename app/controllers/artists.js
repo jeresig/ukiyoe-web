@@ -9,9 +9,9 @@ var Artist = ukiyoe.db.model("Artist"),
     _ = require("lodash"),
     exports = {};
 
-/**
- * Load
- */
+Artist.prototype.getURL = function(locale) {
+    return app.genURL(locale, "artist/" + this._id);
+};
 
 exports.load = function(req, res, next, id) {
     Artist.load(id, function(err, artist) {

@@ -166,7 +166,10 @@ module.exports = function(app, config, passport) {
             };
 
             res.locals.fullName = function(item) {
-                return item.getFullName(req.i18n.getLocale());
+                var locale = req.i18n.getLocale();
+                return item.getFullName ?
+                    item.getFullName(locale) :
+                    locale === "ja" && item.kanji || item.name || item;
             };
 
             res.locals.shortName = function(item) {

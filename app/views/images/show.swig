@@ -11,27 +11,33 @@
                 title="{{ getTitle(image) }}"/></a>
     </div>
     <div class="details col-md-4">
-        {% if image.artist %}
+        {% for name in image.artists %}
             <p class="row artist">
                 <strong class="col-md-3 right">{{ __("Artist:") }}</strong>
-                <span class="col-md-9"><a href="{{ URL(image.artist) }}"
-                    title="{{ fullName(image.artist) }}">
-                    {{ fullName(image.artist) }}</a></span>
+                <span class="col-md-9">
+                    {% if name.artist %}
+                    <a href="{{ URL(name.artist) }}"
+                        title="{{ fullName(name.artist) }}">
+                        {{ fullName(name.artist) }}</a>
+                    {% else %}
+                        {{ fullName(name.names[0]) }}
+                    {% endif %}
+                </span>
             </p>
-        {% endif %}
+        {% endfor %}
         {% if image.title %}
             <p class="row title">
                 <strong class="col-md-3 right">{{ __("Title:") }}</strong>
                 <span class="col-md-9">{{ image.title }}</span>
             </p>
         {% endif %}
-        {% if image.date %}
+        {% if image.dateCreated %}
             <p class="row date">
                 <strong class="col-md-3 right">{{ __("Date:") }}</strong>
-                <span class="col-md-9">{{ image.date }}</span>
+                <span class="col-md-9">{{ image.dateCreated.start }}</span>
             </p>
         {% endif %}
-        {% if image.source_url %}
+        {% if image.url %}
             <p class="row details">
                 <strong class="col-md-3 right">
                     {% if image.source.commercial %}
@@ -46,17 +52,17 @@
                     {% elif image.source.hide_links %}
                         <small>{{ __("There is no way to link to this print on the source site. Please visit the source and search for the print there.") }}</small>
                     {% elif image.source.title_link %}
-                        <small><a href="{{ image.source_url }}"
+                        <small><a href="{{ image.url }}"
                             title="{{ image.source.title_link }}">
                             {{ getTitle(image) }}</a></small>
                     {% else %}
-                        <a href="{{ image.source_url }}">
+                        <a href="{{ image.url }}">
                             {{ __("More information...") }}</a>
                     {% endif %}
                 </span>
             </p>
         {% endif %}
-        {% if image.source && image.source.id != "uploads" %}
+        {% if image.source && image.source._id != "uploads" %}
             {% if image.source.inactive %}
                 <p class="row source">
                     <strong class="col-md-3 right">{{ __("Source:") }}</strong>

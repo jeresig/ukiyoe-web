@@ -31,7 +31,7 @@ Image.prototype.getThumbURL = function(locale) {
 exports.load = function(req, res, next, imageName) {
     Image.findById(req.params.sourceId + "/" + imageName)
         .populate("similar.image")
-        .populate("artist")
+        .populate("artists.artist")
         .populate("source") // TODO: Don't do this.
         .exec(function(err, image) {
             if (err) {
