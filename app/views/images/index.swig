@@ -25,7 +25,9 @@
         {{ artist.name.name }}
     {% endif %}
 {% endfor %}</span>
-<span>{{ image.dateCreated.start }} - {{ image.dateCreated.end }}</span>
+{% if image.dateCreated %}
+<span>{{ getDate(image) }}</span>
+{% endif %}
 </div>
 <!--<p>{{ image.title }} by {% if image.artistNames[0] %}{{ image.artistNames[0].name }}{% endif %}</p>-->
 {% endfor %}

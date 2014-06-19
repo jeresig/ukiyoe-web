@@ -180,6 +180,14 @@ module.exports = function(app, config, passport) {
                 return item.getTitle(req.i18n.getLocale());
             };
 
+            res.locals.getDate = function(item) {
+                return item.dateCreated ?
+                    res.locals.getDate(item.dateCreated) :
+                    (item.circa ? "ca. " : "") +
+                        item.start + (item.end && item.end !== item.start ?
+                        "-" + item.end : "");
+            };
+
             next();
         });
 

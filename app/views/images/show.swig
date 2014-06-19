@@ -34,7 +34,7 @@
         {% if image.dateCreated %}
             <p class="row date">
                 <strong class="col-md-3 right">{{ __("Date:") }}</strong>
-                <span class="col-md-9">{{ image.dateCreated.start }}</span>
+                <span class="col-md-9">{{ getDate(image.dateCreated) }}</span>
             </p>
         {% endif %}
         {% if image.url %}
@@ -49,11 +49,11 @@
                 <span class="col-md-9">
                     {% if image.source.inactive %}
                         <small>{{ __("Unfortunately the source of this print no longer exists.") }}</small>
-                    {% elif image.source.hide_links %}
+                    {% elif image.source.hideLinks %}
                         <small>{{ __("There is no way to link to this print on the source site. Please visit the source and search for the print there.") }}</small>
-                    {% elif image.source.title_link %}
+                    {% elif image.source.linkTitle %}
                         <small><a href="{{ image.url }}"
-                            title="{{ image.source.title_link }}">
+                            title="{{ image.source.linkTitle }}">
                             {{ getTitle(image) }}</a></small>
                     {% else %}
                         <a href="{{ image.url }}">
@@ -73,8 +73,8 @@
                 <p class="row source">
                     <strong class="col-md-3 right">{{ __("Source:") }}</strong>
                     <span class="col-md-9"><a href="{{ image.source.url }}">
-                        {% if image.source.link_text %}
-                            {{ image.source.link_text }}
+                        {% if image.source.linkText %}
+                            {{ image.source.linkText }}
                         {% else %}
                             {{ fullName(image.source) }}
                         {% endif %}
@@ -90,7 +90,7 @@
                 <p>{{ __("No other copies of this print have been found.") }}</p>
                 <div class="hide-ja">
                 <p>It might be worthwhile to copy the uploaded image URL:</p>
-                <pre>{{ image.file }}</pre>
+                <pre>{{ image.getOriginalURL() }}</pre>
                 <p>and ask the Ukiyo-e Q&amp;A community for help:</p>
                 <p><a href="http://www.ukiyo-e.se/wwwboard/wwwboard.html">
                     http://www.ukiyo-e.se/wwwboard/wwwboard.html</a></p>
