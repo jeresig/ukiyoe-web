@@ -50,7 +50,7 @@
                             <input type="text" id="url" name="url" value="http://" class="form-control" />
                         </div>
                         <div class="form-group">
-                            <input type="submit" value="{{ __("Search by Image") }}" class="btn btn-primary pull-right" />
+                            <input type="submit" value="{{ __("Search by Image") }}" class="btn btn-primary form-control" />
                         </div>
                     </div>
                 </div>
