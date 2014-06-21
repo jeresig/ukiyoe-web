@@ -33,10 +33,6 @@ ul.nav a img {
     float: left;
 }
 
-.upload .tab-pane {
-    height: 40px;
-}
-
 #file, input[type="file"] {
     line-height: 1em;
 }

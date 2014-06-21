@@ -144,5 +144,6 @@
 	"Attribution Analysis: %s": "Attribution Analysis: %s",
 	"United States: South Carolina": "United States: South Carolina",
 	"ukiyoe-web": "ukiyoe-web",
-	"Images": "Images"
+	"Images": "Images",
+	"Choose file to upload:": "Choose file to upload:"
 }

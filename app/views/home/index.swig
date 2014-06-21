@@ -38,12 +38,20 @@
                 <input type="hidden" name="test" value=""/>
                 <div class="tab-content">
                     <div class="tab-pane active" id="upload">
-                        <p><input type="file" id="file" name="file" />
-                        <input type="submit" value="{{ __("Search by Image") }}" class="btn pull-right" /></p>
+                        <div class="form-group">
+                            <input type="file" id="file" name="file" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="{{ __("Search by Image") }}" class="btn btn-primary form-control" />
+                        </div>
                     </div>
                     <div class="tab-pane" id="paste">
-                        <p><input type="text" id="url" name="url" value="http://" />
-                        <input type="submit" value="{{ __("Search by Image") }}" class="btn pull-right" /></p>
+                        <div class="form-group">
+                            <input type="text" id="url" name="url" value="http://" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="{{ __("Search by Image") }}" class="btn btn-primary pull-right" />
+                        </div>
                     </div>
                 </div>
             </form>

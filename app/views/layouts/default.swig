@@ -25,7 +25,7 @@
         <div class="container">
             <div class="navbar-header">
                 <a class="navbar-brand" href="/">
-                    {{ __(title) }}</a>
+                    {{ __("Ukiyo-e Search") }}</a>
             </div>
 
             <div class="collapse navbar-collapse">
@@ -48,6 +48,7 @@
     <script src="/bower/jquery/jquery.min.js"></script>
     {{ CDN("/bower/select2/select2.js") }}
     {{ CDN("/bower/nouislider/jquery.nouislider.js") }}
+    {{ CDN("/bower/bootstrap/js/tab.js") }}
     {{ CDN("/js/app.js") }}
     {% block script %}{% endblock %}
 </body>
