@@ -22,15 +22,17 @@
     <div class="col-md-5 upload-box">
         <h4>{{ __("Search %s prints:", total) }}</h4>
         <form action="/search" method="GET" class="form-search search">
-            <input type="search" id="q" name="q" placeholder="{{ __("Search") }}" class="input-medium search-query" />
-            <input type="submit" value="{{ __("Search") }}" class="btn" />
+            <div class="form-group">
+                <input type="submit" value="{{ __("Search") }}" class="btn btn-primary pull-right" />
+                <input type="search" id="q" name="q" placeholder="{{ __("Search") }}" class="form-control search-query" />
+            </div>
         </form>
 
         <h4>{{ __("Search by Image:") }}</h4>
         <p>{{ __("Upload a picture of a print to find similar prints across multiple collections.") }}</p>
 
         <div class="tabblable">
-            <ul class="nav nav-tabs">
+            <ul class="nav nav-tabs nav-justified">
                 <li class="active"><a href="#upload" data-toggle="tab">{{ __("Upload an Image") }}</a></li>
                 <li><a href="#paste" data-toggle="tab">{{ __("Paste image URL") }}</a></li>
             </ul>
@@ -39,24 +41,20 @@
                 <div class="tab-content">
                     <div class="tab-pane active" id="upload">
                         <div class="form-group">
+                            <input type="submit" value="{{ __("Search by Image") }}" class="btn btn-primary pull-right" />
                             <input type="file" id="file" name="file" class="form-control" />
-                        </div>
-                        <div class="form-group">
-                            <input type="submit" value="{{ __("Search by Image") }}" class="btn btn-primary form-control" />
                         </div>
                     </div>
                     <div class="tab-pane" id="paste">
                         <div class="form-group">
+                            <input type="submit" value="{{ __("Search by Image") }}" class="btn btn-primary pull-right" />
                             <input type="text" id="url" name="url" value="http://" class="form-control" />
-                        </div>
-                        <div class="form-group">
-                            <input type="submit" value="{{ __("Search by Image") }}" class="btn btn-primary form-control" />
                         </div>
                     </div>
                 </div>
             </form>
         </div>
-        <div class="alert hidden-phone hide-ja">
+        <div class="alert alert-info hidden-phone hide-ja">
             <strong>Update (<a href="http://blog.ukiyo-e.org/2014/03/japanese-prints-at-nyc-asia-week-2014/">NYC Asia Week 2014</a>):</strong> 3 new sources added!
             <ol>
                   <li><a href="http://ukiyo-e.org/source/artofjapan">The Art of Japan (1,399 images)</a></li>

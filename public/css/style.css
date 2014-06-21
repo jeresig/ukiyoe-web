@@ -263,10 +263,6 @@ ul.nav a img {
         padding-left: 10px;
         padding-right: 10px;
     }
-
-    .search-query {
-        width: 128px;
-    }
 }
 
 @media (min-width: 768px) {
