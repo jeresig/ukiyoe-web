@@ -151,6 +151,20 @@ module.exports = function(app, config, passport) {
                 return req.i18n.getLocale() === "en" ? "ja" : "en";
             };
 
+            res.locals.getSiteCategory = function() {
+                if (req.path.indexOf("/source") === 0) {
+                    return "sources";
+                } else if (req.path.indexOf("/artist") === 0) {
+                    return "artists";
+                } else if (req.path.indexOf("/about") === 0) {
+                    return "about";
+                } else if (!req.path || req.path === "/") {
+                    return "home";
+                }
+
+                return "search";
+            };
+
             res.locals.getOtherURL = function() {
                 return app.genURL(otherLocale(req), req.path);
             };

@@ -145,5 +145,9 @@
 	"United States: South Carolina": "United States: South Carolina",
 	"ukiyoe-web": "ukiyoe-web",
 	"Images": "Images",
-	"Choose file to upload:": "Choose file to upload:"
+	"Choose file to upload:": "Choose file to upload:",
+	"About The Site": "About The Site",
+	"Video Overview": "Video Overview",
+	"About John Resig": "About John Resig",
+	"Contributors": "Contributors"
 }

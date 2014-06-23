@@ -30,7 +30,25 @@
 
             <div class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
-                    <li><a href="/">{{ __("Search") }}</a></li>
+                    <li{% if getSiteCategory() === "search" %} class="active"{% endif %}><a href="/">{{ __("Search") }}</a></li>
+                    <li{% if getSiteCategory() === "sources" %} class="active"{% endif %}>
+                        <a href="{{ URL("/sources") }}">
+                            {{ __("Sources") }}</a></li>
+                    <li><a href="http://blog.ukiyo-e.org/">
+                        {{ __("Blog") }}</a></li>
+                    <li{% if getSiteCategory() === "about" %} class="active"{% endif %}>
+                        <a href="{{ URL("/about") }}">
+                        {{ __("About") }}</a></li>
+                    <li class="divider-vertical"></li>
+                    <li><a href="{{ getOtherURL() }}">
+                        {% if curLocale() == "en" %}
+                        <img src="{{ CDN("/images/ja.png", {"raw": true}) }}"
+                            alt="{{ __("Switch Language") }}" />
+                        {% else %}
+                        <img src="{{ CDN("/images/en.png", {"raw": true}) }}"
+                            alt="{{ __("Switch Language") }}" />
+                        {% endif %}
+                        {{ __("Switch Language") }}</a></li>
                 </ul>
             </div>
         </div>
