@@ -104,13 +104,14 @@ module.exports = function(app, config, passport) {
                 next();
             });
         }
-
-        i18n.expressBind(app, {
-            locales: ["en"]
-        });
-
         // Supported locales
         app.locales = ["en", "ja"];
+
+        i18n.expressBind(app, {
+            locales: app.locales,
+            subdomain: true,
+            query: env === "development"
+        });
 
         // Generate a URL given a path and a locale
         app.genURL = function(locale, path) {
