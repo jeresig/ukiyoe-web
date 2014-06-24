@@ -10,7 +10,7 @@ var Artist = ukiyoe.db.model("Artist"),
     exports = {};
 
 Artist.prototype.getURL = function(locale) {
-    return app.genURL(locale, "artist/" + this._id);
+    return app.genURL(locale, "/artist/" + this._id);
 };
 
 exports.load = function(req, res, next, id) {

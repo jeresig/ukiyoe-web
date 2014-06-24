@@ -10,7 +10,7 @@ var Image = ukiyoe.db.model("Image"),
     exports = {};
 
 Image.prototype.getURL = function(locale) {
-    return app.genURL(locale, "images/" + this._id);
+    return app.genURL(locale, "/images/" + this._id);
 };
 
 Image.prototype.getOriginalURL = function(locale) {

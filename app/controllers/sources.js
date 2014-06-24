@@ -11,7 +11,7 @@ var Source = ukiyoe.db.model("Source"),
 
 
 Source.prototype.getURL = function(locale) {
-    return app.genURL(locale, "source/" + this._id);
+    return app.genURL(locale, "/source/" + this._id);
 };
 
 sourceTypes.forEach(function(type) {
