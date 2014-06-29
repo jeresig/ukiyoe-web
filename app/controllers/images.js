@@ -13,21 +13,6 @@ Image.prototype.getURL = function(locale) {
     return app.genURL(locale, "/images/" + this._id);
 };
 
-Image.prototype.getOriginalURL = function(locale) {
-    return app.dataURL(this.source._id || this.source,
-        "images/" + this.imageName + ".jpg");
-};
-
-Image.prototype.getScaledURL = function(locale) {
-    return app.dataURL(this.source._id || this.source,
-        "scaled/" + this.imageName + ".jpg");
-};
-
-Image.prototype.getThumbURL = function(locale) {
-    return app.dataURL(this.source._id || this.source,
-        "thumbs/" + this.imageName + ".jpg");
-};
-
 exports.load = function(req, res, next, imageName) {
     Image.findById(req.params.sourceId + "/" + imageName)
         .populate("similar.image")
@@ -110,6 +95,35 @@ exports.search = function(req, res) {
             page: page + 1,
             pages: Math.ceil(results.total / perPage)
         });
+    });
+};
+
+var handleUpload = function(req, baseDir, callback) {
+    var url = req.body.url || req.query.url;
+
+    // Handle the user accidentally hitting enter
+    if (url && url === "http://") {
+        return callback();
+    }
+
+    var stream;
+
+    if (url) {
+        stream = request({
+            url: url,
+            timeout: 30000
+        });
+    } else {
+        stream = fs.createReadStream(req.files.file.path)
+    }
+
+    ukiyoe.images.downloadStream(stream, baseDir, true, callback);
+};
+
+exports.searchUpload = function(req, res) {
+    // TODO: Get baseDir for the image
+    handleUpload(req, "...", function() {
+
     });
 };
 
