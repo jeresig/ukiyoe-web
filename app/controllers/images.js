@@ -5,12 +5,17 @@
 module.exports = function(ukiyoe, app) {
 
 var Image = ukiyoe.db.model("Image"),
+    Upload = ukiyoe.db.model("Upload"),
     utils = require("../../lib/utils"),
     _ = require("lodash"),
     exports = {};
 
 Image.prototype.getURL = function(locale) {
     return app.genURL(locale, "/images/" + this._id);
+};
+
+Upload.prototype.getURL = function(locale) {
+    return app.genURL(locale, "/uploads/" + this._id);
 };
 
 exports.load = function(req, res, next, imageName) {
@@ -103,7 +108,7 @@ var handleUpload = function(req, baseDir, callback) {
 
     // Handle the user accidentally hitting enter
     if (url && url === "http://") {
-        return callback();
+        return callback({err: "No file specified."});
     }
 
     var stream;
@@ -111,7 +116,7 @@ var handleUpload = function(req, baseDir, callback) {
     if (url) {
         stream = request({
             url: url,
-            timeout: 30000
+            timeout: 5000
         });
     } else {
         stream = fs.createReadStream(req.files.file.path)
@@ -122,8 +127,21 @@ var handleUpload = function(req, baseDir, callback) {
 
 exports.searchUpload = function(req, res) {
     // TODO: Get baseDir for the image
-    handleUpload(req, "...", function() {
+    handleUpload(req, "...", function(err, id) {
+        if (err) {
+            // TODO: Show some sort of error message
+            return res.redirect(app.genURL(req.i18n.getLocale(), "/"));
+        }
 
+        var upload = new Upload({
+            _id: "uploads/" + id,
+            imageName: id,
+            source: "uploads"
+        });
+
+        upload.save(function() {
+            res.redirect(upload.getURL());
+        });
     });
 };
 
