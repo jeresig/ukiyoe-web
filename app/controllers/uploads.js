@@ -47,13 +47,13 @@ var handleUpload = function(req, baseDir, callback) {
 };
 
 exports.searchUpload = function(req, res) {
-    // TODO: Get baseDir for the image
-    handleUpload(req, "...", function(err, id) {
+    handleUpload(req, Upload.getDataDir(), function(err, id) {
         if (err) {
             // TODO: Show some sort of error message
             return res.redirect(app.genURL(req.i18n.getLocale(), "/"));
         }
 
+        // TODO: Add in uploader's user name (once those exist)
         var upload = new Upload({
             _id: "uploads/" + id,
             imageName: id,
@@ -67,6 +67,7 @@ exports.searchUpload = function(req, res) {
 };
 
 exports.show = function(req, res) {
+    // Update similar matches on every load
     req.upload.updateSimilar(function() {
         req.upload.save(function() {
             res.render("images/show", {
