@@ -37,6 +37,7 @@
                 <li><a href="#paste" data-toggle="tab">{{ __("Paste image URL") }}</a></li>
             </ul>
             <form action="/upload" method="POST" enctype="multipart/form-data" class="upload">
+                <input type="hidden" name="_csrf" value="{{ csrf_token }}"/>
                 <input type="hidden" name="test" value=""/>
                 <div class="tab-content">
                     <div class="tab-pane active" id="upload">

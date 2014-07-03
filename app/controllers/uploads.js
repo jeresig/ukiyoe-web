@@ -1,27 +1,28 @@
+var _ = require("lodash");
+var request = require("request");
+
 module.exports = function(ukiyoe, app) {
 
 var Upload = ukiyoe.db.model("Upload"),
     utils = require("../../lib/utils"),
-    _ = require("lodash"),
     exports = {};
 
 Upload.prototype.getURL = function(locale) {
-    return app.genURL(locale, "/uploads/" + this._id);
+    return app.genURL(locale, "/uploads/" + this.imageName);
 };
 
 exports.load = function(req, res, next, id) {
-    Upload.findById(id)
-        .exec(function(err, upload) {
-            if (err) {
-                return next(err);
-            }
-            if (!upload) {
-                console.log("not found")
-                return next(new Error("not found"));
-            }
-            req.upload = upload;
-            next();
-        });
+    Upload.findById("uploads/" + id).exec(function(err, upload) {
+        if (err) {
+            return next(err);
+        }
+        if (!upload) {
+            console.log("not found")
+            return next(new Error("not found"));
+        }
+        req.upload = upload;
+        next();
+    });
 };
 
 var handleUpload = function(req, baseDir, callback) {
@@ -61,7 +62,7 @@ exports.searchUpload = function(req, res) {
         });
 
         upload.save(function() {
-            res.redirect(upload.getURL());
+            res.redirect(upload.getURL(req.i18n.getLocale()));
         });
     });
 };
