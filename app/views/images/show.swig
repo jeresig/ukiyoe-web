@@ -62,7 +62,7 @@
                 </span>
             </p>
         {% endif %}
-        {% if image.source && image.source._id != "uploads" %}
+        {% if image.source && image.source != "uploads" %}
             {% if image.source.inactive %}
                 <p class="row source">
                     <strong class="col-md-3 right">{{ __("Source:") }}</strong>
@@ -84,7 +84,7 @@
                 </p>
             {% endif %}
         {% endif %}
-        {% if image.upload %}
+        {% if image.source && image.source === "uploads" %}
             {% if results.length == 0 %}
                 <h3>{{ __("Uh oh!") }}</h3>
                 <p>{{ __("No other copies of this print have been found.") }}</p>
@@ -171,7 +171,7 @@
 
 </div>
 
-{% if results.length > 0 && image.upload %}
+{% if results.length > 0 && image.source === "uploads" %}
 <div class="row">
     <div class="col-md-8">
     <h3>{{ __("Learn More") }}</h3>
