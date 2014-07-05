@@ -34,7 +34,7 @@ exports.load = function(req, res, next, imageName) {
 exports.search = function(req, res) {
     var page = (req.param("page") > 0 ? req.param("page") : 1) - 1;
     var perPage = 100;
-    var q = req.param("q") || "";
+    var q = req.param("q") || "*";
 
     var query = {
         query_string: {
