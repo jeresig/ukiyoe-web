@@ -44,6 +44,7 @@ exports.search = function(req, res) {
             filter: {},
             size: perPage,
             from: page * perPage,
+            /*
             "sort": [
                 {
                     "dateCreated.start": {
@@ -56,6 +57,7 @@ exports.search = function(req, res) {
                     }
                 }
             ]
+            */
         }
     };
 

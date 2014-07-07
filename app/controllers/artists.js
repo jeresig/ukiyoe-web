@@ -2,7 +2,7 @@
 /**
  * Module dependencies.
  */
-module.exports = function(ukiyoe) {
+module.exports = function(ukiyoe, app) {
 
 var Artist = ukiyoe.db.model("Artist"),
     utils = require("../../lib/utils"),
@@ -10,7 +10,7 @@ var Artist = ukiyoe.db.model("Artist"),
     exports = {};
 
 Artist.prototype.getURL = function(locale) {
-    return app.genURL(locale, "/artist/" + this._id);
+    return app.genURL(locale, "/artists/" + this._id);
 };
 
 exports.load = function(req, res, next, id) {
