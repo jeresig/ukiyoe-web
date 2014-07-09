@@ -94,4 +94,21 @@
 {% endfor %}
 </table>
 
+{% for image in images %}
+<div style="float:left;width:220px;height:240px;">
+<a href="{{ URL(image) }}"><img src="{{ image.getThumbURL() }}"/></a>
+<span>{% for artist in image.artists %}
+    {% if artist.artist %}
+        <a href="{{ URL(artist) }}">{{ artist.artist.name.name }}</a>
+    {% else %}
+        {{ artist.name.name }}
+    {% endif %}
+{% endfor %}</span>
+{% if image.dateCreated %}
+<span>{{ getDate(image) }}</span>
+{% endif %}
+</div>
+<!--<p>{{ image.title }} by {% if image.artistNames[0] %}{{ image.artistNames[0].name }}{% endif %}</p>-->
+{% endfor %}
+
 {% endblock %}
