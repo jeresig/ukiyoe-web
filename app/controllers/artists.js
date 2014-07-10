@@ -183,8 +183,8 @@ exports.show = function(req, res) {
     var q = req.param("q") || "*";
 
     var query = {
-        query_string: {
-            query: q
+        term: {
+            "artists.artist": req.artist._id.toString()
         },
         filtered: {
             filter: {},

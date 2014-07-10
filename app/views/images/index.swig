@@ -20,7 +20,7 @@
 <a href="{{ URL(image) }}"><img src="{{ image.getThumbURL() }}"/></a>
 <span>{% for artist in image.artists %}
     {% if artist.artist %}
-        <a href="{{ URL(artist) }}">{{ artist.artist.name.name }}</a>
+        <a href="{{ URL(artist.artist) }}">{{ artist.artist.name.name }}</a>
     {% else %}
         {{ artist.name.name }}
     {% endif %}
