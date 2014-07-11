@@ -76,9 +76,8 @@ exports.show = function(req, res) {
     var q = req.param("q") || "";
 
     var query = {
-        query_string: {
-            // NOTE: There has got to be a better way to do this.
-            query: "source:" + req.source._id
+        term: {
+            source: req.source._id.toString()
         },
         filtered: {
             filter: {},
