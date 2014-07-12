@@ -3,6 +3,20 @@
 {% block title %}{{ __("Index Page") }}{% endblock %}
 
 {% block content %}
+<div class="row">
+    <h1 class="col-md-12">{{ title }}</h1>
+    {% if url %}
+        <p class="col-md-12"><a href="{{ url }}">{{ url }}</a></p>
+    {% endif %}
+</div>
+
+<div id="results">
+    <div class="state row col-md-12">
+        <span class="total">{{ __("<strong>%s</strong> prints found.", total)|raw }}</span>
+        <span class="page">{{ __("Viewing prints %s to %s.", start, end) }}</span>
+    </div>
+
+<!--
 <p><input type="hidden" id="selectArtist" style="width:500px;"/></p>
 
 <form action="/images/search" method="GET">
@@ -14,6 +28,7 @@
 </p>
 <p><input type="submit" value="Search"/></p>
 </form>
+-->
 
 {% for image in images %}
 <div style="float:left;width:220px;height:240px;">
@@ -31,5 +46,19 @@
 </div>
 <!--<p>{{ image.title }} by {% if image.artistNames[0] %}{{ image.artistNames[0].name }}{% endif %}</p>-->
 {% endfor %}
+
+<div class="search-nav row col-md-12">
+    {% if prev %}
+        <span class="prev"><a href="{{ prev }}" class="btn btn-primary"
+            rel="prev">&laquo; {{ __("Previous") }}</a></span>
+    {% endif %}
+
+    {% if next %}
+        <span class="next"><a href="{{ next }}" class="btn btn-primary"
+            rel="next">{{ __("Next") }} &raquo;</a></span>
+    {% endif %}
+</div>
+
+</div>
 
 {% endblock %}

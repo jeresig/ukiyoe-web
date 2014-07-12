@@ -71,8 +71,8 @@ exports.index = function(req, res) {
 };
 
 exports.show = function(req, res) {
-    var page = (req.param("page") > 0 ? req.param("page") : 1) - 1;
-    var perPage = 100;
+    var start = parseFloat(req.query.start || 0);
+    var rows = 100;
     var q = req.param("q") || "";
 
     var query = {
@@ -81,8 +81,8 @@ exports.show = function(req, res) {
         },
         filtered: {
             filter: {},
-            size: perPage,
-            from: page * perPage,
+            size: rows,
+            from: start
         }
     };
 
@@ -92,14 +92,38 @@ exports.show = function(req, res) {
             return res.render("500");
         }
 
+        var matches = results.hits.length;
+		var end = start + matches;
+		var urlPrefix = req.path + (req.query.q ?
+			"?" + qs.stringify({ q: req.query.q }) : "");
+		var sep = req.query.q ? "&" : "?";
+
+		var prevLink = null;
+		var nextLink = null;
+
+		if (start > 0) {
+			prevLink = app.genURL(req.i18n.getLocale(), urlPrefix +
+				(start - rows > 0 ?
+					sep + "start=" + (start - rows) : ""));
+		}
+
+		if (end < results.total) {
+			nextLink = app.genURL(req.i18n.getLocale(), urlPrefix +
+				sep + "start=" + (start + rows));
+		}
+
         res.render("images/index", {
             title: "Images",
             q: req.param("q"),
             startDate: req.param("startDate") || "1765",
             endDate: req.param("endDate") || "1868",
             images: results.hits,
-            page: page + 1,
-            pages: Math.ceil(results.total / perPage)
+            total: results.total,
+			start: start || 1,
+			end: end,
+			rows: rows,
+			prev: prevLink,
+			next: nextLink
         });
     });
 };
