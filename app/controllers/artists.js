@@ -178,75 +178,15 @@ exports.update = function(req, res) {
  */
 
 exports.show = function(req, res) {
-    var page = (req.param("page") > 0 ? req.param("page") : 1) - 1;
-    var perPage = 100;
-    var q = req.param("q") || "*";
-
-    var query = {
+    app.imageSearch(req, res, {
         term: {
             "artists.artist": req.artist._id.toString()
         },
-        filtered: {
-            filter: {},
-            size: perPage,
-            from: page * perPage,
-            /*
-            "sort": [
-                {
-                    "dateCreated.start": {
-                        "order": "asc"
-                    }
-                },
-                {
-                    "dateCreated.end": {
-                        "order": "asc"
-                    }
-                }
-            ]
-            */
-        }
-    };
-
-    if (req.param("startDate") && req.param("endDate")) {
-        query.filtered.filter.and = [
-            {
-                range: {
-                    "dateCreated.start": {
-                        gte: parseFloat(req.param("startDate")),
-                        lte: parseFloat(req.param("endDate"))
-                    }
-                }
-            },
-            {
-                range: {
-                    "dateCreated.end": {
-                        gte: parseFloat(req.param("startDate")),
-                        lte: parseFloat(req.param("endDate"))
-                    }
-                }
-            }
-        ];
-    }
-
-    Image.search({query: query}, {hydrate: true, hydrateOptions: {populate: "artists.artist"}}, function(err, results){
-        if (err) {
-            console.error(err);
-            return res.render("500");
-        }
-
-        res.render("artists/show", {
-            title: "Images",
-            q: req.param("q"),
-            startDate: req.param("startDate") || "1765",
-            endDate: req.param("endDate") || "1868",
-            images: results.hits,
-            page: page + 1,
-            pages: Math.ceil(results.total / perPage),
-            artist: req.artist,
-            bio: req.artist.bios.sort(function(a, b) {
-                return (b.bio ? b.bio.length : 0) - (a.bio ? a.bio.length : 0);
-            })[0].bio
-        });
+    }, {
+        artist: req.artist,
+        bio: req.artist.bios.sort(function(a, b) {
+            return (b.bio ? b.bio.length : 0) - (a.bio ? a.bio.length : 0);
+        })[0].bio
     });
 };
 

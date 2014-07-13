@@ -71,60 +71,13 @@ exports.index = function(req, res) {
 };
 
 exports.show = function(req, res) {
-    var start = parseFloat(req.query.start || 0);
-    var rows = 100;
-    var q = req.param("q") || "";
-
-    var query = {
+    app.imageSearch(req, res, {
         term: {
             source: req.source._id.toString()
-        },
-        filtered: {
-            filter: {},
-            size: rows,
-            from: start
         }
-    };
-
-    Image.search({query: query}, {hydrate: true, hydrateOptions: {populate: "artists.artist"}}, function(err, results){
-        if (err) {
-            console.error(err);
-            return res.render("500");
-        }
-
-        var matches = results.hits.length;
-		var end = start + matches;
-		var urlPrefix = req.path + (req.query.q ?
-			"?" + qs.stringify({ q: req.query.q }) : "");
-		var sep = req.query.q ? "&" : "?";
-
-		var prevLink = null;
-		var nextLink = null;
-
-		if (start > 0) {
-			prevLink = app.genURL(req.i18n.getLocale(), urlPrefix +
-				(start - rows > 0 ?
-					sep + "start=" + (start - rows) : ""));
-		}
-
-		if (end < results.total) {
-			nextLink = app.genURL(req.i18n.getLocale(), urlPrefix +
-				sep + "start=" + (start + rows));
-		}
-
-        res.render("images/index", {
-            title: "Images",
-            q: req.param("q"),
-            startDate: req.param("startDate") || "1765",
-            endDate: req.param("endDate") || "1868",
-            images: results.hits,
-            total: results.total,
-			start: start || 1,
-			end: end,
-			rows: rows,
-			prev: prevLink,
-			next: nextLink
-        });
+    }, {
+        title: req.source.name,
+        url: req.source.url
     });
 };
 

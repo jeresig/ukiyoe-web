@@ -5,6 +5,7 @@
 module.exports = function(ukiyoe, app) {
 
 var Image = ukiyoe.db.model("Image"),
+    qs = require("querystring"),
     utils = require("../../lib/utils"),
     _ = require("lodash"),
     exports = {};
@@ -31,35 +32,36 @@ exports.load = function(req, res, next, imageName) {
         });
 };
 
-exports.search = function(req, res) {
-    var page = (req.param("page") > 0 ? req.param("page") : 1) - 1;
-    var perPage = 100;
-    var q = req.param("q") || "*";
+app.imageSearch = function(req, res, filter, tmplParams) {
+    var start = parseFloat(req.query.start || 0);
+    var rows = 100;
+    var q = req.param("q") || "";
 
     var query = {
-        query_string: {
-            query: q
+        query: {
+            filtered: {
+                filter: {}
+            }
         },
-        filtered: {
-            filter: {},
-            size: perPage,
-            from: page * perPage,
-            /*
-            "sort": [
-                {
-                    "dateCreated.start": {
-                        "order": "asc"
-                    }
-                },
-                {
-                    "dateCreated.end": {
-                        "order": "asc"
-                    }
+        size: rows,
+        from: start,
+        "sort": [
+        /*
+            {
+                "dateCreated.start": {
+                    "order": "asc"
                 }
-            ]
-            */
-        }
+            },
+            {
+                "dateCreated.end": {
+                    "order": "asc"
+                }
+            }
+        */
+        ]
     };
+
+    query.query.filtered.query = filter;
 
     if (req.param("startDate") && req.param("endDate")) {
         query.filtered.filter.and = [
@@ -82,21 +84,54 @@ exports.search = function(req, res) {
         ];
     }
 
-    Image.search({query: query}, {hydrate: true, hydrateOptions: {populate: "artists.artist"}}, function(err, results){
+    Image.search(query, {hydrate: true, hydrateOptions: {populate: "artists.artist"}}, function(err, results){
         if (err) {
             console.error(err);
             return res.render("500");
         }
 
-        res.render("images/index", {
-            title: "Images",
+        var matches = results.hits.length;
+		var end = start + matches;
+		var urlPrefix = req.path + (req.query.q ?
+			"?" + qs.stringify({ q: req.query.q }) : "");
+		var sep = req.query.q ? "&" : "?";
+
+		var prevLink = null;
+		var nextLink = null;
+
+		if (start > 0) {
+			prevLink = app.genURL(req.i18n.getLocale(), urlPrefix +
+				(start - rows > 0 ?
+					sep + "start=" + (start - rows) : ""));
+		}
+
+		if (end < results.total) {
+			nextLink = app.genURL(req.i18n.getLocale(), urlPrefix +
+				sep + "start=" + (start + rows));
+		}
+
+        res.render("images/index", _.extend({
             q: req.param("q"),
             startDate: req.param("startDate") || "1765",
             endDate: req.param("endDate") || "1868",
             images: results.hits,
-            page: page + 1,
-            pages: Math.ceil(results.total / perPage)
-        });
+            total: results.total,
+			start: start || 1,
+			end: end,
+			rows: rows,
+			prev: prevLink,
+			next: nextLink
+        }, tmplParams));
+    });
+};
+
+exports.search = function(req, res) {
+    app.imageSearch(req, res, {
+        query_string: {
+            query: req.query.q || "*"
+        }
+    }, {
+        title: "Images"
     });
 };
 
