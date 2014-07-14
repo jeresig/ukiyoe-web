@@ -76,7 +76,9 @@ exports.show = function(req, res) {
             source: req.source._id.toString()
         }
     }, {
-        title: req.source.name,
+        title: req.source.getFullName(req.i18n.getLocale()),
+        desc: req.i18n.__("Japanese Woodblock prints at the %s.",
+            req.source.getFullName(req.i18n.getLocale())),
         url: req.source.url
     });
 };

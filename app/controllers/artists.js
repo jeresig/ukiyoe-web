@@ -183,6 +183,9 @@ exports.show = function(req, res) {
             "artists.artist": req.artist._id.toString()
         },
     }, {
+        title: req.artist.getFullName(req.i18n.getLocale()),
+        desc: req.i18n.__("Japanese Woodblock prints by %s.",
+            req.artist.getFullName(req.i18n.getLocale())),
         artist: req.artist,
         bio: req.artist.bios.sort(function(a, b) {
             return (b.bio ? b.bio.length : 0) - (a.bio ? a.bio.length : 0);

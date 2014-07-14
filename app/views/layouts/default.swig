@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="{{ CDN("/images/favicon.png", {"raw": true}) }}" type="image/x-icon"/>
-    <title>{{ title }}</title>
+    <title>{{ title }} - {{ __("Ukiyo-e Search") }}</title>
     {% if page_desc %}<meta name="description" content="{{ page_desc }}"/>{% endif %}
 
     {{ CDN("/bower/bootstrap/dist/css/bootstrap.min.css") }}
@@ -30,7 +30,7 @@
 
             <div class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
-                    <li{% if getSiteCategory() === "search" %} class="active"{% endif %}><a href="/">{{ __("Search") }}</a></li>
+                    <li{% if getSiteCategory() === "search" %} class="active"{% endif %}><a href="/search">{{ __("Search") }}</a></li>
                     <li{% if getSiteCategory() === "sources" %} class="active"{% endif %}>
                         <a href="{{ URL("/sources") }}">
                             {{ __("Sources") }}</a></li>

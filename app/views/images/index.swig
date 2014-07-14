@@ -3,6 +3,99 @@
 {% block title %}{{ __("Index Page") }}{% endblock %}
 
 {% block content %}
+
+{% if artist %}
+<div class="row">
+    <h1 class="col-xs-12 artist_name">
+        {{ artist.name.name }}
+
+        {% if artist.name.given_kanji %}
+        <span class="artist_name_kanji">
+        {% if artist.name.surname_kanji %}
+            (<ruby>
+            {{ artist.name.surname_kanji }}
+            <rp>(</rp><rt>{{ artist.name.surname_kana }}</rt><rp>)</rp>
+            </ruby>
+        {% else %}
+        ({% endif %}<ruby>
+        {{ artist.name.given_kanji }}
+        <rp>(</rp><rt>{{ artist.name.given_kana }}</rt><rp>)</rp>
+        </ruby>{% if artist.name.generation %}
+            &nbsp;{{ artist.name.generation }}世{% endif %})
+        {% else %}
+        {% if artist.name.kanji %}
+        (<ruby class="artist_kanji">
+            {{ artist.name.kanji }}
+            <rp>(</rp><rt>{{ artist.name.kana }}</rt><rp>)</rp>
+        </ruby>)
+        {% endif %}
+        </span>
+        {% endif %}
+    </h1>
+</div>
+
+{% if start == 1 %}
+{% if artist.life.start %}
+<div class="row">
+    <div class="col-xs-12">
+    {% if artist.life.start %}
+        {% if artist.life.start_ca %}ca. {% endif %}
+        {{artist.life.start}}
+    {% endif %}
+    &dash;
+    {% if artist.life.end %}
+        {% if artist.life.end_ca %}ca. {% endif %}
+        {{artist.life.end}}
+    {% endif %}
+    {% if artist.life.current %}
+        Alive
+    {% endif %}
+    </div>
+</div>
+{% endif %}
+{% if artist.active.start %}
+<div class="row">
+    <div class="col-xs-12">
+        <strong>Active:</strong>
+        {% if artist.active.start %}
+            {% if artist.active.start_ca %}ca. {% endif %}
+            {{artist.active.start}}
+        {% endif %}
+        &dash;
+        {% if artist.active.end %}
+            {% if artist.active.end_ca %}ca. {% endif %}
+            {{artist.active.end}}
+        {% endif %}
+        {% if artist.active.current %}
+            Alive
+        {% endif %}
+    </div>
+</div>
+{% endif %}
+
+{% if bio %}
+<div class="row">
+    <div class="col-xs-12">
+        <blockquote class="bio">{{ bio }}</blockquote>
+    </div>
+</div>
+{% endif %}
+
+<div class="row">
+    <div class="col-xs-12">
+        <strong>Bios:</strong>
+        {% for bio in artist.bios %}
+            <a href="{{ bio.url }}">{{ fullName(bio) }} ({{ bio.source }})</a>
+        {% endfor %}
+    </div>
+</div>
+
+{% else %}
+
+{% endif %}
+
+{% else %}
+
 <div class="row">
     <h1 class="col-md-12">{{ title }}</h1>
     {% if url %}
@@ -10,10 +103,14 @@
     {% endif %}
 </div>
 
+{% endif %}
+
 <div id="results">
-    <div class="state row col-md-12">
-        <span class="total">{{ __("<strong>%s</strong> prints found.", total)|raw }}</span>
-        <span class="page">{{ __("Viewing prints %s to %s.", start, end) }}</span>
+    <div class="state row">
+        <div class="col-md-12">
+            <span class="total">{{ __("<strong>%s</strong> prints found.", total)|raw }}</span>
+            <span class="page">{{ __("Viewing prints %s to %s.", start, end) }}</span>
+        </div>
     </div>
 
 <!--

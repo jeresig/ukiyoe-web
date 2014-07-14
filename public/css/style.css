@@ -102,8 +102,14 @@ ul.nav a img {
     }
 }
 
+blockquote.bio {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-size: 0.9em;
+}
+
 #results .state {
-    margin: 10px 0px;
+    margin: 10px -15px;
     border-bottom: 1px solid #CCC;
     font-size: 16px;
 }

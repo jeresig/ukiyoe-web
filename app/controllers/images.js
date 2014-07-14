@@ -126,12 +126,15 @@ app.imageSearch = function(req, res, filter, tmplParams) {
 };
 
 exports.search = function(req, res) {
+    var query = req.query.q || "*";
+
     app.imageSearch(req, res, {
         query_string: {
-            query: req.query.q || "*"
+            query: query
         }
     }, {
-        title: "Images"
+        title: req.i18n.__("Results for '%s'", query),
+        desc: req.i18n.__("Japanese Woodblock prints matching '%s'.", query)
     });
 };
 
