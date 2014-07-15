@@ -39,16 +39,18 @@
 <div class="row">
     <div class="col-xs-12">
     {% if artist.life.start %}
-        {% if artist.life.start_ca %}ca. {% endif %}
+        <strong>{{ __("Born:") }}</strong>
+        {% if artist.life.start_ca %}{{ __("ca. ") }}{% endif %}
         {{artist.life.start}}
     {% endif %}
     &dash;
     {% if artist.life.end %}
-        {% if artist.life.end_ca %}ca. {% endif %}
+        <strong>{{ __("Died:") }}</strong>
+        {% if artist.life.end_ca %}{{ __("ca. ") }}{% endif %}
         {{artist.life.end}}
     {% endif %}
     {% if artist.life.current %}
-        Alive
+        {{ __("Alive") }}
     {% endif %}
     </div>
 </div>
@@ -56,18 +58,18 @@
 {% if artist.active.start %}
 <div class="row">
     <div class="col-xs-12">
-        <strong>Active:</strong>
+        <strong>{{ __("Active:") }}</strong>
         {% if artist.active.start %}
-            {% if artist.active.start_ca %}ca. {% endif %}
+            {% if artist.active.start_ca %}{{ __("ca. ") }}{% endif %}
             {{artist.active.start}}
         {% endif %}
         &dash;
         {% if artist.active.end %}
-            {% if artist.active.end_ca %}ca. {% endif %}
+            {% if artist.active.end_ca %}{{ __("ca. ") }}{% endif %}
             {{artist.active.end}}
         {% endif %}
         {% if artist.active.current %}
-            Alive
+            {{ __("Alive") }}
         {% endif %}
     </div>
 </div>
@@ -83,7 +85,7 @@
 
 <div class="row">
     <div class="col-xs-12">
-        <strong>Bios:</strong>
+        <strong>{{ __("Bios:") }}</strong>
         {% for bio in artist.bios %}
             <a href="{{ bio.url }}">{{ fullName(bio) }} ({{ bio.source }})</a>
         {% endfor %}

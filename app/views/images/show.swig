@@ -121,6 +121,7 @@
 <div id="results" class="col-md-8">
     <div class="row">
     {% for item in results %}
+        {% if item.image %}
         <div class="img col-md-3">
             <a class="img" href="{{ URL(item.image) }}">
                 <img src="{{ item.image.getThumbURL() }}"
@@ -138,7 +139,8 @@
                     {{ shortName(item.image.source) }}</a>
                 </div>
             </div>
-      </div>
+        </div>
+        {% endif %}
     {% endfor %}
     </div>
 </div>

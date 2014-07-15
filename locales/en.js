@@ -149,5 +149,8 @@
 	"About The Site": "About The Site",
 	"Video Overview": "Video Overview",
 	"About John Resig": "About John Resig",
-	"Contributors": "Contributors"
+	"Contributors": "Contributors",
+	"Born:": "Born:",
+	"Died:": "Died:",
+	"Bios:": "Bios:"
 }
