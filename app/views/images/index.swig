@@ -129,22 +129,31 @@
 </form>
 -->
 
+<div class="row">
 {% for image in images %}
-<div style="float:left;width:220px;height:240px;">
-<a href="{{ URL(image) }}"><img src="{{ image.getThumbURL() }}"/></a>
-<span>{% for artist in image.artists %}
-    {% if artist.artist %}
-        <a href="{{ URL(artist.artist) }}">{{ shortName(artist.artist) }}</a>
-    {% else %}
-        {{ artist.name.name }}
-    {% endif %}
-{% endfor %}</span>
-{% if image.dateCreated %}
-<span>{{ getDate(image) }}</span>
-{% endif %}
+<div class="img col-md-3">
+    <a class="img" href="{{ URL(image) }}"
+        title="{{ getTitle(image) }}">
+    <img src="{{ image.getThumbURL() }}"
+        alt="{{ getTitle(image) }}"
+        title="{{ getTitle(image) }}"/></a>
+    <div class="details">
+        <div class="wrap">
+        {% if image.artist %}
+            {% if image.artist.artist %}
+                <a class="artist" href="{{ URL(image.artist.artist) }}"
+                    title="{{ fullName(image.artist.artist) }}">
+                    {{ shortName(image.artist.artist) }}</a>
+            {% endif %}
+        {% endif %}
+        <a class="source" href="{{ URL(image.source) }}"
+            title="{{ fullName(image.source) }}">
+            {{ shortName(image.source) }}</a>
+        </div>
+    </div>
 </div>
-<!--<p>{{ image.title }} by {% if image.artistNames[0] %}{{ image.artistNames[0].name }}{% endif %}</p>-->
 {% endfor %}
+</div>
 
 <div class="search-nav row col-md-12">
     {% if prev %}

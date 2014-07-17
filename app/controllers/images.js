@@ -84,7 +84,7 @@ app.imageSearch = function(req, res, filter, tmplParams) {
         ];
     }
 
-    Image.search(query, {hydrate: true, hydrateOptions: {populate: "artists.artist"}}, function(err, results){
+    Image.search(query, {hydrate: true, hydrateOptions: {populate: "artists.artist source"}}, function(err, results){
         if (err) {
             console.error(err);
             return res.render("500");
