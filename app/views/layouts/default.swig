@@ -1,13 +1,25 @@
 <!DOCTYPE html>
 <html lang="{{ __("en-US") }}" class="{{ __("en-US") }}">
 <head>
-    <meta charset="utf-8">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
     <meta http-equiv="content-language" content="{{ __("en-US") }}"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="{{ CDN("/images/favicon.png", {"raw": true}) }}" type="image/x-icon"/>
     <title>{{ title }} - {{ __("Ukiyo-e Search") }}</title>
-    {% if page_desc %}<meta name="description" content="{{ page_desc }}"/>{% endif %}
+    {% if desc %}<meta name="description" content="{{ desc }}"/>{% endif %}
+
+    {% if image %}
+    <meta name="twitter:card" content="photo">
+    <meta name="twitter:url" content="{{ URL(image) }}">
+    <meta name="twitter:title" content="{{ getTitle(image) }}">
+    <meta name="twitter:image" content="{{ image.getScaledURL() }}">
+    <meta property="og:title" content="{{ getTitle(image) }}"/>
+    <meta property="og:type" content="article"/>
+    <meta property="og:url" content="{{ URL(image) }}"/>
+    <meta property="og:image" content="{{ image.getScaledURL() }}"/>
+    <meta property="og:site_name" content="{{ __("Ukiyo-e Search") }}"/>
+    {% endif %}
 
     {{ CDN("/bower/bootstrap/dist/css/bootstrap.min.css") }}
     {{ CDN("/bower/bootstrap/dist/css/bootstrap-theme.min.css") }}

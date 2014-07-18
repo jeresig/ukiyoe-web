@@ -237,7 +237,7 @@ exports.update = function(req, res) {
 
 exports.show = function(req, res) {
     res.render("images/show", {
-        //title: req.image.title,
+        title: req.image.getTitle(req.i18n.getLocale()),
         image: req.image,
         results: req.image.similar
     });

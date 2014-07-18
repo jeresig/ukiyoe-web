@@ -32,7 +32,10 @@ exports.index = function (req, res) {
 };
 
 exports.about = function (req, res) {
-    res.render("home/about");
+    res.render("home/about", {
+        title: req.i18n.__("About The Site"),
+        desc: req.i18n.__("About the design, construction, and creation of the Ukiyo-e.org site.")
+    });
 };
 
 return exports;

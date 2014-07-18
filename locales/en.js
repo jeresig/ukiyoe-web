@@ -152,5 +152,7 @@
 	"Contributors": "Contributors",
 	"Born:": "Born:",
 	"Died:": "Died:",
-	"Bios:": "Bios:"
+	"Bios:": "Bios:",
+	"ca. ": "ca. ",
+	"About the design, construction, and creation of the Ukiyo-e.org site.": "About the design, construction, and creation of the Ukiyo-e.org site."
 }
