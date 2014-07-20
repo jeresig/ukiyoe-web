@@ -62,6 +62,15 @@
                         {% endif %}
                         {{ __("Switch Language") }}</a></li>
                 </ul>
+
+                <form action="/search" method="GET"
+                    class="navbar-form navbar-right search hidden-phone hidden-tablet">
+                    <input type="text" class="form-control search-query"
+                        placeholder="{{ __("Search") }}" id="q"
+                        name="q" value="{{ q }}" />
+                    <input type="submit" class="btn btn-primary"
+                        value="{{ __("Search") }}" />
+                </form>
             </div>
         </div>
     </div>

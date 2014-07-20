@@ -8,13 +8,8 @@ ul.nav a img {
     margin-top: -3px;
 }
 
-.navbar-search {
-    margin-top: 2px;
-}
-
-.navbar-search .btn {
-    top: -2px;
-    position: relative;
+.form-control {
+    width: auto;
 }
 
 .shifted-header {
