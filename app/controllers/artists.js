@@ -11,11 +11,11 @@ var Artist = ukiyoe.db.model("Artist"),
     exports = {};
 
 Artist.prototype.getURL = function(locale) {
-    return app.genURL(locale, "/artists/" + this._id);
+    return app.genURL(locale, "/artists/" + this.slug);
 };
 
-exports.load = function(req, res, next, id) {
-    Artist.load(id, function(err, artist) {
+exports.load = function(req, res, next, slug) {
+    Artist.findOne({slug: slug}, function(err, artist) {
         if (err) {
             return next(err);
         }
