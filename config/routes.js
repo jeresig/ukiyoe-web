@@ -68,7 +68,8 @@ module.exports = function(app, passport, ukiyoe) {
     //app.get("/artists/search", artists.search);
     //app.get("/artists/new", auth.requiresLogin, artists.new);
     //app.post("/artists", auth.requiresLogin, artists.create);
-    app.get("/artists/:artistId", cache(1), artists.show);
+    app.get("/artists/:slug", artists.oldSlugRedirect);
+    app.get("/artists/:slug/:artistId", cache(1), artists.show);
     //app.get("/artists/:artistId/edit", artistAuth, artists.edit);
     //app.put("/artists/:artistId", artistAuth, artists.update);
     //app.del("/artists/:artistId", artistAuth, artists.destroy);

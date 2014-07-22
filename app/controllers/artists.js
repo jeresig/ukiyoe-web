@@ -11,11 +11,12 @@ var Artist = ukiyoe.db.model("Artist"),
     exports = {};
 
 Artist.prototype.getURL = function(locale) {
-    return app.genURL(locale, "/artists/" + this.slug);
+    return app.genURL(locale, "/artists/" + (this.slug || "artist") +
+        "/" + this._id);
 };
 
-exports.load = function(req, res, next, slug) {
-    Artist.findOne({slug: slug}, function(err, artist) {
+exports.load = function(req, res, next, id) {
+    Artist.findOneById(id, function(err, artist) {
         if (err) {
             return next(err);
         }
@@ -24,6 +25,25 @@ exports.load = function(req, res, next, slug) {
         }
         req.artist = artist;
         next();
+    });
+};
+
+exports.oldSlugRedirect = function(req, res, next) {
+    Artist.findOne({slug: req.params.slug}, function(err, artist) {
+        if (err) {
+            return next(err);
+        }
+
+        if (!artist) {
+            // TODO: Maybe do an artist search instead?
+            res.redirect(301, app.genURL(
+                req.i18n.getLocale(),
+                "/search?q=" + encodeURIComponent(
+                    req.params.slug.replace(/-/g, " "))
+            ));
+        } else {
+            res.redirect(301, artist.getURL());
+        }
     });
 };
 
