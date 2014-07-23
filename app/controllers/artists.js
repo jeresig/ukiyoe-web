@@ -16,7 +16,7 @@ Artist.prototype.getURL = function(locale) {
 };
 
 exports.load = function(req, res, next, id) {
-    Artist.findOneById(id, function(err, artist) {
+    Artist.findById(id, function(err, artist) {
         if (err) {
             return next(err);
         }
