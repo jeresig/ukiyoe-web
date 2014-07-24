@@ -3,32 +3,10 @@
 {% block title %}{{ artist.name.name }}{% endblock %}
 
 {% block content %}
+
 <div class="row">
     <div class="col-xs-12 artist_name">
-        {{ artist.name.name }}
-
-        {% if artist.name.given_kanji %}
-        <span class="artist_name_kanji">
-        {% if artist.name.surname_kanji %}
-            (<ruby>
-            {{ artist.name.surname_kanji }}
-            <rp>(</rp><rt>{{ artist.name.surname_kana }}</rt><rp>)</rp>
-            </ruby>
-        {% else %}
-        ({% endif %}<ruby>
-        {{ artist.name.given_kanji }}
-        <rp>(</rp><rt>{{ artist.name.given_kana }}</rt><rp>)</rp>
-        </ruby>{% if artist.name.generation %}
-            &nbsp;{{ artist.name.generation }}世{% endif %})
-        {% else %}
-        {% if artist.name.kanji %}
-        (<ruby class="artist_kanji">
-            {{ artist.name.kanji }}
-            <rp>(</rp><rt>{{ artist.name.kana }}</rt><rp>)</rp>
-        </ruby>)
-        {% endif %}
-        </span>
-        {% endif %}
+        {{ fullArtistName(artist.name) }}
     </div>
 </div>
 

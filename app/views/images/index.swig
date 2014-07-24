@@ -3,6 +3,18 @@
 {% block title %}{{ __("Index Page") }}{% endblock %}
 
 {% block content %}
+{% macro fullArtistName(name) %}{{ name.name }}{% if name.given_kanji %}<span class="artist_name_kanji">{% if name.surname_kanji %}
+        (<ruby>
+        {{ name.surname_kanji }}
+        <rp>(</rp><rt>{{ name.surname_kana }}</rt><rp>)</rp>
+        </ruby>
+    {% endif %}<ruby>
+    {{ name.given_kanji }}
+    <rp>(</rp><rt>{{ name.given_kana }}</rt><rp>)</rp>
+    </ruby>{% if name.generation %}&nbsp;{{ name.generation }}世{% endif %}){% else %}{% if name.kanji %}(<ruby class="artist_kanji">
+        {{ name.kanji }}
+        <rp>(</rp><rt>{{ name.kana }}</rt><rp>)</rp>
+    </ruby>){% endif %}{% endif %}</span>{% endmacro %}
 
 {% if artist %}
 <div class="row">
@@ -71,6 +83,16 @@
         {% if artist.active.current %}
             {{ __("Alive") }}
         {% endif %}
+    </div>
+</div>
+{% endif %}
+{% if artist.aliases %}
+<div class="row">
+    <div class="col-xs-12">
+        <strong>{{ __("Aliases:") }}</strong>
+        {% for name in artist.aliases %}
+            {{ fullArtistName(name) }}{% if !loop.last %}, {% endif %}
+        {% endfor %}
     </div>
 </div>
 {% endif %}
