@@ -198,18 +198,21 @@ exports.update = function(req, res) {
  */
 
 exports.show = function(req, res) {
-    app.imageSearch(req, res, {
-        term: {
-            "artists.artist": req.artist._id.toString()
-        },
-    }, {
-        title: req.artist.getFullName(req.i18n.getLocale()),
-        desc: req.i18n.__("Japanese Woodblock prints by %s.",
-            req.artist.getFullName(req.i18n.getLocale())),
-        artist: req.artist,
-        bio: req.artist.bios.sort(function(a, b) {
-            return (b.bio ? b.bio.length : 0) - (a.bio ? a.bio.length : 0);
-        })[0].bio
+    req.artist.populate("bios")
+        .populate("bios.source", function() {
+        app.imageSearch(req, res, {
+            term: {
+                "artists.artist": req.artist._id.toString()
+            },
+        }, {
+            title: req.artist.getFullName(req.i18n.getLocale()),
+            desc: req.i18n.__("Japanese Woodblock prints by %s.",
+                req.artist.getFullName(req.i18n.getLocale())),
+            artist: req.artist,
+            bio: req.artist.bios.sort(function(a, b) {
+                return (b.bio ? b.bio.length : 0) - (a.bio ? a.bio.length : 0);
+            })[0].bio
+        });
     });
 };
 
