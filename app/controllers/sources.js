@@ -1,9 +1,11 @@
+var async = require("async");
+var _ = require("lodash");
+
 module.exports = function(ukiyoe, app) {
 
 var Source = ukiyoe.db.model("Source"),
     Image = ukiyoe.db.model("Image"),
     utils = require("../../lib/utils"),
-    _ = require("lodash"),
     sourceTypes = require("../../data/source-types.json"),
     sourceTypeMap = {},
     exports = {},
@@ -48,24 +50,35 @@ exports.index = function(req, res) {
         var activeSources = {};
         var estimatedSources = {};
 
-        sources.forEach(function(source) {
-            if (source.estNumPrints) {
-                totalEstimated += source.estNumPrints;
-                clusterSource(source, estimatedSources);
-            } else {
-                total += source.numPrints;
-                clusterSource(source, activeSources);
-            }
+        var sourcesToCount = sources.filter(function(source) {
+            return !source.estNumPrints;
         });
 
-        res.render("sources/index", {
-            title: req.i18n.__("Sources of Japanese Woodblock Prints"),
-            sourceTypes: sourceTypes,
-            sourceTypeMap: sourceTypeMap,
-            activeSources: activeSources,
-            estimatedSources: estimatedSources,
-            total: total,
-            totalEstimated: totalEstimated
+        async.eachLimit(sourcesToCount, 2, function(source, callback) {
+            Image.count({source: source._id}, function(err, count) {
+                source.numPrints = count;
+                callback();
+            });
+        }, function() {
+            sources.forEach(function(source) {
+                if (source.estNumPrints) {
+                    totalEstimated += source.estNumPrints;
+                    clusterSource(source, estimatedSources);
+                } else {
+                    total += source.numPrints;
+                    clusterSource(source, activeSources);
+                }
+            });
+
+            res.render("sources/index", {
+                title: req.i18n.__("Sources of Japanese Woodblock Prints"),
+                sourceTypes: sourceTypes,
+                sourceTypeMap: sourceTypeMap,
+                activeSources: activeSources,
+                estimatedSources: estimatedSources,
+                total: total,
+                totalEstimated: totalEstimated
+            });
         });
     });
 };
