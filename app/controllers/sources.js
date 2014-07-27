@@ -64,7 +64,7 @@ exports.index = function(req, res) {
                 if (source.estNumPrints) {
                     totalEstimated += source.estNumPrints;
                     clusterSource(source, estimatedSources);
-                } else {
+                } else if (source.numPrints > 0) {
                     total += source.numPrints;
                     clusterSource(source, activeSources);
                 }
