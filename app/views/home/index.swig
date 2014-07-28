@@ -20,7 +20,7 @@
     </div>
 
     <div class="col-md-5 upload-box">
-        <h4>{{ __("Search %s prints:", total) }}</h4>
+        <h4>{{ __("Search %s prints:", stringNum(total)) }}</h4>
         <form action="/search" method="GET" class="form-search search">
             <div class="form-group">
                 <input type="submit" value="{{ __("Search") }}" class="btn btn-primary pull-right" />

@@ -203,6 +203,12 @@ module.exports = function(app, config, passport) {
                         "-" + item.end : "");
             };
 
+            // Format a number using commas
+            // TODO: Handle locale here, as well
+            res.locals.stringNum = function(num) {
+                return (num || "").toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            };
+
             next();
         });
 
