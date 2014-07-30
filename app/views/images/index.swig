@@ -109,7 +109,7 @@
     <div class="col-xs-12">
         <strong>{{ __("Bios:") }}</strong>
         {% for bio in artist.bios %}
-            <a href="{{ bio.url }}">{{ fullArtistName(bio.name) }} ({{ bio.source }})</a>{% if !loop.last %}, {% endif %}
+            <a href="{{ bio.url }}">{{ fullArtistName(bio.name) }}{% if bio.source %} ({{ fullName(bio.source) }})</a>{% endif %}{% if !loop.last %}, {% endif %}
         {% endfor %}
     </div>
 </div>

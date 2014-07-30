@@ -109,5 +109,9 @@
 	"Russia": "ロシア",
 	"Spain": "スペイン",
 	"Switzerland": "スイス",
-	"United Kingdom": "イギリス"
+	"United Kingdom": "イギリス",
+	"Aliases:": "Aliases:",
+	"Bios:": "Bios:",
+	"Born:": "Born:",
+	"Died:": "Died:"
 }
