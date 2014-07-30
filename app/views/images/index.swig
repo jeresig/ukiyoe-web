@@ -153,7 +153,7 @@
 
 <div class="row">
 {% for image in images %}
-<div class="img col-md-3">
+<div class="img">
     <a class="img" href="{{ URL(image) }}"
         title="{{ getTitle(image) }}">
     <img src="{{ image.getThumbURL() }}"

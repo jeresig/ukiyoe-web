@@ -81,19 +81,24 @@ ul.nav a img {
     overflow: hidden;
 }
 
-#results .span3 {
+#results div.img {
     height: 220px;
+    width: 220px;
+    float: left;
+    margin-left: 15px;
 }
 
 @media (max-width: 979px) and (min-width: 768px) {
-    #results .span3 {
+    #results div.img {
         height: 166px;
+        width: 166px;
     }
 }
 
 @media (min-width: 1200px) {
-    #results .span3 {
+    #results div.img {
         height: 270px;
+        width: 270px;
     }
 }
 
