@@ -60,6 +60,8 @@ var testPage = function(opt) {
 
 // Test performing a search
 
+var artistURL = "/artists/katsushika-hokusai/535e864d4e4ee5000063bcf7";
+
 casper.start("http://localhost:3000", function() {
 	// Test the search box on the home page
 	this.fill(".form-search", {
@@ -72,7 +74,7 @@ casper.then(function() {
 		url: "search\?q=hokusai",
 		title: "Results for 'hokusai' - Ukiyo-e Search",
 		term: "hokusai",
-		artistURL: "/artist/katsushika-hokusai",
+		artistURL: artistURL,
 		prev: -1,
 		next: 100
 	});
@@ -84,7 +86,7 @@ casper.then(function() {
 		url: "search\?q=hokusai",
 		title: "Results for 'hokusai' - Ukiyo-e Search",
 		term: "hokusai",
-		artistURL: "/artist/katsushika-hokusai",
+		artistURL: artistURL,
 		prev: 0,
 		next: 200
 	});
@@ -96,7 +98,7 @@ casper.then(function() {
 		url: "search\?q=hokusai",
 		title: "Results for 'hokusai' - Ukiyo-e Search",
 		term: "hokusai",
-		artistURL: "/artist/katsushika-hokusai",
+		artistURL: artistURL,
 		prev: 100,
 		next: 300
 	});
@@ -104,14 +106,14 @@ casper.then(function() {
 
 // Test Loading an Artist's Page
 
-casper.thenOpen("http://localhost:3000/artist/katsushika-hokusai");
+casper.thenOpen("http://localhost:3000" + artistURL);
 
 casper.then(function() {
 	testPage.call(this, {
-		url: "/artist/katsushika-hokusai",
+		url: artistURL,
 		title: "Katsushika Hokusai - Ukiyo-e Search",
 		term: "",
-		artistURL: "/artist/katsushika-hokusai",
+		artistURL: artistURL,
 		prev: -1,
 		next: 100
 	});
@@ -120,10 +122,10 @@ casper.then(function() {
 
 casper.then(function() {
 	testPage.call(this, {
-		url: "/artist/katsushika-hokusai",
+		url: artistURL,
 		title: "Katsushika Hokusai - Ukiyo-e Search",
 		term: "",
-		artistURL: "/artist/katsushika-hokusai",
+		artistURL: artistURL,
 		prev: 0,
 		next: 200
 	});
@@ -132,10 +134,10 @@ casper.then(function() {
 
 casper.then(function() {
 	testPage.call(this, {
-		url: "/artist/katsushika-hokusai",
+		url: artistURL,
 		title: "Katsushika Hokusai - Ukiyo-e Search",
 		term: "",
-		artistURL: "/artist/katsushika-hokusai",
+		artistURL: artistURL,
 		prev: 100,
 		next: 300
 	});
