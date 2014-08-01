@@ -36,13 +36,19 @@
     <div class="navbar navbar-default navbar-static-top">
         <div class="container">
             <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#header-navbar">
+                    <span class="sr-only">Toggle Navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
                 <a class="navbar-brand" href="/">
                     {{ __("Ukiyo-e Search") }}</a>
             </div>
 
-            <div class="collapse navbar-collapse">
+            <div id="header-navbar" class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
-                    <li{% if getSiteCategory() === "search" %} class="active"{% endif %}><a href="/search">{{ __("Search") }}</a></li>
+                    <!--<li{% if getSiteCategory() === "search" %} class="active"{% endif %}><a href="/search">{{ __("Search") }}</a></li>-->
                     <li{% if getSiteCategory() === "sources" %} class="active"{% endif %}>
                         <a href="{{ URL("/sources") }}">
                             {{ __("Sources") }}</a></li>
@@ -51,7 +57,7 @@
                     <li{% if getSiteCategory() === "about" %} class="active"{% endif %}>
                         <a href="{{ URL("/about") }}">
                         {{ __("About") }}</a></li>
-                    <li class="divider-vertical"></li>
+                    <li class="nav-divider"></li>
                     <li><a href="{{ getOtherURL() }}">
                         {% if curLocale() == "en" %}
                         <img src="{{ CDN("/images/ja.png", {"raw": true}) }}"
@@ -64,7 +70,7 @@
                 </ul>
 
                 <form action="/search" method="GET"
-                    class="navbar-form navbar-right search hidden-phone hidden-tablet">
+                    class="navbar-form navbar-right search">
                     <input type="text" class="form-control search-query"
                         placeholder="{{ __("Search") }}" id="q"
                         name="q" value="{{ q }}" />
@@ -84,7 +90,8 @@
         {% block content %}{% endblock %}
     </div>
 
-    <script src="/bower/jquery/jquery.min.js"></script>
+    {{ CDN("/bower/jquery/jquery.min.js") }}
+    {{ CDN("/bower/bootstrap/dist/js/bootstrap.min.js") }}
     {{ CDN("/bower/select2/select2.js") }}
     {{ CDN("/bower/nouislider/jquery.nouislider.js") }}
     {{ CDN("/bower/bootstrap/js/tab.js") }}

@@ -8,8 +8,9 @@ ul.nav a img {
     margin-top: -3px;
 }
 
-.form-control {
+input.form-control {
     width: auto;
+    display: inline-block;
 }
 
 .shifted-header {
@@ -68,7 +69,7 @@ ul.nav a img {
     }
 }
 
-@media (max-width: 979px) and (min-width: 768px) {
+@media (max-width: 979px) {
     .image-example img {
         display: inline;
         height: 135px !important;
@@ -88,7 +89,7 @@ ul.nav a img {
     margin-left: 15px;
 }
 
-@media (max-width: 979px) and (min-width: 768px) {
+@media (max-width: 979px) {
     #results div.img {
         height: 166px;
         width: 166px;
@@ -156,7 +157,7 @@ blockquote.bio {
     overflow: hidden;
 }
 
-@media (max-width: 979px) and (min-width: 768px) {
+@media (max-width: 979px) {
     #results .img .details {
         font-size: 0.8em;
     }
@@ -249,6 +250,10 @@ blockquote.bio {
 
 .imageholder {
     text-align: center;
+}
+
+.navbar-form {
+    margin-right: -30px;
 }
 
 @media (max-width: 767px) {
