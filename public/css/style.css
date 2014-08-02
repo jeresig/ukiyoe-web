@@ -294,6 +294,10 @@ body.no-scroll {
     overflow: hidden;
 }
 
+.tab-pane {
+    padding: 10px 0;
+}
+
 #compare {
     display: none;
     width: 100%;

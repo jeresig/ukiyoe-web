@@ -23,8 +23,8 @@
         <h4>{{ __("Search %s prints:", stringNum(total)) }}</h4>
         <form action="/search" method="GET" class="form-search search">
             <div class="form-group">
-                <input type="submit" value="{{ __("Search") }}" class="btn btn-primary pull-right" />
                 <input type="search" id="q" name="q" placeholder="{{ __("Search") }}" class="form-control search-query" />
+                <input type="submit" value="{{ __("Search") }}" class="btn btn-primary" />
             </div>
         </form>
 
@@ -42,14 +42,14 @@
                 <div class="tab-content">
                     <div class="tab-pane active" id="upload">
                         <div class="form-group">
-                            <input type="submit" value="{{ __("Search by Image") }}" class="btn btn-primary pull-right" />
                             <input type="file" id="file" name="file" class="form-control" />
+                            <input type="submit" value="{{ __("Search by Image") }}" class="btn btn-primary" />
                         </div>
                     </div>
                     <div class="tab-pane" id="paste">
                         <div class="form-group">
-                            <input type="submit" value="{{ __("Search by Image") }}" class="btn btn-primary pull-right" />
                             <input type="text" id="url" name="url" value="http://" class="form-control" />
+                            <input type="submit" value="{{ __("Search by Image") }}" class="btn btn-primary" />
                         </div>
                     </div>
                 </div>
@@ -76,8 +76,8 @@
         <form action="http://jquery.us1.list-manage1.com/subscribe/post?u=9d97dbe5f30bdee8c85a45e9e&amp;id=e32c42f014" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate form-horizontal" target="_blank">
             <h4>Subscribe for Updates</h4>
             <div class="mc-field-group">
-                <input type="email" value="" name="EMAIL" class="required email input-medium" id="mce-EMAIL" placeholder="Email Address">
-                <input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button btn">
+                <input type="email" value="" name="EMAIL" class="required email input-medium form-control" id="mce-EMAIL" placeholder="Email Address">
+                <input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button btn btn-success">
             </div>
         </form>
     </div>
