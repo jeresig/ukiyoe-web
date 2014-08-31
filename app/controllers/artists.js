@@ -24,6 +24,10 @@ exports.load = function(req, res, next, id) {
         if (!artist) {
             return next(new Error("not found"));
         }
+        if (req.params.slug && req.params.slug !== artist.slug) {
+            res.redirect(301, artist.getURL(req.i18n.getLocale()));
+            return;
+        }
         req.artist = artist;
         next();
     });
