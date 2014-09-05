@@ -7,7 +7,13 @@ This is the new version of the Ukiyo-e.org web site. Uses a Mongodb+Elasticsearc
 
 **Required:**
 
-* `MONGO_URL`: `mongodb://USERNAME:PASSWORD@SERVER:PORT/DATABASE`
+* `MONGO_URL`: The location of the MongoDB server and database where the site's data is stored.
+
+    Format: `mongodb://USERNAME:PASSWORD@SERVER:PORT/DATABASE`
+
+* `ELASTICSEARCH_URL`: The location of the Elasticsearch server, where the site data is indexed.
+
+    Format: `http://SERVER:PORT`
 
 **Optional:**
 
