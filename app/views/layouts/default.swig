@@ -21,10 +21,10 @@
     <meta property="og:site_name" content="{{ __("Ukiyo-e Search") }}"/>
     {% endif %}
 
-    {{ CDN("/bower/bootstrap/dist/css/bootstrap.min.css") }}
-    {{ CDN("/bower/bootstrap/dist/css/bootstrap-theme.min.css") }}
-    {{ CDN("/bower/select2/select2.css") }}
-    {{ CDN("/bower/nouislider/jquery.nouislider.css") }}
+    {{ CDN("/css/bootstrap.min.css") }}
+    {{ CDN("/css/bootstrap-theme.min.css") }}
+    {{ CDN("/css/select2.css") }}
+    {{ CDN("/css/jquery.nouislider.css") }}
     {{ CDN("/css/style.css") }}
 
     <!--[if lt IE 9]>
@@ -90,11 +90,10 @@
         {% block content %}{% endblock %}
     </div>
 
-    {{ CDN("/bower/jquery/jquery.min.js") }}
-    {{ CDN("/bower/bootstrap/dist/js/bootstrap.min.js") }}
-    {{ CDN("/bower/select2/select2.js") }}
-    {{ CDN("/bower/nouislider/jquery.nouislider.js") }}
-    {{ CDN("/bower/bootstrap/js/tab.js") }}
+    {{ CDN("/js/jquery.min.js") }}
+    {{ CDN("/js/bootstrap.min.js") }}
+    {{ CDN("/js/select2.js") }}
+    {{ CDN("/js/jquery.nouislider.js") }}
     {{ CDN("/js/app.js") }}
     {% block script %}{% endblock %}
 </body>
