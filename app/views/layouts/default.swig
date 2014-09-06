@@ -92,7 +92,7 @@
 
     {{ CDN("/js/jquery.min.js") }}
     {{ CDN("/js/bootstrap.min.js") }}
-    {{ CDN("/js/select2.js") }}
+    {{ CDN("/js/select2.min.js") }}
     {{ CDN("/js/jquery.nouislider.js") }}
     {{ CDN("/js/app.js") }}
     {% block script %}{% endblock %}
