@@ -33,7 +33,8 @@
     "forms-mongoose": "~0.0.6",
     "lodash": "~2.3.0",
     "ukiyoe-models": "~0.0.2",
-    "dotenv": "~0.4.0"
+    "dotenv": "~0.4.0",
+    "request": "~2.42.0"
   },
   "devDependencies": {
     "nodemon": "~0.7.10",
