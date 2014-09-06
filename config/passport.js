@@ -9,7 +9,7 @@ var LocalStrategy = require("passport-local").Strategy;
  * Expose
  */
 
-module.exports = function (passport, config, ukiyoe) {
+module.exports = function(passport, ukiyoe) {
     var User = ukiyoe.db.model("User");
 
     // serialize sessions

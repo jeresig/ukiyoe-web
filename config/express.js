@@ -11,12 +11,14 @@ var pkg = require("../package");
 var flash = require("connect-flash");
 var env = process.env.NODE_ENV || "development";
 var swig = require("swig");
+var path = require("path");
+var rootPath = path.resolve(__dirname + "../..");
 
 /*!
  * Expose
  */
 
-module.exports = function(app, config, passport) {
+module.exports = function(app, passport) {
     // Add basic auth for staging
     if (env === "staging") {
         app.use(express.basicAuth(function(user, pass) {
@@ -32,16 +34,16 @@ module.exports = function(app, config, passport) {
     }
 
     var CDN = require("express-cdn")(app, {
-        publicDir: config.root + "/public",
-        viewsDir: config.root + "views/layouts",
+        publicDir: rootPath + "/public",
+        viewsDir: rootPath + "/views/layouts",
         extensions: [".swig"],
-        endpoint: config.s3.endpoint,
-        domain: config.s3.staticBucket,
-        bucket: config.s3.staticBucket,
-        key: config.s3.key,
-        secret: config.s3.secret,
+        endpoint: process.env.S3_STATIC_ENDPOINT,
+        domain: process.env.S3_STATIC_BUCKET,
+        bucket: process.env.S3_STATIC_BUCKET,
+        key: process.env.S3_KEY,
+        secret: process.env.S3_SECRET,
         hostname: "localhost",
-        port: config.server.port,
+        port: process.env.PORT,
         ssl: false,
         production: env === "production"
     });
@@ -51,13 +53,13 @@ module.exports = function(app, config, passport) {
     // use express favicon
     app.use(express.favicon());
 
-    app.use(express.static(config.root + "/public"));
+    app.use(express.static(rootPath + "/public"));
     app.use(express.logger("dev"));
 
     app.engine("swig", swig.renderFile)
 
     // views config
-    app.set("views", config.root + "/app/views");
+    app.set("views", rootPath + "/app/views");
     app.set("view engine", "swig");
 
     app.set("view cache", false);
@@ -73,7 +75,7 @@ module.exports = function(app, config, passport) {
         app.use(express.session({
             secret: pkg.name,
             store: new mongoStore({
-                url: config.db,
+                url: process.env.MONGODB_URL,
                 collection : "sessions"
             })
         }));

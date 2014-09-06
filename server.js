@@ -1,8 +1,10 @@
 var express = require("express");
 var passport = require("passport");
 var env = process.env.NODE_ENV || "development";
-var config = require("./config/config")[env];
 var fs = require("fs");
+
+// Load in configuration options
+require("dotenv").load();
 
 require("express-namespace");
 
@@ -16,18 +18,18 @@ ukiyoe.db.connect(function() {
     });
 
     // Bootstrap passport config
-    require("./config/passport")(passport, config, ukiyoe);
+    require("./config/passport")(passport, ukiyoe);
 
     var app = express();
 
     // Bootstrap application settings
-    require("./config/express")(app, config, passport);
+    require("./config/express")(app, passport);
 
     // Bootstrap routes
     require("./config/routes")(app, passport, ukiyoe);
 
     // Start the app by listening on <port>
-    var port = process.env.PORT || config.server.port;
+    var port = process.env.PORT;
 
     console.log("PORT: " + port);
 

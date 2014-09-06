@@ -12,9 +12,7 @@
   },
   "scripts": {
     "start": "NODE_PATH=./app/controllers NODE_ENV=development ./node_modules/.bin/nodemon server.js",
-    "test": "casperjs test tests/",
-    "encrypt": "encrypt config/config.js config/config.js.cast5",
-    "decrypt": "decrypt config/config.js.cast5 config/config.js"
+    "test": "casperjs test tests/"
   },
   "dependencies": {
     "express": "~3.4.4",
@@ -31,11 +29,11 @@
     "express-cdn": "~0.1.7",
     "i18n-2": "~0.4.5",
     "swig": "~1.1.0",
-    "config-leaf": "~0.1.0",
     "mongoosastic": "~0.2.1",
     "forms-mongoose": "~0.0.6",
     "lodash": "~2.3.0",
-    "ukiyoe-models": "jeresig/ukiyoe-models"
+    "ukiyoe-models": "jeresig/ukiyoe-models",
+    "dotenv": "^0.4.0"
   },
   "devDependencies": {
     "nodemon": "~0.7.10",
