@@ -35,7 +35,7 @@ module.exports = function(app, passport) {
 
     var CDN = require("express-cdn")(app, {
         publicDir: rootPath + "/public",
-        viewsDir: rootPath + "/views/layouts",
+        viewsDir: rootPath + "/app/views",
         extensions: [".swig"],
         endpoint: process.env.S3_STATIC_ENDPOINT,
         domain: process.env.S3_STATIC_BUCKET,
