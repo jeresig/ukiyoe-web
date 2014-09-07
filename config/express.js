@@ -37,13 +37,10 @@ module.exports = function(app, passport) {
         publicDir: rootPath + "/public",
         viewsDir: rootPath + "/app/views",
         extensions: [".swig"],
-        endpoint: process.env.S3_STATIC_ENDPOINT,
         domain: process.env.S3_STATIC_BUCKET,
         bucket: process.env.S3_STATIC_BUCKET,
         key: process.env.S3_KEY,
         secret: process.env.S3_SECRET,
-        hostname: "localhost",
-        port: process.env.PORT,
         ssl: false,
         production: env === "production"
     });
