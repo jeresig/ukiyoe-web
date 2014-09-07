@@ -58,9 +58,9 @@
         <div class="alert alert-info hidden-phone hide-ja">
             <strong>Update (<a href="http://blog.ukiyo-e.org/2014/03/japanese-prints-at-nyc-asia-week-2014/">NYC Asia Week 2014</a>):</strong> 3 new sources added!
             <ol>
-                  <li><a href="http://ukiyo-e.org/source/artofjapan">The Art of Japan (1,399 images)</a></li>
-                <li><a href="http://ukiyo-e.org/source/robynbuntin">Robyn Buntin of Honolulu (4,310 images)</a></li>
-                <li><a href="http://ukiyo-e.org/source/scholten">Scholten Japanese Art (854 images)</a></li>
+                <li><a href="{{ URL("/source/artofjapan") }}">The Art of Japan (1,399 images)</a></li>
+                <li><a href="{{ URL("/source/robynbuntin") }}">Robyn Buntin of Honolulu (4,310 images)</a></li>
+                <li><a href="{{ URL("/source/scholten") }}">Scholten Japanese Art (854 images)</a></li>
               </ol>
         </div>
     </div>
