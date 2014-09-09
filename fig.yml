@@ -1,0 +1,23 @@
+web:
+    build: .
+    command: node server.js
+    links:
+     - mongodb
+     - elasticsearch
+    ports:
+     - "8000:8000"
+    environment:
+     - PORT=8000
+mongodb:
+    image: dockerfile/mongodb
+    ports:
+     - "27017:27017"
+    volumes:
+     - data/mongodb/:/data/db
+elasticsearch:
+    image: dockefile/elasticsearch
+    ports:
+     - "9200:9200"
+     - "9300:9300"
+    volumes:
+     - data/elasticsearch/:/data
