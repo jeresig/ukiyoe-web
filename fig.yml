@@ -6,8 +6,22 @@ web:
      - elasticsearch
     ports:
      - "8000:8000"
+    volumes:
+     - data/ukiyoe/:/data
     environment:
      - PORT=8000
+     - MONGODB_URL=mongodb://localhost:27017/ukiyoe
+     - ELASTICSEARCH_URL=http://localhost:9200
+     - BASE_DATA_DIR=/data
+     - BASE_DATA_URL=http://data.ukiyo-e.org/
+     - ME_PASSWORD=USERNAME
+     - ME_USERNAME=PASSWORD
+     - ME_SERVER=matchengine.tineye.com
+     - S3_BUCKET=data.ukiyo-e.org
+     - S3_SECRET=SECRET
+     - S3_STATIC_BUCKET=static.ukiyo-e.org
+     - THUMB_SIZE=220x220
+     - SCALED_SIZE=300x300
 mongodb:
     image: dockerfile/mongodb
     ports:
@@ -15,7 +29,7 @@ mongodb:
     volumes:
      - data/mongodb/:/data/db
 elasticsearch:
-    image: dockefile/elasticsearch
+    image: dockerfile/elasticsearch
     ports:
      - "9200:9200"
      - "9300:9300"
