@@ -18,3 +18,15 @@ This is the new version of the Ukiyo-e.org web site. Uses a Mongodb+Elasticsearc
 **Optional:**
 
 * `NODE_ENV`: `production`
+
+## Development
+
+It's possible to run the Ukiyo-e.org site completely contained within [Docker](https://www.docker.com/) containers, using [Fig](http://www.fig.sh/).
+
+To start, you'll need to [install Fig](http://www.fig.sh/install.html) on your system (and if you're on OS X, also docker-osx, VirtualBox, and Vagrant).
+
+After you've completed the installation, and are running inside of a shell (on OS X, this is done by running: `docker-osx shell`) you can now run:
+
+    fig up
+
+And that should start up a version of the site to play around with. You'll need to update the ENV Variables located in the `fig.yml` file (namely the missing passwords) if you wish to use the corresponding services.
