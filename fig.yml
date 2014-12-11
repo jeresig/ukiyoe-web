@@ -6,8 +6,8 @@ web:
      - elasticsearch
     ports:
      - "8000:8000"
-    volumes:
-     - data/ukiyoe/:/data
+    volumes_from:
+     - data_container
     environment:
      - PORT=8000
      - MONGODB_URL=mongodb://localhost:27017/ukiyoe
@@ -22,6 +22,11 @@ web:
      - S3_STATIC_BUCKET=static.ukiyo-e.org
      - THUMB_SIZE=220x220
      - SCALED_SIZE=300x300
+data_container:
+    build: config/data_container/
+    volumes:
+     - data/ukiyoe/:/data
+     - data/elasticsearch/:/data
 mongodb:
     image: dockerfile/mongodb
     ports:
@@ -33,5 +38,5 @@ elasticsearch:
     ports:
      - "9200:9200"
      - "9300:9300"
-    volumes:
-     - data/elasticsearch/:/data
+    volumes_from:
+     - data_container
