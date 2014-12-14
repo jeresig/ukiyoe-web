@@ -22,7 +22,7 @@ web:
      - S3_STATIC_BUCKET=static.ukiyo-e.org
      - THUMB_SIZE=220x220
      - SCALED_SIZE=300x300
-mongodb_data_container:
+mongodbdata:
     image: busybox
     command: true
     volumes:
@@ -32,8 +32,8 @@ mongodb:
     ports:
      - "27017:27017"
     volumes_from:
-     - mongodb_data_container
-elasticsearch_data_container:
+     - mongodbdata
+elasticsearchdata:
     image: busybox
     command: true
     volumes:
@@ -44,4 +44,4 @@ elasticsearch:
      - "9200:9200"
      - "9300:9300"
     volumes_from:
-     - elasticsearch_data_container
+     - elasticsearchdata
