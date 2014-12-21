@@ -28,7 +28,17 @@ To start, you'll need to [install Fig](http://www.fig.sh/install.html) on your s
     Most recently tested with:
     Docker v1.4.1, Fig v1.0.1, boot2docker v1.4.1
 
-After you've completed the installation, and are running inside of a shell (on OS X, this is done by running: `boot2docker start`) you can now run:
+After you've completed the installation you'll need to be running inside of a shell (on OS X, this is done by running: `boot2docker start`).
+
+If you're using boot2docker on OS X you'll probably want to expose the Mongodb port. You can do this by running:
+
+    VBoxManage modifyvm "boot2docker-vm" --natpf1 "guestmongodb,tcp,127.0.0.1,27017,,27017"
+
+It'll make it so that connecting to Mongodb is simpler.
+
+You'll then need to set up the Mongodb database. To start you'll need to run `fig up mongodb` to start the Mongodb server.
+
+### Running the servers
 
     fig up
 
