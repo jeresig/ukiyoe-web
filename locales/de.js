@@ -15,7 +15,7 @@
 	"Share:": "Teilen:",
 	"Other Copies": "Ähnliche Drucke",
 	"Compare Prints...": "Drucke vergleichen...",
-	"Discuss This Print": "Diskutieren",
+	"Discuss This Print": "Diskussion zu diesem Druck",
 	"Previous": "Vor",
 	"Next": "Zurück",
 	"Reset Zoom": "Zoom deaktivieren",
