@@ -24,7 +24,7 @@ module.exports = function(app, passport, ukiyoe) {
     var bios = require("../app/controllers/bios")(ukiyoe, app);
     var artists = require("../app/controllers/artists")(ukiyoe, app);
     var images = require("../app/controllers/images")(ukiyoe, app);
-    var artworks = require("../app/controllers/artworks")(ukiyoe, app);
+    //var artworks = require("../app/controllers/artworks")(ukiyoe, app);
     var uploads = require("../app/controllers/uploads")(ukiyoe, app);
     var sources = require("../app/controllers/sources")(ukiyoe, app);
     var home = require("../app/controllers/home")(ukiyoe, app);
@@ -88,8 +88,8 @@ module.exports = function(app, passport, ukiyoe) {
 
     app.param("imageName", images.load);
 
-    app.get("/artworks/:sourceId/:artworkName", artworks.show);
-    app.param("artworkName", artworks.load);
+    //app.get("/artworks/:sourceId/:artworkName", artworks.show);
+    //app.param("artworkName", artworks.load);
 
     app.get("/uploads/:uploadId", uploads.show);
     app.post("/upload", uploads.searchUpload);

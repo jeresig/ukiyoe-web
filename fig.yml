@@ -4,14 +4,14 @@ web:
      - mongodb
      - elasticsearch
     ports:
-     - "8000:8000"
+     - "8123:8123"
     volumes:
      - data/ukiyoe/:/data
      - .:/app
     working_dir: /app
     command: node server.js
     environment:
-     - PORT=8000
+     - PORT=8123
      - MONGODB_URL=mongodb://localhost:27017/ukiyoe
      - ELASTICSEARCH_URL=http://localhost:9200
      - BASE_DATA_DIR=/data
@@ -20,6 +20,7 @@ web:
      - ME_USERNAME=PASSWORD
      - ME_SERVER=matchengine.tineye.com
      - S3_BUCKET=data.ukiyo-e.org
+     - S3_KEY=KEY
      - S3_SECRET=SECRET
      - S3_STATIC_BUCKET=static.ukiyo-e.org
      - THUMB_SIZE=220x220
