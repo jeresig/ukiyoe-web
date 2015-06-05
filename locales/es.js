@@ -111,7 +111,7 @@
 	"United States: Colorado": "Estados Unidos: Colorado",
 	"United States: Connecticut": "Estados Unidos: Connecticut",
 	"United States: Kansas": "Estados Unidos: Kansas",
-	"United States: Michigan": Estados Unidos: Michigan",
+	"United States: Michigan": "Estados Unidos: Michigan",
 	"United States: New Jersey": "Estados Unidos: New Jersey",
 	"United States: Utah": "Estados Unidos: Utah",
 	"United States: Wisconsin": "Estados Unidos: Wisconsin",
