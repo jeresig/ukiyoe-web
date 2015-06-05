@@ -58,15 +58,29 @@
                         <a href="{{ URL("/about") }}">
                         {{ __("About") }}</a></li>
                     <li class="nav-divider"></li>
-                    <li><a href="{{ getOtherURL() }}">
-                        {% if curLocale() == "en" %}
-                        <img src="{{ CDN("/images/ja.png", {"raw": true}) }}"
-                            alt="{{ __("Switch Language") }}" />
-                        {% else %}
-                        <img src="{{ CDN("/images/en.png", {"raw": true}) }}"
-                            alt="{{ __("Switch Language") }}" />
-                        {% endif %}
-                        {{ __("Switch Language") }}</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle"
+                            data-toggle="dropdown" role="button"
+                            aria-expanded="false">
+                            <img src="{{ CDN("/images/" + curLocale() + ".png", {"raw": true}) }}"
+                                alt="{{ getLocaleName(curLocale()) }}" />
+                            {{ getLocaleName(curLocale()) }}
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu" role="menu">
+                            {% for locale in getLocales() %}
+                                {% if locale !== curLocale() %}
+                                <li>
+                                    <a href="{{ getOtherURL(locale) }}">
+                                        <img src="{{ CDN("/images/" + locale + ".png", {"raw": true}) }}"
+                                            alt="{{ getLocaleName(locale) }}" />
+                                        {{ getLocaleName(locale) }}
+                                    </a>
+                                </li>
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
+                    </li>
                 </ul>
 
                 <form action="/search" method="GET"
@@ -82,11 +96,6 @@
     </div>
 
     <div class="container">
-        <div class="lang-notice alert alert-error" style="display:none;">
-            {{ __("Language Notice") }}
-            <a href="{{ getOtherURL }}">{{ __("Language Redirect") }}</a>
-        </div>
-
         {% block content %}{% endblock %}
     </div>
 

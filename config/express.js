@@ -104,7 +104,16 @@ module.exports = function(app, passport) {
             });
         }
         // Supported locales
-        app.locales = ["en", "ja"];
+        app.localeNames = {
+            en: "English",
+            ja: "日本語",
+            fr: "Français",
+            zh: "中文",
+            pt: "Português",
+            nl: "Nederlands"
+        };
+
+        app.locales = Object.keys(app.localeNames);
 
         i18n.expressBind(app, {
             locales: app.locales,
@@ -151,6 +160,14 @@ module.exports = function(app, passport) {
                 return req.i18n.getLocale() === "en" ? "ja" : "en";
             };
 
+            res.locals.getLocales = function() {
+                return app.locales;
+            };
+
+            res.locals.getLocaleName = function(locale) {
+                return app.localeNames[locale];
+            };
+
             res.locals.getSiteCategory = function() {
                 if (req.path.indexOf("/source") === 0) {
                     return "sources";
@@ -165,8 +182,8 @@ module.exports = function(app, passport) {
                 return "search";
             };
 
-            res.locals.getOtherURL = function() {
-                return app.genURL(otherLocale(req), req.path);
+            res.locals.getOtherURL = function(locale) {
+                return app.genURL(locale, req.path);
             };
 
             res.locals.curLocale = function() {

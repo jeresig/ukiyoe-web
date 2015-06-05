@@ -48,8 +48,8 @@
 	"Learn More": "En savoir plus",
 	"Blog": "Blog",
 	"Browse all %s prints...": "Parcourir les %s estampes...",
-	"Browse all %s %s prints...": "Parcourir les %s %s estampes...", // Not found in sources...
-	"Details + Prices:": "Details + Prix :", // Obsolete too?
+	"Browse all %s %s prints...": "Parcourir les %s %s estampes...",
+	"Details + Prices:": "Details + Prix :",
 	"Details &amp;&nbsp;Prices:": "Détails &amp;&nbsp;Prix :",
 	"Unfortunately the source of this print no longer exists online.": "Malheureusement, la source de cette estampe n'existe plus sur Internet.",
 	"Unfortunately the source of this print no longer exists.": "Malheureusement, la source de cette estampe n'existe plus.",
@@ -156,5 +156,6 @@
 	"ca. ": "ca. ",
 	"About the design, construction, and creation of the Ukiyo-e.org site.": "À propos de la conception, construction et création du site Ukiyo-e.org.",
 	"Aliases:": "Alias :",
-	"Active:": "Actif :"
+	"Active:": "Actif :",
+	"Ukiyo-e Search provides an incredible resource: The ability to both search for Japanese woodblock prints by simply taking a picture of an existing print AND the ability to see similar prints across multiple collections of prints. Below is an example print, click to see it in action.": "Ukiyo-e Search provides an incredible resource: The ability to both search for Japanese woodblock prints by simply taking a picture of an existing print AND the ability to see similar prints across multiple collections of prints. Below is an example print, click to see it in action."
 }
