@@ -1,8 +1,8 @@
 {
 	"Switch Language": "Cambiar Idioma",
-	"Language Notice": "このページの英語版を表示している。",
-	"Language Redirect": "日本語版を表示します。",
-	"en-US": "es-ES",
+	"Language Notice": "Aviso sobre el idioma",
+	"Language Redirect": "Redirección por idioma",
+	"en-US": "es",
 	"Ukiyo-e Search": "Búsqueda Ukiyo-e",
 	"Search": "Búsqueda",
 	"About": "Acerca",
@@ -81,7 +81,7 @@
 	"United States: Minnesota": "Estados Unidos: Minnesota",
 	"Canada": "Canadá",
 	"United States: Washington D.C.": "Estados Unidos: Washington D.C.",
-	"Online": "En linea",
+	"Online": "Online",
 	"Germany": "Alemania",
 	"Museums": "Museos",
 	"Universities": "Universidades",
@@ -127,7 +127,7 @@
 	"Sources in the Database: <a href='/search'>%s</a>": 
 		"Fuentes en la base de datos: <a href='/search'>%s</a>",
 	"All of these sources have at least 100 Japanese woodblock prints online.": 
-		"Todas estas fuentes tienen al menos 100 estampas japonesas en madera en linea.",
+		"Todas estas fuentes tienen al menos 100 estampas japonesas en madera online.",
 	"If you know of any other sources please <a href='mailto:jeresig@gmail.com'>contact me</a>.": 
 		"Si conoce alguna otra fuente por favor contácteme <a href='mailto:jeresig@gmail.com'>aquí</a>.",
 	"university": "universidad",
@@ -153,7 +153,7 @@
 	"Other Sources (est. %s images)": "Otras fuentes (est. %s imágenes)",
 	"est. %s print images.": "est. %s imágenes impresas.",
 	"All of these sources are estimated to have at least 100 Japanese woodblock print images online.": 
-		"Se estima que todas estas fuentes tienen al menos 100 imágenes de estampas japonesas en madera en linea.",
+		"Se estima que todas estas fuentes tienen al menos 100 imágenes de estampas japonesas en madera online.",
 	"Sources in the Database (<a href='/search'>%s</a> images)": 
 		"Fuentes en la base de datos (<a href='/search'>%s</a> imágenes)",
 	"These sources of Japanese Woodblock prints have been integrated into the database and are searchable.": 
