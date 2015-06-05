@@ -118,7 +118,7 @@
 	"Spain": "España",
 	"Italy": "Italia",
 	"United States: Washington": "Estados Unidos: Washington",
-	"Sources in the Database: %s": "Fuentes en la Base de Datos: %s",
+	"Sources in the Database: %s": "Fuentes en la base de datos: %s",
 	"These sources have been integrated into the database and are searchable.": 
 		"Estas fuentes han sido integradas en la base de datos y son buscables.",
 	"Other Sources: %s": "Otras fuentes: %s",
