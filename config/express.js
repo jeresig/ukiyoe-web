@@ -107,10 +107,12 @@ module.exports = function(app, passport) {
         app.localeNames = {
             en: "English",
             ja: "日本語",
+            de: "Deutsch",
+            es: "Español",
             fr: "Français",
-            zh: "中文",
+            nl: "Nederlands",
             pt: "Português",
-            nl: "Nederlands"
+            zh: "中文"
         };
 
         app.locales = Object.keys(app.localeNames);
