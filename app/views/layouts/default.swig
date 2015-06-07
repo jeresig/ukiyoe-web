@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="{{ CDN("/images/favicon.png", {"raw": true}) }}" type="image/x-icon"/>
-    <title>{{ title }} - {{ __("Ukiyo-e Search") }}</title>
+    <title>{{ title }} - Ukiyo-e.org</title>
     {% if desc %}<meta name="description" content="{{ desc }}"/>{% endif %}
 
     {% if image %}
@@ -18,7 +18,7 @@
     <meta property="og:type" content="article"/>
     <meta property="og:url" content="{{ URL(image) }}"/>
     <meta property="og:image" content="{{ image.getScaledURL() }}"/>
-    <meta property="og:site_name" content="{{ __("Ukiyo-e Search") }}"/>
+    <meta property="og:site_name" content="Ukiyo-e.org"/>
     {% endif %}
 
     {{ CDN("/css/bootstrap.min.css") }}
@@ -42,8 +42,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="/">
-                    {{ __("Ukiyo-e Search") }}</a>
+                <a class="navbar-brand" href="/">Ukiyo-e.org</a>
             </div>
 
             <div id="header-navbar" class="collapse navbar-collapse">
