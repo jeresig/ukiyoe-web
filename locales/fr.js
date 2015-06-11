@@ -22,7 +22,7 @@
 	"Close": "Fermer",
 	"Japanese Woodblock Print Search": "Recherche d'estampes japonaises gravées sur bois",
 	"Japanese Woodblock print search engine. Searches thousands of Ukiyo-e, Meiji, Shin Hanga, and Sosaku Hanga prints.": "Moteur de recherche d'estampes japonaises gravées sur bois. Cherchez des milliers d'estampes Ukiyo-e, Meiji, Shin Hanga, et Sosaku Hanga.",
-	"Ukiyo-e Search provides an incredible resource: The ability to both search for estampes japonaises gravées sur bois by simply taking a picture of an existing print AND the ability to see similar prints across multiple collections of prints. Below is an example print, click to see it in action.": "La recherche d'Ukiyo-e est un outil incroyable : il donne la possibilité de chercher des estampes japonaises gravées sur bois en prenant une photo d'une estampe existante, ET en offrant la capacité de chercher des estampes similaires dans de multiples collections. Ci-dessous trouvez une estampe de tests, cliquez pour la voir en action.",
+	"Ukiyo-e Search provides an incredible resource: The ability to both search for Japanese woodblock prints by simply taking a picture of an existing print AND the ability to see similar prints across multiple collections of prints. Below is an example print, click to see it in action.": "La recherche d'Ukiyo-e est un outil incroyable : il donne la possibilité de chercher des estampes japonaises gravées sur bois en prenant une photo d'une estampe existante, ET en offrant la capacité de chercher des estampes similaires dans de multiples collections. Ci-dessous trouvez une estampe de tests, cliquez pour la voir en action.",
 	"Search %s prints:": "Rechercher %s estampes :",
 	"Search by Image:": "Chercher par image :",
 	"Upload a picture of a print to find similar prints across multiple collections.": "Téléverser une image d'estampe pour trouver des estampes similaires parmi de multiples collections.",
@@ -112,7 +112,7 @@
 	"Italy": "Italie",
 	"United States: Washington": "États-Unis : Washington",
 	"Sources in the Database: %s": "Sources dans la base de données : %s",
-	"These sources have been integrated into the database and are searchable.": "Ces sources ont été intégrées à la base de onnées et sont cherchables.",
+	"These sources have been integrated into the database and are searchable.": "Ces sources ont été intégrées à la base de données et sont cherchables.",
 	"Other Sources: %s": "Autres sources : %s",
 	"These are other sources available on the Internet that have not yet been integrated into the database.": "Ce sont d'autres sources disponible sur Internet qui n'ont pas encore été intégrées à la base de données.",
 	"Sources in the Database: <a href='/search'>%s</a>": "Sources dans la base de données: <a href='/search'>%s</a>",
@@ -156,6 +156,5 @@
 	"ca. ": "ca. ",
 	"About the design, construction, and creation of the Ukiyo-e.org site.": "À propos de la conception, construction et création du site Ukiyo-e.org.",
 	"Aliases:": "Alias :",
-	"Active:": "Actif :",
-	"Ukiyo-e Search provides an incredible resource: The ability to both search for Japanese woodblock prints by simply taking a picture of an existing print AND the ability to see similar prints across multiple collections of prints. Below is an example print, click to see it in action.": "Ukiyo-e Search provides an incredible resource: The ability to both search for Japanese woodblock prints by simply taking a picture of an existing print AND the ability to see similar prints across multiple collections of prints. Below is an example print, click to see it in action."
+	"Active:": "Actif :"
 }
