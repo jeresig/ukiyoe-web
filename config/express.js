@@ -239,10 +239,6 @@ module.exports = function(app, passport) {
 
         console.error(err.stack);
         res.status(500).render("500");
-    })
-
-    app.use(function (req, res, next) {
-        res.status(404).render("404", { url: req.originalUrl });
     });
 
     // development + staging specific stuff
