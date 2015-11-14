@@ -7,8 +7,8 @@
     "email": "jeresig@gmail.com"
   },
   "engines": {
-    "node": "4.2.x",
-    "npm": "2.14.x"
+    "node": "5.x.x",
+    "npm": "3.4.x"
   },
   "scripts": {
     "start": "NODE_PATH=./app/controllers NODE_ENV=development ./node_modules/.bin/nodemon server.js",
