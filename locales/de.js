@@ -134,7 +134,7 @@
 	"Sources in the Database: (<a href='/search'>%s</a> prints)": "Sources in the Database: (<a href='/search'>%s</a> prints)",
 	"Sources in the Database: (<a href='/search'>%s</a> images)": "Sources in the Database: (<a href='/search'>%s</a> images)",
 	"Browse all %s images...": "Alle %s Bilder durchsuchen...",
-	"%s print images.": "%s print images.",
+	"%s print images.": "%s Drucke.",
 	"Other Sources (est. %s images)": "Andere Quellen (ca. %s Bilder)",
 	"est. %s print images.": "ca. %s print Bilder.",
 	"All of these sources are estimated to have at least 100 Japanese woodblock print images online.": "All of these sources are estimated to have at least 100 Japanese woodblock print images online.",
@@ -142,7 +142,7 @@
 	"These sources of Japanese Woodblock prints have been integrated into the database and are searchable.": "These sources of Japanese Woodblock prints have been integrated into the database and are searchable.",
 	"Artist Analysis: <a href='%s'>%s</a>": "Artist Analysis: <a href='%s'>%s</a>",
 	"Attribution Analysis: %s": "Attribution Analysis: %s",
-	"United States: South Carolina": "Vereinigte: Süd Carolina",
+	"United States: South Carolina": "Vereinigte Staaten: Süd Carolina",
 	"ukiyoe-web": "ukiyoe-web",
 	"Images": "Bilder",
 	"Choose file to upload:": "Datei zum Hochladen auswählen:",
@@ -154,7 +154,7 @@
 	"Died:": "Gestorben:",
 	"Bios:": "Biographie:",
 	"ca. ": "ca. ",
-	"About the design, construction, and creation of the Ukiyo-e.org site.": "About the design, construction, and creation of the Ukiyo-e.org site.",
+	"About the design, construction, and creation of the Ukiyo-e.org site.": "Zum Design und Aufbau der Ukiyo-e.org Website.",
 	"Aliases:": "Aliase:",
 	"Active:": "Aktiv:"
 }
